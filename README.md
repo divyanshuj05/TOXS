@@ -1,1 +1,1 @@
-# TOX
+yarn start
