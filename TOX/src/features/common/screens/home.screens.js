@@ -1,14 +1,11 @@
 import React from 'react';
-import { StatusBar, FlatList, TouchableWithoutFeedback } from "react-native";
+import { StatusBar, FlatList, TouchableOpacity  } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
 import { RestaurantScreen } from '../../restaurants/screens/restaurants.screens';
 import { NavigationContainer } from '@react-navigation/native';
-/*import { createNativeStackNavigator } from '@react-navigation/native-stack';*/
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
-
+import { HomeNavigator } from "../../../infrastructure/navigation/home.navigator";
 const SafeArea = styled.SafeAreaView`
     background-color: ${(props) => props.theme.colors.bg.secondary}
     flex:1;
@@ -78,32 +75,32 @@ const flatlist_data = [
     }
 ]
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
 
-    const serviceHandler = (text) => {
+/*    const serviceHandler = (text) => {
         if (text === "TPO") {
             alert(text)
         }
         else {
             alert(text)
         }
-    }
+    }*/
 
     return (
         <SafeArea>
             <Main_Logo source={logo} />
-            <App_Name>Thapar Pre-Ordering and Exchnage Service</App_Name>
+            <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
             <FlatList
                 data={flatlist_data}
                 horizontal={true}
                 renderItem={({ item }) =>
-                    <TouchableWithoutFeedback onPress={() => serviceHandler(item.text)}>
+                    <TouchableOpacity  onPress={() => navigation.navigate("Restaurants")}>
                         <ListWrapper>
                             <Facility_Logo source={item.icon} />
                             <Facility_Text color={item.color}>{item.text}</Facility_Text>
                             <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
                         </ListWrapper>
-                    </TouchableWithoutFeedback>}
+                    </TouchableOpacity >}
                 keyExtractor={(item) => item.text}
             />
         </SafeArea>
