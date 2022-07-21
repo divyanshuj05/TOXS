@@ -78,23 +78,18 @@ const flatlist_data = [
     }
 ]
 
-{/*const App = StackNavigator({
-    Restaurant: { screen: RestaurantScreen }
-});*/}
-
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = () => {
 
     const serviceHandler = (text) => {
         if (text === "TPO") {
-            navigation.navigate('Details')
+            alert(text)
         }
         else {
             alert(text)
         }
     }
 
-
-    const Home = () => {
+    return (
         <SafeArea>
             <Main_Logo source={logo} />
             <App_Name>Thapar Pre-Ordering and Exchnage Service</App_Name>
@@ -112,24 +107,5 @@ export const HomeScreen = ({ navigation }) => {
                 keyExtractor={(item) => item.text}
             />
         </SafeArea>
-    }
-
-    const DetailsScreen = () => {
-        return (
-            <View>
-                <Text>Contact tab!!!</Text>
-            </View>
-        )
-    }
-
-    const Stack = createNativeStackNavigator();
-
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Details" component={DetailsScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+    )
 }
