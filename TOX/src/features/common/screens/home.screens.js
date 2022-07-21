@@ -5,7 +5,9 @@ import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
 import { RestaurantScreen } from '../../restaurants/screens/restaurants.screens';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+/*import { createNativeStackNavigator } from '@react-navigation/native-stack';*/
+import { createStackNavigator } from '@react-navigation/stack';
+import 'react-native-gesture-handler';
 
 const SafeArea = styled.SafeAreaView`
     background-color: ${(props) => props.theme.colors.bg.secondary}
