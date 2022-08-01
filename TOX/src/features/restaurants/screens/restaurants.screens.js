@@ -3,6 +3,7 @@ import { TouchableOpacity, StatusBar, FlatList, Text } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
+import { TabActions } from "@react-navigation/native";
 
 const Container = styled.SafeAreaView`
     flex:1;
@@ -34,7 +35,6 @@ export const RestaurantScreen = ({ navigation }) => {
                 <Searchbar placeholder="Search" />
             </SearchContainer>
             <CardContainer>
-
                 <FlatList
                     data={[{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }, { name: 6 }]}
                     renderItem={() =>
@@ -43,8 +43,6 @@ export const RestaurantScreen = ({ navigation }) => {
                         </TouchableOpacity>}
                     keyExtractor={(item) => item.name}
                 />
-
-
             </CardContainer>
         </Container>
     );
