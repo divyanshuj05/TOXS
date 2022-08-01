@@ -21,7 +21,7 @@ export const HomeNavigator = () => {
       />
       <HomeStack.Screen
         name="Exchnage"
-        component={RestaurantsNavigator}
+        component={ExchangeScreen}
       />
     </HomeStack.Navigator>
   );

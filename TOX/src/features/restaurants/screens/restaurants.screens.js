@@ -3,7 +3,6 @@ import { TouchableOpacity, StatusBar, FlatList, Text } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
-import { TabActions } from "@react-navigation/native";
 
 const Container = styled.SafeAreaView`
     flex:1;
@@ -20,12 +19,6 @@ const CardContainer = styled.View`
     padding: ${(props) => props.theme.space[3]};
     background-color: ${(props) => props.theme.colors.brand.primary};
 `;
-
-const Details = () => {
-    return (
-        <Text>Destails sdvsgrf</Text>
-    )
-}
 
 export const RestaurantScreen = ({ navigation }) => {
     return (

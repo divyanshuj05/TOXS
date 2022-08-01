@@ -98,7 +98,7 @@ export const HomeScreen = ({ navigation }) => {
                         }
                         else {
                             return (
-                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Exchnage")}>
                                     <ListWrapper>
                                         <Facility_Logo source={item.icon} />
                                         <Facility_Text color={item.color}>{item.text}</Facility_Text>

@@ -5,10 +5,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { HomeNavigator } from "./home.navigator.js";
-import { RestaurantScreen } from "../../features/restaurants/screens/restaurants.screens.js";
 
 const Tab = createBottomTabNavigator();
-
 
 const Profile = () => {
   return (
