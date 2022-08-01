@@ -1,19 +1,18 @@
 import React from 'react';
-import { StatusBar, FlatList, TouchableOpacity  } from "react-native";
+import { StatusBar, FlatList, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
-import { RestaurantScreen } from '../../restaurants/screens/restaurants.screens';
-import { NavigationContainer } from '@react-navigation/native';
-import { HomeNavigator } from "../../../infrastructure/navigation/home.navigator";
+
 const SafeArea = styled.SafeAreaView`
-    background-color: ${(props) => props.theme.colors.bg.secondary}
     flex:1;
-    paddding-top:${StatusBar.currentHeight}px;
+    padding-top:${StatusBar.currentHeight}px;
+    background-color: ${(props) => props.theme.colors.bg.secondary}
+    
 `;
 
 const Main_Logo = styled.Image`
-    margin-top:${(props) => props.theme.space[3]};
+    margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
     `;
@@ -76,33 +75,42 @@ const flatlist_data = [
 ]
 
 export const HomeScreen = ({ navigation }) => {
-
-/*    const serviceHandler = (text) => {
-        if (text === "TPO") {
-            alert(text)
-        }
-        else {
-            alert(text)
-        }
-    }*/
-
     return (
-        <SafeArea>
-            <Main_Logo source={logo} />
-            <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
-            <FlatList
-                data={flatlist_data}
-                horizontal={true}
-                renderItem={({ item }) =>
-                    <TouchableOpacity  onPress={() => navigation.navigate("Restaurants")}>
-                        <ListWrapper>
-                            <Facility_Logo source={item.icon} />
-                            <Facility_Text color={item.color}>{item.text}</Facility_Text>
-                            <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
-                        </ListWrapper>
-                    </TouchableOpacity >}
-                keyExtractor={(item) => item.text}
-            />
-        </SafeArea>
+        <>
+            <StatusBar backgroundColor="#FFF" />
+            <SafeArea>
+                <Main_Logo source={logo} />
+                <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
+                <FlatList
+                    data={flatlist_data}
+                    horizontal={true}
+                    renderItem={({ item, index }) => {
+                        if (index === 0) {
+                            return (
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                    <ListWrapper>
+                                        <Facility_Logo source={item.icon} />
+                                        <Facility_Text color={item.color}>{item.text}</Facility_Text>
+                                        <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
+                                    </ListWrapper>
+                                </TouchableOpacity >
+                            )
+                        }
+                        else {
+                            return (
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                    <ListWrapper>
+                                        <Facility_Logo source={item.icon} />
+                                        <Facility_Text color={item.color}>{item.text}</Facility_Text>
+                                        <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
+                                    </ListWrapper>
+                                </TouchableOpacity >
+                            )
+                        }
+                    }}
+                    keyExtractor={(item) => item.text}
+                />
+            </SafeArea>
+        </>
     )
 }

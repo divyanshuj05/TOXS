@@ -1,22 +1,23 @@
 import React from "react";
-import { Text } from "react-native";
-
-import { TransitionPresets, createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../../features/common/screens/home.screens";
 import { RestaurantScreen } from "../../features/restaurants/screens/restaurants.screens";
+import { RestaurantsNavigator } from "./restaurants.navigator";
 
 const HomeStack = createStackNavigator();
 
 export const HomeNavigator = () => {
   return (
-    <HomeStack.Navigator >
+    <HomeStack.Navigator screenOptions={{
+      headerShown: false
+    }} >
       <HomeStack.Screen
         name="home"
         component={HomeScreen}
       />
       <HomeStack.Screen
-        name="Restaurants"
-        component={RestaurantScreen}
+        name="RestaurantNavigator"
+        component={RestaurantsNavigator}
       />
     </HomeStack.Navigator>
   );

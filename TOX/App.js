@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme/index";
@@ -22,7 +21,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-      <Navigation/>
+        <Navigation />
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
