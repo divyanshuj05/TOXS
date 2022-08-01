@@ -1,11 +1,27 @@
 import React from 'react';
-import { Text } from "react-native"
+import { Image, View } from "react-native"
+import styled from 'styled-components';
 import { SafeArea } from '../../../utils/components/safe-area.components';
+import { Soon } from "../../../../assets/images";
 
-export default ExchangeScreen = () => {
+const Wrapper = styled(View)`
+    flex:1;
+    background-color:${(props) => props.theme.colors.brand.tertiary};
+    justify-content:center;
+    align-items:center;
+`;
+
+const SoonImage = styled(Image)`
+    height:300px;
+    width: 300px;
+`;
+
+export const ExchangeScreen = () => {
     return (
         <SafeArea>
-            <Text>Coming Soon!</Text>
+            <Wrapper>
+                <SoonImage source={Soon} />
+            </Wrapper>
         </SafeArea>
     )
 }

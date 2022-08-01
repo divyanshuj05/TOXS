@@ -64,7 +64,6 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
                     <Title>{name}</Title>
                     <Section>
                         <RatingStyle>
-
                             <OpenContainer>
                                 {isOpen && <SvgXml xml={open} width={20} height={20} />}
                             </OpenContainer>
