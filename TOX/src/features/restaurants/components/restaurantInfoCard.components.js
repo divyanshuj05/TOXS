@@ -5,7 +5,8 @@ import styled from 'styled-components/native';
 import open from '../../../../assets/open';
 import { SvgXml } from 'react-native-svg';
 
-export const RestaurantInfoCard = ({ restaurant = {} }) => {
+export const RestaurantInfoCard = ({ restaurant={},restaurantName}) => {
+
 
     const RestaurantInfo = styled.View`
     padding: ${(props) => props.theme.space[3]}
@@ -61,7 +62,7 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             <Card elevation={5}>
                 <Card.Cover key={name} source={{ uri: icon[0] }} />
                 <RestaurantInfo>
-                    <Title>{name}</Title>
+                    <Title>{restaurantName}</Title>
                     <Section>
                         <RatingStyle>
                             <OpenContainer>

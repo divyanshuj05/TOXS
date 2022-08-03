@@ -29,10 +29,10 @@ export const RestaurantScreen = ({ navigation }) => {
             </SearchContainer>
             <CardContainer>
                 <FlatList
-                    data={[{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }, { name: 6 }]}
-                    renderItem={() =>
-                        <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail")}>
-                            <RestaurantInfoCard />
+                    data={[{ name: "Wrapchik" }, { name: "Sip n Bites" }, { name: "Pizza Nation" }, { name: "G Cafeteria" }, { name: "A Cafeteria" }, { name: "Dessert Club" }]}
+                    renderItem={({item}) =>
+                        <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail",{restaurent:item.name})}>
+                            <RestaurantInfoCard restaurantName={item.name} />
                         </TouchableOpacity>}
                     keyExtractor={(item) => item.name}
                 />
