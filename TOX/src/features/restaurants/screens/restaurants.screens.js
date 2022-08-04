@@ -1,17 +1,18 @@
-import React from "react";
-import { TouchableOpacity, StatusBar, FlatList, Text } from "react-native";
-import { Searchbar } from "react-native-paper";
+import React, { useContext } from "react";
+import { TouchableOpacity, StatusBar, FlatList, View } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
+import { DropDownComponent } from "../components/dropdown.components.js";
+import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const Container = styled.SafeAreaView`
     flex:1;
     margin-top: ${StatusBar.currentHeight}px;
 `;
 
-const SearchContainer = styled.View`
+const DropDownContainer = styled.View`
     padding: ${(props) => props.theme.space[3]};
-    background-color: ${(props) => props.theme.colors.ui.primary};
 `;
 
 const CardContainer = styled.View`
@@ -21,22 +22,36 @@ const CardContainer = styled.View`
 `;
 
 export const RestaurantScreen = ({ navigation }) => {
+
+    const { restaurants, isLoading, isError } = useContext(RestaurantContext);
+
     return (
         <Container>
             <StatusBar backgroundColor="white" />
-            <SearchContainer>
-                <Searchbar placeholder="Search" />
-            </SearchContainer>
+            <DropDownContainer>
+                <DropDownComponent />
+            </DropDownContainer>
             <CardContainer>
-                <FlatList
-                    data={[{ name: "Wrapchik" }, { name: "Sip n Bites" }, { name: "Pizza Nation" }, { name: "G Cafeteria" }, { name: "A Cafeteria" }, { name: "Dessert Club" }]}
-                    renderItem={({item}) =>
-                        <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail",{restaurent:item.name})}>
-                            <RestaurantInfoCard restaurantName={item.name} />
-                        </TouchableOpacity>}
-                    keyExtractor={(item) => item.name}
-                />
+                {isLoading ?
+                    (
+                        <View>
+                            <ActivityIndicator color={Colors.red400} size={50} />
+                        </View>
+                    ) :
+                    (
+                        <FlatList
+                            data={restaurants}
+                            renderItem={({ item }) =>
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
+                                    <RestaurantInfoCard restaurantName={item.Name} />
+                                </TouchableOpacity>}
+                            keyExtractor={(item) => item.Name}
+                        />
+                    )
+                }
+
             </CardContainer>
         </Container>
     );
 };
+

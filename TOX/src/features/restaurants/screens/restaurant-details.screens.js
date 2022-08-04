@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Alert } from "react-native";
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
@@ -12,9 +13,29 @@ const RestaurantText = styled.Text`
     font-family:${(props) => props.theme.fonts.body};
 `;
 
-export const RestaurantDetails = ({ route }) => {
+export const RestaurantDetails = ({ route, navigation }) => {
 
     const { restaurent } = route.params;
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', (block) => {
+            block.preventDefault();
+            Alert.alert(
+                "Discard cart?",
+                "All changes will be discarded",
+                [
+                    {
+                        text: "Yes",
+                        onPress: () => navigation.dispatch(block.data.action)
+                    },
+                    {
+                        text: "No",
+                        onPress: () => console.log("No Pressed")
+                    }
+                ]
+            )
+        })
+    }, [navigation])
 
     const flatlistData = [
         {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, FlatList, View } from "react-native";
 import styled from 'styled-components';
 import { AddFoodItems } from './add-food.components';

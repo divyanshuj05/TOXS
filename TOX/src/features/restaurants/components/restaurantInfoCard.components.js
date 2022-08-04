@@ -5,8 +5,7 @@ import styled from 'styled-components/native';
 import open from '../../../../assets/open';
 import { SvgXml } from 'react-native-svg';
 
-export const RestaurantInfoCard = ({ restaurant={},restaurantName}) => {
-
+export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
 
     const RestaurantInfo = styled.View`
     padding: ${(props) => props.theme.space[3]}
@@ -54,8 +53,6 @@ export const RestaurantInfoCard = ({ restaurant={},restaurantName}) => {
         rating = 4,
         address = "9th Street"
     } = restaurant;
-
-
 
     return (
         <CardContainer>

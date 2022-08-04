@@ -5,6 +5,8 @@ import { theme } from "./src/infrastructure/theme/index";
 import { useFonts as OswaldFont, Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
 import { Navigation } from "./src/infrastructure/navigation";
+import { RestaurantContextProvider } from "./src/services/restaurant/restaurant-block.context";
+
 export default function App() {
 
   const [OswaldLoaded] = OswaldFont({
@@ -21,7 +23,9 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Navigation />
+        <RestaurantContextProvider>
+          <Navigation />
+        </RestaurantContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
