@@ -7,7 +7,6 @@ export const RestaurantContextProvider = ({ children }) => {
     const [restaurants, setRestaurants] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [keyword, setKeyword] = useState("Dessert Club")
 
     const retrieveRestaurants = (Name) => {
         setIsLoading(true)

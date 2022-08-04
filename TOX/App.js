@@ -6,6 +6,7 @@ import { useFonts as OswaldFont, Oswald_400Regular } from '@expo-google-fonts/os
 import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
 import { Navigation } from "./src/infrastructure/navigation";
 import { RestaurantContextProvider } from "./src/services/restaurant/restaurant-block.context";
+import { CartContextProvider } from "./src/services/restaurant/cart.context";
 
 export default function App() {
 
@@ -24,7 +25,9 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <RestaurantContextProvider>
-          <Navigation />
+          <CartContextProvider>
+            <Navigation />
+          </CartContextProvider>
         </RestaurantContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />

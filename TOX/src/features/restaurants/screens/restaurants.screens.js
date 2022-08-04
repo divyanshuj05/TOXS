@@ -23,7 +23,7 @@ const CardContainer = styled.View`
 
 export const RestaurantScreen = ({ navigation }) => {
 
-    const { restaurants, isLoading, isError } = useContext(RestaurantContext);
+    const { restaurants, isLoading } = useContext(RestaurantContext);
 
     return (
         <Container>

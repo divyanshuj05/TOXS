@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
 
 const Count = styled.Text`
@@ -52,22 +53,24 @@ export const AddFoodItems = ({ foodDetail }) => {
 
     const [subjectCount, setSubjectCount] = useState(0)
 
+    const { items, cost, cal } = useContext(CartContext)
+
     return (
         <>
             {subjectCount != 0 ?
                 (
                     <Wrapper>
                         <Count>{subjectCount}</Count>
-                        <TouchableOpacity onPress={() => setSubjectCount(subjectCount + 1)} >
+                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1) }} >
                             <Add>+</Add>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setSubjectCount(subjectCount - 1)}>
+                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount - 1), cal(-price, -1) }}>
                             <Subtract>-</Subtract>
                         </TouchableOpacity>
                     </Wrapper>
                 ) :
                 (
-                    <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1) }}>
+                    <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1) }}>
                         <AddButton>Add</AddButton>
                     </TouchableOpacity>
                 )
