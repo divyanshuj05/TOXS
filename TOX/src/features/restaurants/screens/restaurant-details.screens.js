@@ -22,23 +22,21 @@ export const RestaurantDetails = ({ route, navigation }) => {
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {
-            if ({ items } != 0) {
-                block.preventDefault();
-                Alert.alert(
-                    "Discard cart?",
-                    "All changes will be discarded",
-                    [
-                        {
-                            text: "Yes",
-                            onPress: () => { navigation.dispatch(block.data.action), destroy() }
-                        },
-                        {
-                            text: "No",
-                            onPress: () => { <></> }
-                        }
-                    ]
-                )
-            }
+            block.preventDefault();
+            Alert.alert(
+                "Discard cart?",
+                "All changes will be discarded",
+                [
+                    {
+                        text: "Yes",
+                        onPress: () => { navigation.dispatch(block.data.action), destroy() }
+                    },
+                    {
+                        text: "No",
+                        onPress: () => { <></> }
+                    }
+                ]
+            )
         })
     }, [navigation])
 
