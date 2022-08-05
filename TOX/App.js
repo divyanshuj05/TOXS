@@ -1,12 +1,9 @@
 import React from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import { ThemeProvider } from "styled-components/native";
-import { theme } from "./src/infrastructure/theme/index";
 import { useFonts as OswaldFont, Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
-import { Navigation } from "./src/infrastructure/navigation";
-import { RestaurantContextProvider } from "./src/services/restaurant/restaurant-block.context";
-import { CartContextProvider } from "./src/services/restaurant/cart.context";
+import { AppThemeContextProvider } from "./src/services/common/theme.context";
+import { Index } from "./src/features/common/screens/index.screens";
 
 export default function App() {
 
@@ -20,16 +17,11 @@ export default function App() {
     return null;
   }
 
-
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <RestaurantContextProvider>
-          <CartContextProvider>
-            <Navigation />
-          </CartContextProvider>
-        </RestaurantContextProvider>
-      </ThemeProvider>
+      <AppThemeContextProvider>
+        <Index />
+      </AppThemeContextProvider>
       <ExpoStatusBar style="auto" />
     </>
   );

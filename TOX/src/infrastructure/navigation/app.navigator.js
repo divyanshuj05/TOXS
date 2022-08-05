@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer, useNavigationState, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { HomeNavigator } from "./home.navigator.js";
+import { AppThemeContext } from "../../services/common/theme.context.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +34,9 @@ const About = () => {
 }
 
 export const AppNavigator = () => {
+
+  const { scheme } = useContext(AppThemeContext)
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -54,6 +58,7 @@ export const AppNavigator = () => {
           },
           tabBarActiveTintColor: 'red',
           tabBarInactiveTintColor: 'gray',
+          tabBarStyle: { backgroundColor: scheme === 'dark' ? "black" : "white" },
           headerShown: false
         })}
       >

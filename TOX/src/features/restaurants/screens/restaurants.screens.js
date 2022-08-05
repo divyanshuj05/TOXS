@@ -19,7 +19,7 @@ const DropDownContainer = styled.View`
 const CardContainer = styled.View`
     flex:1;
     padding: ${(props) => props.theme.space[3]};
-    background-color: ${(props) => props.theme.colors.bg.primary};
+    background-color: ${(props) => props.theme.background};
 `;
 
 export const RestaurantScreen = ({ navigation }) => {

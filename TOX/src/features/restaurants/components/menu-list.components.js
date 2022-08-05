@@ -22,12 +22,14 @@ const ListTitle = styled(Text)`
     padding-left:${(props) => props.theme.space[3]};
     padding-right:${(props) => props.theme.space[6]};
     font-family:${(props) => props.theme.fonts.heading};
+    color:${(props) => props.theme.text};
 `;
 
 const ListPrice = styled(Text)`
     padding-horizontal:${(props) => props.theme.space[3]};
     font-family:${(props) => props.theme.fonts.heading};
     padding-top:${(props) => props.theme.space[2]};
+    color:${(props) => props.theme.text};
 `;
 
 const BottomBar = styled(View)`

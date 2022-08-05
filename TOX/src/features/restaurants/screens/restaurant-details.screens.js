@@ -8,10 +8,15 @@ import { CartContext } from "../../../services/restaurant/cart.context";
 const RestaurantText = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
-    color:${(props) => props.theme.colors.text.primary};
+    color:${(props) => props.theme.text};
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family:${(props) => props.theme.fonts.body};
+`;
+
+const Container = styled.View`
+    flex:1
+    background-color:${(props) => props.theme.background};
 `;
 
 export const RestaurantDetails = ({ route, navigation }) => {
@@ -80,9 +85,10 @@ export const RestaurantDetails = ({ route, navigation }) => {
     ];
 
     return (
-        <SafeArea>
+        <Container>
             <RestaurantText>{restaurent}</RestaurantText>
             <MenuList data={flatlistData} navigation={navigation} />
-        </SafeArea>
+        </Container>
+
     );
 }

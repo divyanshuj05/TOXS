@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
 import { Text, View, TouchableOpacity } from "react-native"
-import { SafeArea } from '../../../utils/components/safe-area.components';
 import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
+
+const Container = styled.View`
+    flex:1;
+    background-color:${(props) => props.theme.background};
+`;
 
 const MainText = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
-    color:${(props) => props.theme.colors.text.primary};
+    color:${(props) => props.theme.text};
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family:${(props) => props.theme.fonts.body};
@@ -15,13 +19,14 @@ const MainText = styled.Text`
 `;
 
 const FlatListStyle = styled.FlatList`
-    flex:0.8
+    flex:0.87
 `;
 
 const ListText = styled.Text`
     font-size: ${(props) => props.theme.fontSizes.body};
     padding-bottom:${(props) => props.theme.space[4]};
     font-family:${(props) => props.theme.fonts.heading};
+    color:${(props) => props.theme.text};
 `;
 
 const ViewFlex = styled.View`
@@ -30,7 +35,7 @@ const ViewFlex = styled.View`
 `;
 
 const TotalText = styled.Text`
-    color:${(props) => props.theme.colors.ui.basic};
+    color:${(props) => props.theme.text};
     font-size: 18px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
@@ -38,14 +43,14 @@ const TotalText = styled.Text`
 
 const Total = styled.View`
     flex-direction:row;
-    flex:0.1
+    flex:0.15
     padding-left:${(props) => props.theme.space[4]};
 `;
 
 const Cancel = styled.Text`
     text-align:center;
     font-size: 18px;
-    padding:23px;
+    padding:20px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
@@ -55,7 +60,7 @@ const Cancel = styled.Text`
 const Pay = styled.Text`
     text-align:center;
     font-size: 18px;
-    padding:23px;
+    padding:20px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
@@ -103,7 +108,7 @@ export const OrderListScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeArea>
+        <Container>
             <MainText>Your Order List</MainText>
             {cal()}
             <ViewFlex>
@@ -141,6 +146,6 @@ export const OrderListScreen = ({ navigation }) => {
                     <Pay>Pay amount</Pay>
                 </TouchableOpacity>
             </View>
-        </SafeArea>
+        </Container>
     )
 }

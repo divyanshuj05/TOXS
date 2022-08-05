@@ -6,7 +6,7 @@ import { Soon } from "../../../../assets/images";
 
 const Wrapper = styled(View)`
     flex:1;
-    background-color:${(props) => props.theme.colors.bg.primary};
+    background-color:${(props) => props.theme.background};
     justify-content:center;
     align-items:center;
 `;
