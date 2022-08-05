@@ -17,7 +17,7 @@ const Wrapper = styled.View`
 `;
 
 const Add = styled.Text`
-text-align:center
+    text-align:center
     padding-horizontal:${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
     font-size: ${(props) => props.theme.fontSizes.h5};
@@ -61,16 +61,16 @@ export const AddFoodItems = ({ foodDetail }) => {
                 (
                     <Wrapper>
                         <Count>{subjectCount}</Count>
-                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1) }} >
+                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1, title) }} >
                             <Add>+</Add>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount - 1), cal(-price, -1) }}>
+                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount - 1), cal(-price, -1, title) }}>
                             <Subtract>-</Subtract>
                         </TouchableOpacity>
                     </Wrapper>
                 ) :
                 (
-                    <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1) }}>
+                    <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(price, 1, title) }}>
                         <AddButton>Add</AddButton>
                     </TouchableOpacity>
                 )

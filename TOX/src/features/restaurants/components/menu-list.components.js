@@ -88,10 +88,17 @@ export const MenuList = ({ data, navigation }) => {
             <BottomBar>
                 <ItemText>Items {items}</ItemText>
                 <CostText>Cost {cost}</CostText>
-                <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Payments")}>
-                    <Proceed>Proceed to pay</Proceed>
-                    <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
-                </TouchableOpacity>
+                {items === 0 ?
+                    (
+                        <></>
+                    ) :
+                    (
+                        <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("OrderList")}>
+                            <Proceed>Proceed to pay</Proceed>
+                            <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
+                        </TouchableOpacity>
+                    )
+                }
             </BottomBar>
         </>
     )

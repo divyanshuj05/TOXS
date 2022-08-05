@@ -18,14 +18,14 @@ export const RestaurantDetails = ({ route, navigation }) => {
 
     const { restaurent } = route.params;
 
-    const { destroy } = useContext(CartContext)
+    const { destroy, items } = useContext(CartContext)
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {
             block.preventDefault();
             Alert.alert(
                 "Discard cart?",
-                "All changes will be discarded",
+                "Any changes will be discarded",
                 [
                     {
                         text: "Yes",
@@ -37,6 +37,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
                     }
                 ]
             )
+
         })
     }, [navigation])
 
