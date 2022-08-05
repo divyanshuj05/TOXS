@@ -36,7 +36,7 @@ export const DropDownComponent = () => {
             valueField="value"
             labelField="label"
             renderLeftIcon={() => (
-                <AntDesign style={styles.icon} color="black" name="search1" size={23} />
+                <AntDesign style={styles.icon} color="white" name="search1" size={23} />
             )}
         />
     )
@@ -47,20 +47,22 @@ const styles = StyleSheet.create({
         margin: 16,
         height: 50,
         borderBottomColor: 'gray',
-        borderBottomWidth: 0.5
+        borderBottomWidth: 0.5,
     },
     icon: {
         marginRight: 16,
     },
     placeholderStyle: {
         fontSize: 16,
+        color: "white"
     },
     selectedTextStyle: {
         fontSize: 16,
+        color: "white"
     },
     iconStyle: {
         width: 20,
-        height: 20,
+        height: 20
     },
     inputSearchStyle: {
         height: 40,

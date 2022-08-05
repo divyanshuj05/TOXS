@@ -9,6 +9,7 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
 
     const RestaurantInfo = styled.View`
     padding: ${(props) => props.theme.space[3]}
+    background-color:${props => props.theme.colors.brand.basic};
     `;
 
     const Title = styled(Text)`

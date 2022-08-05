@@ -13,12 +13,13 @@ const Container = styled.SafeAreaView`
 
 const DropDownContainer = styled.View`
     padding: ${(props) => props.theme.space[3]};
+    background-color:${(props) => props.theme.colors.ui.basic};
 `;
 
 const CardContainer = styled.View`
     flex:1;
     padding: ${(props) => props.theme.space[3]};
-    background-color: ${(props) => props.theme.colors.brand.primary};
+    background-color: ${(props) => props.theme.colors.bg.primary};
 `;
 
 export const RestaurantScreen = ({ navigation }) => {

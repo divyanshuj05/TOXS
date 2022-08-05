@@ -30,7 +30,7 @@ const ViewFlex = styled.View`
 `;
 
 const TotalText = styled.Text`
-    color:rgb(56, 10, 100);
+    color:${(props) => props.theme.colors.ui.basic};
     font-size: 18px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};

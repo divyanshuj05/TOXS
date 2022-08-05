@@ -4,8 +4,10 @@ export const colors = {
         secondary: "#5282BD",
         tertiary: "#32BD32",
         muted: "#C6DAF7",
+        basic: "rgb(185,185,185)"
     },
     ui: {
+        basic: "rgb(56, 10, 100)",
         primary: "#363636",
         secondary: "#656565",
         tertiary: "#F1F1F1",

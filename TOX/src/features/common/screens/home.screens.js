@@ -3,13 +3,7 @@ import { StatusBar, FlatList, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
-
-const SafeArea = styled.SafeAreaView`
-    flex:1;
-    padding-top:${StatusBar.currentHeight}px;
-    background-color: ${(props) => props.theme.colors.bg.secondary}
-    
-`;
+import { SafeArea } from '../../../utils/components/safe-area.components';
 
 const Main_Logo = styled.Image`
     margin-top:${(props) => props.theme.space[5]};
@@ -28,7 +22,7 @@ const Facility_Logo = styled.Image`
 const App_Name = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
-    color:${(props) => props.theme.colors.text.primary};
+    color:${(props) => props.theme.colors.ui.basic};
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
@@ -51,7 +45,7 @@ const Facility_SubText = styled.Text`
 `;
 
 const ListWrapper = styled.View`
-    background-color: ${props => props.theme.colors.ui.primary};
+    background-color: ${(props) => props.theme.colors.ui.basic};
     margin-left:${(props) => props.theme.space[2]};
     margin-right:${(props) => props.theme.space[1]};
     margin-bottom:${(props) => props.theme.space[4]};
@@ -64,13 +58,13 @@ const flatlist_data = [
         icon: TPO_logo,
         text: "TPO",
         subText: "(Thapar Pre-Ordering)",
-        color: colors.brand.primary
+        color: colors.bg.primary
     },
     {
         icon: TLX_logo,
         text: "TLX",
         subText: "(Thapar Online Exchnage)",
-        color: colors.brand.tertiary
+        color: colors.bg.primary
     }
 ]
 

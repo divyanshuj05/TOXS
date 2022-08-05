@@ -21,16 +21,16 @@ const Add = styled.Text`
     padding-horizontal:${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
     font-size: ${(props) => props.theme.fontSizes.h5};
-    color:rgb(56, 10, 100);
-    border:2px solid rgb(56, 10, 100);
+    color:${(props) => props.theme.colors.ui.basic};
+    border:2px solid ${(props) => props.theme.colors.ui.basic};
     margin-right: ${(props) => props.theme.space[4]};
     border-radius:${(props) => props.theme.space[2]};
 `;
 
 const Subtract = styled.Text`
     text-align:center
-    color:rgb(56, 10, 100);
-    border:2px solid rgb(56, 10, 100);
+    color:${(props) => props.theme.colors.ui.basic};
+    border:2px solid ${(props) => props.theme.colors.ui.basic};
     padding-horizontal: ${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
     font-size: ${(props) => props.theme.fontSizes.h5};
@@ -38,8 +38,8 @@ const Subtract = styled.Text`
 `;
 
 const AddButton = styled(Text)`
-    color:rgb(56, 10, 100);
-    border:2px solid rgb(56, 10, 100);
+    color:${(props) => props.theme.colors.ui.basic};
+    border:2px solid ${(props) => props.theme.colors.ui.basic};
     text-align:center;
     padding-horizontal:${(props) => props.theme.space[2]};
     padding-vertical:${(props) => props.theme.space[1]};

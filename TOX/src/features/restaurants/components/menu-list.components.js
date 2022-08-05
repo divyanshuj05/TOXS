@@ -31,7 +31,7 @@ const ListPrice = styled(Text)`
 `;
 
 const BottomBar = styled(View)`
-    background-color:rgb(56, 10, 100);
+    background-color:${(props) => props.theme.colors.ui.basic};
     flex-direction:row
     padding: ${(props) => props.theme.space[3]};
     border-radius: ${(props) => props.theme.space[2]};
