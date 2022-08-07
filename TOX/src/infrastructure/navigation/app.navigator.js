@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavigationContainer, useNavigationState, useRoute } from "@react-navigation/native";
+import { useNavigationState, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
@@ -38,7 +38,6 @@ export const AppNavigator = () => {
   const { scheme } = useContext(AppThemeContext)
 
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
@@ -67,6 +66,5 @@ export const AppNavigator = () => {
         <Tab.Screen name="Contact" component={Contact} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }

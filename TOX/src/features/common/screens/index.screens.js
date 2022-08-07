@@ -7,6 +7,7 @@ import { RestaurantContextProvider } from "../../../services/restaurant/restaura
 import { CartContextProvider } from "../../../services/restaurant/cart.context";
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { AuthenticationContextProvider } from "../../../services/authentication/authentication.context";
 
 export const Index = () => {
 
@@ -14,12 +15,14 @@ export const Index = () => {
 
     return (
         <ThemeProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
+          <AuthenticationContextProvider>
             <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
             <RestaurantContextProvider>
                 <CartContextProvider>
                     <Navigation />
                 </CartContextProvider>
             </RestaurantContextProvider>
+          </AuthenticationContextProvider>
         </ThemeProvider>
     )
 }
