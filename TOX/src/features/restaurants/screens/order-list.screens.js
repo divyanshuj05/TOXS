@@ -113,7 +113,7 @@ export const OrderListScreen = ({ navigation }) => {
             {cal()}
             <ViewFlex>
                 <View style={{ flex: 0.5 }}>
-                    <ListText>Name</ListText>
+                    <ListText>Name of {"\n"}item</ListText>
                 </View>
                 <View style={{ flex: 0.2 }}>
                     <ListText>No of Items</ListText>

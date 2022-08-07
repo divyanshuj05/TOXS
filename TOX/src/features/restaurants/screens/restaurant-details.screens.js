@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
@@ -22,18 +22,16 @@ export const RestaurantDetails = ({ route, navigation }) => {
 
     const { restaurent } = route.params;
 
-    const { destroy, items } = useContext(CartContext)
-
-    const [showAlert, setShowAlert] = useState(false);
+    const { destroy } = useContext(CartContext)
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {
             block.preventDefault();
-            setShowAlert(true);
             Alert.alert(
                 "Discard cart?",
                 "Any changes will be discarded",
                 [
+
                     {
                         text: "Yes",
                         onPress: () => { navigation.dispatch(block.data.action), destroy() }
