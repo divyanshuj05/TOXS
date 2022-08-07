@@ -140,7 +140,7 @@ export const OrderListScreen = ({ navigation }) => {
             </Total>
             <View style={{ flex: 0.15, flexDirection: "row" }}>
                 <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
-                    <Cancel>Cancel</Cancel>
+                    <Cancel>Go Back</Cancel>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
                     <Pay>Pay amount</Pay>

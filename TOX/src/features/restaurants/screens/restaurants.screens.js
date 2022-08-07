@@ -28,7 +28,6 @@ export const RestaurantScreen = ({ navigation }) => {
 
     return (
         <Container>
-            <StatusBar backgroundColor="white" />
             <DropDownContainer>
                 <DropDownComponent />
             </DropDownContainer>

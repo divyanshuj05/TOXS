@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StatusBar, FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
@@ -87,7 +87,6 @@ export const HomeScreen = ({ navigation }) => {
 
     return (
         <>
-            <StatusBar backgroundColor="#FFF" />
             <SafeArea>
                 <Container>
                     <ThemeIcon>
