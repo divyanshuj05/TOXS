@@ -4,7 +4,7 @@ import { useFonts as OswaldFont, Oswald_400Regular } from '@expo-google-fonts/os
 import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
 import { AppThemeContextProvider } from "./src/services/common/theme.context";
 import { Index } from "./src/features/common/screens/index.screens";
-import * as firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
@@ -17,13 +17,11 @@ const firebaseConfig = {
   appId: "1:880326269749:web:9ae25f529b4c22bd9e0a7c",
   measurementId: "G-B1QTDC9JPC"
 };
-let app;
 
-if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig)
-} else {
-  app = firebase.app();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
+
 export default function App() {
 
 
