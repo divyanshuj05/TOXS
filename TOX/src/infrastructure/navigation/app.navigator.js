@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { HomeNavigator } from "./home.navigator.js";
 import { AppThemeContext } from "../../services/common/theme.context.js";
 import { AccountNavigator } from "./account.navigator.js";
+import { SettingsNavigator } from "./settings.navigator";
 import { SafeArea } from "../../components/utility/safe-area.component";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
 const Tab = createBottomTabNavigator();
@@ -36,15 +37,7 @@ const About = () => {
   )
 }
 
-const Logout = () => {
-  const { onLogout } = useContext(AuthenticationContext)
-  return (
-    <SafeArea>
 
-      <Button title="logout" onPress={() => onLogout()} />
-    </SafeArea>
-  )
-}
 
 export const AppNavigator = () => {
 
@@ -64,8 +57,8 @@ export const AppNavigator = () => {
               return <AntDesign name="customerservice" size={size} color={color} />
             } else if (route.name === "About") {
               iconName = "information-circle-outline"
-            } else if (route.name === "Logout") {
-              iconName = "log-out-outline"
+            } else if (route.name === "Settings") {
+              iconName = "settings-outline"
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -80,7 +73,7 @@ export const AppNavigator = () => {
         <Tab.Screen name="Contact" component={Contact} />
         <Tab.Screen name="About" component={About} />
         <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Logout" component={Logout} />
+        <Tab.Screen name="Settings" component={SettingsNavigator} />
       </Tab.Navigator>
   );
 }
