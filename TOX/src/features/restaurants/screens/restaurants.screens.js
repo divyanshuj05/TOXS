@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { TouchableOpacity, StatusBar, FlatList, View } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
+import { FadeInView } from "../../../components/animations/fade.animation";
 import { DropDownComponent } from "../components/dropdown.components.js";
 import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
 import { ActivityIndicator, Colors } from "react-native-paper";
@@ -58,7 +59,9 @@ export const RestaurantScreen = ({ navigation }) => {
                             data={restaurants}
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
-                                    <RestaurantInfoCard restaurantName={item.Name} />
+                                    <FadeInView>
+                                        <RestaurantInfoCard restaurantName={item.Name} />
+                                    </FadeInView>
                                 </TouchableOpacity>}
                             keyExtractor={(item) => item.Name}
                         />
