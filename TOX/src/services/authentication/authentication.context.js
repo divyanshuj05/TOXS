@@ -37,7 +37,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     firebase.auth().signOut();
   };
 
-  const onRegister = (email, password, repeatedPassword) => {
+  const onRegister = (userName, email, password, repeatedPassword) => {
     setIsLoading(true);
 
     if (password !== repeatedPassword) {

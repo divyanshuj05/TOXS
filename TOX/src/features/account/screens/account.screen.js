@@ -1,5 +1,6 @@
 import React from "react";
 import LottieView from "lottie-react-native";
+import { SafeArea } from "../../../components/utility/safe-area.component";
 
 import { Spacer } from "../../../components/spacer/spacer.component";
 import {
@@ -13,6 +14,7 @@ import {
 
 export const AccountScreen = ({ navigation }) => {
   return (
+      <SafeArea>
     <AccountBackground>
       <AccountCover />
       <AnimationWrapper>
@@ -44,5 +46,6 @@ export const AccountScreen = ({ navigation }) => {
         </Spacer>
       </AccountContainer>
     </AccountBackground>
+        </SafeArea>
   );
 };
