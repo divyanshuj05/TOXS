@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import React from "react";
 import { useFonts as OswaldFont, Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
 import { AppThemeContextProvider } from "./src/services/common/theme.context";
@@ -38,10 +37,8 @@ export default function App() {
   return (
     <>
       <AppThemeContextProvider>
-
-            <Index />
+        <Index />
       </AppThemeContextProvider>
-      <ExpoStatusBar style="auto" />
     </>
   );
 }

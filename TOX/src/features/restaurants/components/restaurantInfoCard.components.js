@@ -4,11 +4,12 @@ import { Card } from 'react-native-paper';
 import styled from 'styled-components/native';
 import open from '../../../../assets/open';
 import { SvgXml } from 'react-native-svg';
+import { Favourite } from './favourite.components';
 
 export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
 
     const RestaurantInfo = styled.View`
-    padding: ${(props) => props.theme.space[3]}
+    padding: ${(props) => props.theme.space[2]}
     background-color:${props => props.theme.colors.brand.basic};
     `;
 
@@ -55,10 +56,14 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
         address = "9th Street"
     } = restaurant;
 
+
     return (
         <CardContainer>
             <Card elevation={5}>
-                <Card.Cover key={name} source={{ uri: icon[0] }} />
+                <View>
+                    <Favourite restaurant={restaurantName} />
+                    <Card.Cover key={name} source={{ uri: icon[0] }} style={{ height: 160 }} />
+                </View>
                 <RestaurantInfo>
                     <Title>{restaurantName}</Title>
                     <Section>

@@ -5,6 +5,8 @@ import styled from "styled-components/native";
 import { DropDownComponent } from "../components/dropdown.components.js";
 import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { FavouritesContext } from "../../../services/restaurant/favourites.context.js";
+import { FavBar } from "../components/favouritesBar.components.js";
 
 const Container = styled.SafeAreaView`
     flex:1;
@@ -22,15 +24,28 @@ const CardContainer = styled.View`
     background-color: ${(props) => props.theme.background};
 `;
 
+const FavWrap = styled.View`
+    flex:0.3;
+    background-color: ${(props) => props.theme.background};
+    padding: ${(props) => props.theme.space[3]};
+`;
+
 export const RestaurantScreen = ({ navigation }) => {
 
     const { restaurants, isLoading } = useContext(RestaurantContext);
+
+    const { favourites } = useContext(FavouritesContext)
 
     return (
         <Container>
             <DropDownContainer>
                 <DropDownComponent />
             </DropDownContainer>
+            {favourites.length === 0 ?
+                (<></>) : (<FavWrap>
+                    <FavBar favourites={favourites} navigation={navigation} />
+                </FavWrap>)
+            }
             <CardContainer>
                 {isLoading ?
                     (

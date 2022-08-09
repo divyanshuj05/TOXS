@@ -1,17 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FlatList, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
 import { SafeArea } from '../../../utils/components/safe-area.components';
-import { Ionicons } from '@expo/vector-icons';
-import { AppThemeContext } from '../../../services/common/theme.context';
-
-const ThemeIcon = styled.View`
-    align-items:flex-end;
-    padding-top:${(props) => props.theme.space[3]};
-    padding-right:${(props) => props.theme.space[2]};
-`;
 
 const Container = styled.View`
     background-color:${(props) => props.theme.background}
@@ -19,7 +11,7 @@ const Container = styled.View`
 `;
 
 const Main_Logo = styled.Image`
-    margin-top:${(props) => props.theme.space[4]};
+    margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
     `;
@@ -83,26 +75,10 @@ const flatlist_data = [
 
 export const HomeScreen = ({ navigation }) => {
 
-    const { setScheme, scheme } = useContext(AppThemeContext);
-
     return (
         <>
             <SafeArea>
                 <Container>
-                    <ThemeIcon>
-                        {scheme === 'light' ?
-                            (
-                                <TouchableOpacity onPress={() => { setScheme('dark') }}>
-                                    <Ionicons name="bulb" size={26} color="black" />
-                                </TouchableOpacity>
-                            ) :
-                            (
-                                <TouchableOpacity onPress={() => { setScheme('light') }}>
-                                    <Ionicons name="bulb-outline" size={26} color="white" />
-                                </TouchableOpacity>
-                            )
-                        }
-                    </ThemeIcon>
                     <Main_Logo source={logo} />
                     <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
                     <FlatList
