@@ -12,9 +12,7 @@ const FavouriteButton = styled(TouchableOpacity)`
 `;
 
 export const Favourite = ({ restaurant }) => {
-    const { favourites, addFavoutites, removeFavorites } = useContext(
-        FavouritesContext
-    );
+    const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext);
 
     const [count, setCount] = useState(true)
 

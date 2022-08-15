@@ -11,8 +11,8 @@ import {
   ErrorContainer,
   Title,
 } from "../components/account.styles";
-import { Text } from "../../../components/typography/text.component";
-import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../common/components/typography/text.component";
+import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 export const RegisterScreen = ({ navigation }) => {
@@ -34,16 +34,16 @@ export const RegisterScreen = ({ navigation }) => {
           autoCapitalize="words"
           onChangeText={(u) => setUserName(u)}
         />
-       <Spacer size="large">
-        <AuthInput
-          label="E-mail"
-          value={email}
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onChangeText={(u) => setEmail(u)}
-        />
-       </Spacer>
+        <Spacer size="large">
+          <AuthInput
+            label="E-mail"
+            value={email}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onChangeText={(u) => setEmail(u)}
+          />
+        </Spacer>
         <Spacer size="large">
           <AuthInput
             label="Password"

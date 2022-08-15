@@ -19,6 +19,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       setIsLoading(false);
     }
   });
+
   const onLogin = (email, password) => {
     setIsLoading(true);
     loginRequest(email, password)
@@ -35,6 +36,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const onLogout = () => {
     setUser(null);
     firebase.auth().signOut();
+    console.log(!!user)
   };
 
   const onRegister = (userName, email, password, repeatedPassword) => {

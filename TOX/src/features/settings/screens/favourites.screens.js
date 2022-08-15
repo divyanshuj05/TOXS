@@ -38,7 +38,7 @@ export const FavSettingsScreen = ({ navigation }) => {
                 {favourites.map((restaurant) => {
                     const key = restaurant;
                     return (
-                        <Wrapper onPress={() => {
+                        <Wrapper key={key} onPress={() => {
                             navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
                         }}>
                             <RestaurantInfoCard restaurantName={restaurant} />

@@ -2,13 +2,12 @@ import React, { useContext } from "react";
 import { TouchableOpacity, StatusBar, FlatList, View } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
-import { FadeInView } from "../../../components/animations/fade.animation";
+import { FadeInView } from "../../common/components/animations/fade.animation"
 import { DropDownComponent } from "../components/dropdown.components.js";
 import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { FavouritesContext } from "../../../services/restaurant/favourites.context.js";
 import { FavBar } from "../components/favouritesBar.components.js";
-import { RestaurantList } from "../components/restaurant-list.styles.js";
 const Container = styled.SafeAreaView`
     flex:1;
     margin-top: ${StatusBar.currentHeight}px;

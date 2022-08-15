@@ -35,7 +35,7 @@ export const FavBar = ({ favourites, navigation }) => {
                 {favourites.map((restaurant) => {
                     const key = restaurant;
                     return (
-                        <Wrapper onPress={() => {
+                        <Wrapper key={key} onPress={() => {
                             navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
                         }}>
                             <Img source={{ uri: icon }} />

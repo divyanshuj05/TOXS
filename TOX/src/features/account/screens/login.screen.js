@@ -10,8 +10,8 @@ import {
   ErrorContainer,
   Title,
 } from "../components/account.styles";
-import { Text } from "../../../components/typography/text.component";
-import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../common/components/typography/text.component";
+import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 export const LoginScreen = ({ navigation }) => {
