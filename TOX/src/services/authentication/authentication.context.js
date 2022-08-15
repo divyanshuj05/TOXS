@@ -11,9 +11,9 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setUser(user);
+  firebase.auth().onAuthStateChanged((u) => {
+    if (u) {
+      setUser(u);
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -34,9 +34,10 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    setUser(null);
     firebase.auth().signOut();
-    console.log(!!user)
+    setTimeout(() => {
+      setUser(null);
+    }, 800)
   };
 
   const onRegister = (userName, email, password, repeatedPassword) => {

@@ -6,7 +6,7 @@ import open from '../../../../assets/open';
 import { SvgXml } from 'react-native-svg';
 import { Favourite } from './favourite.components';
 
-export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
+export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites, add, remove }) => {
 
     const RestaurantInfo = styled.View`
     padding: ${(props) => props.theme.space[2]}
@@ -61,7 +61,7 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName }) => {
         <CardContainer>
             <Card elevation={5}>
                 <View>
-                    <Favourite restaurant={restaurantName} />
+                    <Favourite restaurant={restaurantName} favourites={favourites} add={add} remove={remove} />
                     <Card.Cover key={name} source={{ uri: icon[0] }} style={{ height: 160 }} />
                 </View>
                 <RestaurantInfo>

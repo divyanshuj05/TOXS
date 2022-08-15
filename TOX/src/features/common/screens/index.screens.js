@@ -5,7 +5,6 @@ import { theme as darkTheme } from "../../../infrastructure/theme/index(dark)";
 import { Navigation } from "../../../infrastructure/navigation";
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import { AuthenticationContextProvider } from "../../../services/authentication/authentication.context";
 
 export const Index = () => {
 
@@ -13,10 +12,8 @@ export const Index = () => {
 
   return (
     <ThemeProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
-      <AuthenticationContextProvider>
-        <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
-        <Navigation />
-      </AuthenticationContextProvider>
+      <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
+      <Navigation />
     </ThemeProvider>
   )
 }

@@ -25,7 +25,7 @@ const TextContainer = styled.Text`
 
 export const FavSettingsScreen = ({ navigation }) => {
 
-    const { favourites } = useContext(FavouritesContext);
+    const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext);
 
     if (!favourites.length) {
         return (<Container><TextContainer>No favourites!!</TextContainer></Container>)
@@ -41,7 +41,7 @@ export const FavSettingsScreen = ({ navigation }) => {
                         <Wrapper key={key} onPress={() => {
                             navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
                         }}>
-                            <RestaurantInfoCard restaurantName={restaurant} />
+                            <RestaurantInfoCard restaurantName={restaurant} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                         </Wrapper>
                     );
                 })}

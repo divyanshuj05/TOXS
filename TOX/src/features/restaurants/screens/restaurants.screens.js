@@ -34,7 +34,7 @@ export const RestaurantScreen = ({ navigation }) => {
 
     const { restaurants, isLoading } = useContext(RestaurantContext);
 
-    const { favourites } = useContext(FavouritesContext)
+    const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext)
 
     return (
         <Container>
@@ -59,7 +59,7 @@ export const RestaurantScreen = ({ navigation }) => {
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
                                     <FadeInView>
-                                        <RestaurantInfoCard restaurantName={item.Name} />
+                                        <RestaurantInfoCard restaurantName={item.Name} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                                     </FadeInView>
                                 </TouchableOpacity>}
                             keyExtractor={(item) => item.Name}

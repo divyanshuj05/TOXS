@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { FavouritesContext } from '../../../services/restaurant/favourites.context';
 import { AntDesign } from "@expo/vector-icons";
 import styled from 'styled-components';
 
@@ -11,8 +10,7 @@ const FavouriteButton = styled(TouchableOpacity)`
   z-index: 9;
 `;
 
-export const Favourite = ({ restaurant }) => {
-    const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext);
+export const Favourite = ({ restaurant, favourites, add, remove }) => {
 
     const [count, setCount] = useState(true)
 
@@ -30,8 +28,8 @@ export const Favourite = ({ restaurant }) => {
         <FavouriteButton
             onPress={() =>
                 !isFavourite
-                    ? (addFavoutites(restaurant), setCount(!count))
-                    : (removeFavorites(restaurant), setCount(!count))
+                    ? (add(restaurant), setCount(!count))
+                    : (remove(restaurant), setCount(!count))
             }
         >
             <AntDesign
