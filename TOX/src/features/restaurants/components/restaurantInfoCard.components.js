@@ -56,7 +56,6 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
         address = "9th Street"
     } = restaurant;
 
-
     return (
         <CardContainer>
             <Card elevation={5}>
