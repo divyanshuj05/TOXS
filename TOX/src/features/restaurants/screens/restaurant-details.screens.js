@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";

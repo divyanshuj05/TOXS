@@ -13,14 +13,15 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setUser(user);
+  firebase.auth().onAuthStateChanged((u) => {
+    if (u) {
+      setUser(u);
       setIsLoading(false);
     } else {
       setIsLoading(false);
     }
   });
+
   const onLogin = (email, password) => {
 
     setIsLoading(true);
@@ -36,8 +37,10 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    setUser(null);
     firebase.auth().signOut();
+    setTimeout(() => {
+      setUser(null);
+    }, 800)
   };
 /*function for fetching user data from users database*/
 

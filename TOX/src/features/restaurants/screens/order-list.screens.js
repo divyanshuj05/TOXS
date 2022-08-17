@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, View, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity } from "react-native"
 import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
 

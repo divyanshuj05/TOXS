@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components/native";
 import { List, Avatar } from "react-native-paper";
-import { Text } from "../../../components/typography/text.component";
-import { Spacer } from "../../../components/spacer/spacer.component";
-import { SafeArea } from "../../../components/utility/safe-area.component";
+import { Text } from "../../common/components/typography/text.component";
+import { Spacer } from "../../common/components/spacer/spacer.component";
+import { SafeArea } from "../../../utils/components/safe-area.components";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { AppThemeContext } from "../../../services/common/theme.context";
 

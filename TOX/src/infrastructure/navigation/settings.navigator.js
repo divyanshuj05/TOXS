@@ -9,15 +9,14 @@ const SettingsStack = createStackNavigator();
 export const SettingsNavigator = ({ route, navigation }) => {
   return (
     <SettingsStack.Navigator
-      headerMode="screen"
       screenOptions={{
         headerShown: false,
         ...TransitionPresets.ModalPresentationIOS
       }}
     >
       <SettingsStack.Screen
-        options={{
-          header: () => null,
+        screenOptions={{
+          headerShown: false,
         }}
         name="SettingsHome"
         component={SettingsScreen}
