@@ -18,6 +18,7 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 export const RegisterScreen = ({ navigation }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [MobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const { onRegister, isLoading, error } = useContext(AuthenticationContext);
@@ -42,6 +43,16 @@ export const RegisterScreen = ({ navigation }) => {
           keyboardType="email-address"
           autoCapitalize="none"
           onChangeText={(u) => setEmail(u)}
+        />
+       </Spacer>
+       <Spacer size="large">
+        <AuthInput
+          label="Mobile-No"
+          value={MobileNo}
+          textContentType="telephoneNumber"
+          keyboardType="phone-pad"
+          autoCapitalize="none"
+          onChangeText={(u) => setMobileNo(u)}
         />
        </Spacer>
         <Spacer size="large">
@@ -74,7 +85,7 @@ export const RegisterScreen = ({ navigation }) => {
             <AuthButton
               icon="food"
               mode="contained"
-              onPress={() => onRegister(userName, email, password, repeatedPassword)}
+              onPress={() => onRegister(userName, email, MobileNo, password, repeatedPassword)}
             >
               Register
             </AuthButton>

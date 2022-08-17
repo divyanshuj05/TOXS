@@ -6,6 +6,7 @@ import { Index } from "./src/features/common/screens/index.screens";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyArsU76qtBJjgJ-GZXTQ9Bc5amkeHYx4Vw",
@@ -20,6 +21,9 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+const app = firebase.initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
 
 export default function App() {
 

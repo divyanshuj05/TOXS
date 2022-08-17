@@ -1,8 +1,10 @@
 import React, { useState, createContext } from "react";
+import { loginRequest } from "./authentication.service";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { loginRequest } from "./authentication.service";
+import { collection, doc, setDoc, addDoc, updateDoc, deleteDoc, getDoc, getDocs, where, query } from "firebase/firestore";
+import { db } from '../../../App';
 
 export const AuthenticationContext = createContext();
 
@@ -20,6 +22,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   });
   const onLogin = (email, password) => {
+
     setIsLoading(true);
     loginRequest(email, password)
       .then((u) => {
@@ -36,14 +39,30 @@ export const AuthenticationContextProvider = ({ children }) => {
     setUser(null);
     firebase.auth().signOut();
   };
+/*function for fetching user data from users database*/
 
-  const onRegister = (userName, email, password, repeatedPassword) => {
+/*    getDocs(collection(db, "users")).then(docSnap => {
+    let users = [];
+    docSnap.forEach((doc)=> {
+        users.push({ ...doc.data(), id:doc.id })
+    });
+        console.log("Document data:", users);
+    });*/
+
+  const onRegister = (userName, email, MobileNo, password, repeatedPassword) => {
+
+    addDoc(collection(db, "users"),{
+    userName: userName,
+    MobileNo: MobileNo,
+    })
+
     setIsLoading(true);
 
     if (password !== repeatedPassword) {
       setError("Error: Passwords do not match");
       return;
     }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
