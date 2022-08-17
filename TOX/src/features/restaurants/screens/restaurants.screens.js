@@ -1,39 +1,74 @@
-import React from "react";
-import { SafeAreaView, StatusBar, Text, View, FlatList } from "react-native";
-import { Searchbar } from "react-native-paper";
+import React, { useContext } from "react";
+import { TouchableOpacity, StatusBar, FlatList, View } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
-
+import { FadeInView } from "../../common/components/animations/fade.animation"
+import { DropDownComponent } from "../components/dropdown.components.js";
+import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { FavouritesContext } from "../../../services/restaurant/favourites.context.js";
+import { FavBar } from "../components/favouritesBar.components.js";
 const Container = styled.SafeAreaView`
     flex:1;
     margin-top: ${StatusBar.currentHeight}px;
 `;
 
-const SearchContainer = styled.View`
+const DropDownContainer = styled.View`
     padding: ${(props) => props.theme.space[3]};
-    background-color: ${(props) => props.theme.colors.ui.primary};
+    background-color:${(props) => props.theme.colors.ui.basic};
 `;
 
 const CardContainer = styled.View`
     flex:1;
     padding: ${(props) => props.theme.space[3]};
-    background-color: ${(props) => props.theme.colors.brand.primary};
+    background-color: ${(props) => props.theme.background};
 `;
 
-export const RestaurantScreen = () => {
+const FavWrap = styled.View`
+    flex:0.3;
+    background-color: ${(props) => props.theme.background};
+    padding: ${(props) => props.theme.space[3]};
+`;
+
+export const RestaurantScreen = ({ navigation }) => {
+
+    const { restaurants, isLoading } = useContext(RestaurantContext);
+
+    const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext)
+
     return (
         <Container>
-            <StatusBar backgroundColor="white" />
-            <SearchContainer>
-                <Searchbar placeholder="Search" />
-            </SearchContainer>
+            <DropDownContainer>
+                <DropDownComponent />
+            </DropDownContainer>
+            {favourites.length === 0 ?
+                (<></>) : (<FavWrap>
+                    <FavBar favourites={favourites} navigation={navigation} />
+                </FavWrap>)
+            }
             <CardContainer>
-                <FlatList
-                    data={[{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }, { name: 6 }]}
-                    renderItem={() => <RestaurantInfoCard />}
-                    keyExtractor={(item) => item.name}
-                />
+                {isLoading ?
+                    (
+                        <View>
+                            <ActivityIndicator color={Colors.red400} size={50} />
+                        </View>
+                    ) :
+                    (
+                        <FlatList
+                            data={restaurants}
+                            renderItem={({ item }) =>
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
+                                    <FadeInView>
+                                        <RestaurantInfoCard restaurantName={item.Name} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
+                                    </FadeInView>
+                                </TouchableOpacity>}
+                            keyExtractor={(item) => item.Name}
+                        />
+                    )
+                }
+
             </CardContainer>
         </Container>
     );
 };
+

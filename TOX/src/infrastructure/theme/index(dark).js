@@ -10,5 +10,7 @@ export const theme = {
     fontSizes,
     sizes,
     lineHeights,
-    space
-}
+    space,
+    background: "#191919",
+    text: "#fff",
+} 

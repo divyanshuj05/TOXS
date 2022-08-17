@@ -1,22 +1,17 @@
 import React from 'react';
-import { StatusBar, FlatList, TouchableWithoutFeedback } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { logo, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
-import { RestaurantScreen } from '../../restaurants/screens/restaurants.screens';
-import { NavigationContainer } from '@react-navigation/native';
-/*import { createNativeStackNavigator } from '@react-navigation/native-stack';*/
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
+import { SafeArea } from '../../../utils/components/safe-area.components';
 
-const SafeArea = styled.SafeAreaView`
-    background-color: ${(props) => props.theme.colors.bg.secondary}
+const Container = styled.View`
+    background-color:${(props) => props.theme.background}
     flex:1;
-    paddding-top:${StatusBar.currentHeight}px;
 `;
 
 const Main_Logo = styled.Image`
-    margin-top:${(props) => props.theme.space[3]};
+    margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
     `;
@@ -32,7 +27,7 @@ const Facility_Logo = styled.Image`
 const App_Name = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
-    color:${(props) => props.theme.colors.text.primary};
+    color:${(props) => props.theme.text};
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
@@ -55,7 +50,7 @@ const Facility_SubText = styled.Text`
 `;
 
 const ListWrapper = styled.View`
-    background-color: ${props => props.theme.colors.ui.primary};
+    background-color: ${(props) => props.theme.colors.ui.basic};
     margin-left:${(props) => props.theme.space[2]};
     margin-right:${(props) => props.theme.space[1]};
     margin-bottom:${(props) => props.theme.space[4]};
@@ -68,44 +63,55 @@ const flatlist_data = [
         icon: TPO_logo,
         text: "TPO",
         subText: "(Thapar Pre-Ordering)",
-        color: colors.brand.primary
+        color: colors.bg.primary
     },
     {
         icon: TLX_logo,
         text: "TLX",
         subText: "(Thapar Online Exchnage)",
-        color: colors.brand.tertiary
+        color: colors.bg.primary
     }
 ]
 
-export const HomeScreen = () => {
-
-    const serviceHandler = (text) => {
-        if (text === "TPO") {
-            alert(text)
-        }
-        else {
-            alert(text)
-        }
-    }
+export const HomeScreen = ({ navigation }) => {
 
     return (
-        <SafeArea>
-            <Main_Logo source={logo} />
-            <App_Name>Thapar Pre-Ordering and Exchnage Service</App_Name>
-            <FlatList
-                data={flatlist_data}
-                horizontal={true}
-                renderItem={({ item }) =>
-                    <TouchableWithoutFeedback onPress={() => serviceHandler(item.text)}>
-                        <ListWrapper>
-                            <Facility_Logo source={item.icon} />
-                            <Facility_Text color={item.color}>{item.text}</Facility_Text>
-                            <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
-                        </ListWrapper>
-                    </TouchableWithoutFeedback>}
-                keyExtractor={(item) => item.text}
-            />
-        </SafeArea>
+        <>
+            <SafeArea>
+                <Container>
+                    <Main_Logo source={logo} />
+                    <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
+                    <FlatList
+                        data={flatlist_data}
+                        horizontal={true}
+                        renderItem={({ item, index }) => {
+                            if (index === 0) {
+                                return (
+                                    <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                        <ListWrapper>
+                                            <Facility_Logo source={item.icon} />
+                                            <Facility_Text color={item.color}>{item.text}</Facility_Text>
+                                            <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
+                                        </ListWrapper>
+                                    </TouchableOpacity >
+                                )
+                            }
+                            else {
+                                return (
+                                    <TouchableOpacity onPress={() => navigation.navigate("Exchnage")}>
+                                        <ListWrapper>
+                                            <Facility_Logo source={item.icon} />
+                                            <Facility_Text color={item.color}>{item.text}</Facility_Text>
+                                            <Facility_SubText color={item.color}>{item.subText}</Facility_SubText>
+                                        </ListWrapper>
+                                    </TouchableOpacity >
+                                )
+                            }
+                        }}
+                        keyExtractor={(item) => item.text}
+                    />
+                </Container>
+            </SafeArea>
+        </>
     )
 }
