@@ -5,6 +5,7 @@ import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AccountBackground, AccountContainer, AccountCover, AuthButton, Title, AnimationWrapper, } from "../components/account.styles";
 
 export const AccountScreen = ({ navigation }) => {
+
   return (
     <SafeArea>
       <AccountBackground>

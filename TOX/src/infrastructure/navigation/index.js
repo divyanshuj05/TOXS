@@ -3,13 +3,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import { AppNavigator } from "./app.navigator";
 import { AccountNavigator } from "./account.navigator";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { View, Text } from "react-native"
 
 export const Navigation = () => {
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { isAuthenticated, isLogging } = useContext(AuthenticationContext);
+
+  if (isLogging) {
+    return (
+      <View style={{ justifyContent: "center", flex: 1 }}>
+        <ActivityIndicator color={Colors.blue300} size={50} />
+      </View>
+    )
+  }
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <AppNavigator /> : <AccountNavigator />}
+      {isAuthenticated ? (<AppNavigator />) : (<AccountNavigator />)}
     </NavigationContainer>
   );
 };

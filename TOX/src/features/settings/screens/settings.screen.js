@@ -33,7 +33,7 @@ export const SettingsScreen = ({ navigation }) => {
         <AvatarContainer>
           <Avatar.Icon size={180} icon="food" backgroundColor="purple" />
           <Spacer position="top" size="large">
-            <Text variant="label" style={{ color: scheme == "light" ? "black" : "white" }}>{user.email}</Text>
+            <Text variant="label" style={{ color: scheme == "light" ? "black" : "white" }}>{user.userName}</Text>
           </Spacer>
         </AvatarContainer>
 

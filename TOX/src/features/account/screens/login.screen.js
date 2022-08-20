@@ -15,21 +15,21 @@ import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 export const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { onLogin, error, isLoading } = useContext(AuthenticationContext);
+  const { onLogin, error, isLoading, setError } = useContext(AuthenticationContext);
   return (
     <AccountBackground>
       <AccountCover />
       <Title>TOXs</Title>
       <AccountContainer>
         <AuthInput
-          label="E-mail"
-          value={email}
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onChangeText={(u) => setEmail(u)}
+          label="User Name"
+          value={userName}
+          textContentType="username"
+          keyboardType="default"
+          autoCapitalize="words"
+          onChangeText={(u) => setUserName(u)}
         />
         <Spacer size="large">
           <AuthInput
@@ -51,7 +51,7 @@ export const LoginScreen = ({ navigation }) => {
             <AuthButton
               icon="food"
               mode="contained"
-              onPress={() => onLogin(email, password)}
+              onPress={() => { setError(null), onLogin(userName, password) }}
             >
               Login
             </AuthButton>
@@ -61,7 +61,7 @@ export const LoginScreen = ({ navigation }) => {
         </Spacer>
       </AccountContainer>
       <Spacer size="large">
-        <AuthButton mode="contained" onPress={() => navigation.goBack()}>
+        <AuthButton mode="contained" onPress={() => { setError(null), navigation.goBack() }}>
           Back
         </AuthButton>
       </Spacer>

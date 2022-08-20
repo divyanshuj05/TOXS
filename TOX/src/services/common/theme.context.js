@@ -32,13 +32,13 @@ export const AppThemeContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            loadScheme(user.uid);
+            loadScheme(user.id);
         }
     }, [user]);
 
     useEffect(() => {
         if (user) {
-            saveScheme(scheme, user.uid);
+            saveScheme(scheme, user.id);
         }
     }, [scheme, user]);
 

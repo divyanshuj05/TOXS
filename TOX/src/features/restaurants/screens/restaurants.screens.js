@@ -41,7 +41,7 @@ export const RestaurantScreen = ({ navigation }) => {
             <DropDownContainer>
                 <DropDownComponent />
             </DropDownContainer>
-            {favourites.length === 0 ?
+            {favourites.length === 0 || favourites.length === null ?
                 (<></>) : (<FavWrap>
                     <FavBar favourites={favourites} navigation={navigation} />
                 </FavWrap>)
