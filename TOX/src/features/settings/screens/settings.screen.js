@@ -31,7 +31,7 @@ export const SettingsScreen = ({ navigation }) => {
     <SafeArea>
       <Container>
         <AvatarContainer>
-          <Avatar.Icon size={180} icon="food" backgroundColor="purple" />
+          <Avatar.Icon size={180} icon="account" backgroundColor="purple" />
           <Spacer position="top" size="large">
             <Text variant="label" style={{ color: scheme == "light" ? "black" : "white" }}>{user.userName}</Text>
           </Spacer>

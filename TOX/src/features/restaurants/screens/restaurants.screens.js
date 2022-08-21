@@ -27,7 +27,7 @@ const CardContainer = styled.View`
 const FavWrap = styled.View`
     flex:0.3;
     background-color: ${(props) => props.theme.background};
-    padding: ${(props) => props.theme.space[3]};
+    padding: ${(props) => props.theme.space[1]};
 `;
 
 export const RestaurantScreen = ({ navigation }) => {

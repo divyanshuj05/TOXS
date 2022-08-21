@@ -10,6 +10,7 @@ import { FavouritesContextProvider } from "../../services/restaurant/favourites.
 import { CartContextProvider } from "../../services/restaurant/cart.context.js";
 import { RestaurantContextProvider } from "../../services/restaurant/restaurant-block.context.js";
 import { SafeArea } from "../../utils/components/safe-area.components.js";
+import { ProfileScreen } from "../../features/common/screens/profile.screens.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,16 +38,6 @@ export const AppNavigator = () => {
     )
   }
 
-  const Profile = () => {
-    return (
-      <SafeArea>
-        <View style={{ flex: 1, backgroundColor: scheme == "light" ? "white" : "black" }}>
-          <Text style={{ color: scheme == "light" ? "black" : "white" }}>Profile section!!!</Text>
-        </View>
-      </SafeArea>
-    )
-  }
-
   return (
     <FavouritesContextProvider>
       <RestaurantContextProvider>
@@ -59,7 +50,7 @@ export const AppNavigator = () => {
                 if (route.name === 'Home') {
                   iconName = "home-outline"
                 } else if (route.name === 'Profile') {
-                  iconName = "person"
+                  return <AntDesign name="profile" size={size} color={color} />
                 } else if (route.name === "Contact") {
                   return <AntDesign name="customerservice" size={size} color={color} />
                 } else if (route.name === "About") {
@@ -77,10 +68,10 @@ export const AppNavigator = () => {
             })}
           >
             <Tab.Screen name="Home" component={HomeNavigator} />
-            <Tab.Screen name="Profile" component={Profile} />
-            <Tab.Screen name="Contact" component={Contact} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
+            {/*<Tab.Screen name="Contact" component={Contact} />*/}
             <Tab.Screen name="Settings" component={SettingsNavigator} />
-            <Tab.Screen name="About" component={About} />
+            {/*<Tab.Screen name="About" component={About} />*/}
           </Tab.Navigator>
         </CartContextProvider>
       </RestaurantContextProvider>
