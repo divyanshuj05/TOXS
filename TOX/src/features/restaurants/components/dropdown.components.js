@@ -1,26 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { AntDesign } from '@expo/vector-icons';
 import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 
-export const DropDownComponent = () => {
+export const DropDownComponent = ({ restaurant = {} }) => {
 
     const [value, setValue] = useState(null);
     const { Search } = useContext(RestaurantContext);
 
-    const dropDownData = [
-        { label: 'Wrapchik', value: '1' },
-        { label: 'Sip n Bites', value: '2' },
-        { label: 'Pizza Nation', value: '3' },
-        { label: 'Dessert Club', value: '4' },
-        { label: 'All', value: '5' }
-    ];
+    var data = [];
+    if (restaurant) {
+        restaurant.forEach(element => {
+            const isFound = data.some((e) => {
+                if (e.label == element.address) { return true }
+            })
+            if (isFound != true) {
+                data.push({ "label": element.address, "value": element.address })
+            }
+        });
+    }
+
+    data.push({ label: "Select All", value: "Select All" })
 
     return (
         <Dropdown
             styles={styles.dropdown}
-            data={dropDownData}
+            data={data}
             onChange={item => {
                 setValue(item.value);
                 Search(item.label)
@@ -31,7 +37,7 @@ export const DropDownComponent = () => {
             iconStyle={styles.iconStyle}
             search
             value={value}
-            placeholder="Select Resturant"
+            placeholder="Filter by Location"
             searchPlaceholder="Search..."
             valueField="value"
             labelField="label"

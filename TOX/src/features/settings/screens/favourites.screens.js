@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import { FavouritesContext } from '../../../services/restaurant/favourites.context'
 import { RestaurantInfoCard } from '../../restaurants/components/restaurantInfoCard.components';
+import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 import styled from 'styled-components';
-
 
 const Container = styled.View`
     flex:1;
@@ -26,6 +26,7 @@ const TextContainer = styled.Text`
 export const FavSettingsScreen = ({ navigation }) => {
 
     const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext);
+    const { restaurantCopy } = useContext(RestaurantContext)
 
     if (!favourites.length) {
         return (<Container><TextContainer>No favourites!!</TextContainer></Container>)
@@ -37,11 +38,19 @@ export const FavSettingsScreen = ({ navigation }) => {
             <ScrollView>
                 {favourites.map((restaurant) => {
                     const key = restaurant;
+                    let data = []
+                    if (restaurantCopy) {
+                        restaurantCopy.some((ele) => {
+                            if (ele.Name == restaurant) {
+                                data = ele
+                            }
+                        })
+                    }
                     return (
                         <Wrapper key={key} onPress={() => {
                             navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
                         }}>
-                            <RestaurantInfoCard restaurantName={restaurant} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
+                            <RestaurantInfoCard restaurant={data} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                         </Wrapper>
                     );
                 })}

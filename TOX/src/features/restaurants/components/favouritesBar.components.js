@@ -24,9 +24,7 @@ const FavTitle = styled.Text`
     padding-left: ${(props) => props.theme.space[2]}
 `;
 
-export const FavBar = ({ favourites, navigation }) => {
-
-    const icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU"
+export const FavBar = ({ favourites, restaurants, navigation }) => {
 
     return (
         <>
@@ -34,6 +32,16 @@ export const FavBar = ({ favourites, navigation }) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {favourites.map((restaurant) => {
                     const key = restaurant;
+                    let icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU"
+                    if (restaurants) {
+                        restaurants.some((ele) => {
+                            if (ele.Name == restaurant) {
+                                if (ele.icon) {
+                                    icon = ele.icon
+                                }
+                            }
+                        })
+                    }
                     return (
                         <Wrapper key={key} onPress={() => {
                             navigation.navigate("RestaurantsDetail", { restaurent: restaurant })

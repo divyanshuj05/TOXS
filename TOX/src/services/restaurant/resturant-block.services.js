@@ -1,35 +1,51 @@
+import { db } from "../../../database.config"
+import { collection, getDocs, query, where } from "firebase/firestore";
+
 export const restaurantsRequest = (Name) => {
 
-    const mockData = [
-        { Name: "Wrapchik" },
-        { Name: "Sip n Bites" },
-        { Name: "Pizza Nation" },
-        { Name: "G Cafeteria" },
-        { Name: "A Cafeteria" },
-        { Name: "Dessert Club" }
-    ]
+    var array = []
 
-    if (Name === "All") {
-        return new Promise((resolve, reject) => {
-            const mock = [{ Name: "Wrapchik" },
-            { Name: "Sip n Bites" },
-            { Name: "Pizza Nation" },
-            { Name: "G Cafeteria" },
-            { Name: "A Cafeteria" },
-            { Name: "Dessert Club" }]
-            if (!mock) {
-                reject("Not found");
+    if (Name === "Select All") {
+        return new Promise(async (resolve, reject) => {
+            const Query = collection(db, "cafeterias")
+            const snapShot = await getDocs(Query)
+            snapShot.forEach(doc => {
+                array.push(doc.data())
+            });
+            if (array == "[]") {
+                reject("Problem getting data!!")
             }
-            resolve(mock);
+            resolve(array);
         })
     }
     else {
-        return new Promise((resolve, reject) => {
-            const mock = { Name }
-            if (!mock) {
-                reject("Not found");
+        return new Promise(async (resolve, reject) => {
+            const Query = query(collection(db, "cafeterias"), where("address", "==", Name))
+            const snapShot = await getDocs(Query)
+            snapShot.forEach(doc => {
+                array.push(doc.data())
+            });
+            if (array == "[]") {
+                reject("Problem getting data!!")
             }
-            resolve([mock]);
+            resolve(array);
         });
     }
 }
+
+export const RestaurantsCopy = async () => {
+
+    var copyArray = []
+
+    return new Promise(async (resolve, reject) => {
+        const Query = collection(db, "cafeterias")
+        const snapShot = await getDocs(Query)
+        snapShot.forEach(doc => {
+            copyArray.push(doc.data())
+        });
+        if (copyArray == "[]") {
+            reject("Problem getting data!!")
+        }
+        resolve(copyArray);
+    })
+} 

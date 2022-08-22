@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TouchableOpacity, StatusBar, FlatList, View } from "react-native";
+import { TouchableOpacity, StatusBar, FlatList, View, Text } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
 import { FadeInView } from "../../common/components/animations/fade.animation"
@@ -8,6 +8,7 @@ import { RestaurantContext } from "../../../services/restaurant/restaurant-block
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { FavouritesContext } from "../../../services/restaurant/favourites.context.js";
 import { FavBar } from "../components/favouritesBar.components.js";
+
 const Container = styled.SafeAreaView`
     flex:1;
     margin-top: ${StatusBar.currentHeight}px;
@@ -32,18 +33,25 @@ const FavWrap = styled.View`
 
 export const RestaurantScreen = ({ navigation }) => {
 
-    const { restaurants, isLoading } = useContext(RestaurantContext);
-
+    const { restaurants, restaurantCopy, isCopyLoading, isLoading } = useContext(RestaurantContext);
     const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext)
 
     return (
         <Container>
             <DropDownContainer>
-                <DropDownComponent />
+                <DropDownComponent restaurant={restaurantCopy} />
             </DropDownContainer>
-            {favourites.length === 0 || favourites.length === null ?
+
+            {favourites.length === 0 || favourites === null ?
                 (<></>) : (<FavWrap>
-                    <FavBar favourites={favourites} navigation={navigation} />
+                    {isCopyLoading ? (
+                        <View style={{ marginTop: 50 }}>
+                            <ActivityIndicator color={Colors.red400} size={50} />
+                        </View>
+                    ) : (
+                        <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} />
+                    )}
+
                 </FavWrap>)
             }
             <CardContainer>
@@ -59,7 +67,7 @@ export const RestaurantScreen = ({ navigation }) => {
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
                                     <FadeInView>
-                                        <RestaurantInfoCard restaurantName={item.Name} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
+                                        <RestaurantInfoCard restaurant={item} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                                     </FadeInView>
                                 </TouchableOpacity>}
                             keyExtractor={(item) => item.Name}

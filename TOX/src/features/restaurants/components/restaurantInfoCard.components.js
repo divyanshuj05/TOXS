@@ -47,28 +47,25 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     `;
 
     const {
-        name = "RestaurantName",
-        icon = [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU"
-        ],
-        isOpen = true,
-        rating = 4,
-        address = "9th Street"
+        Name = "Mock Restaurant Name",
+        icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU",
+        isOpen,
+        address = "Mock Address"
     } = restaurant;
 
     return (
         <CardContainer>
             <Card elevation={5}>
                 <View>
-                    <Favourite restaurant={restaurantName} favourites={favourites} add={add} remove={remove} />
-                    <Card.Cover key={name} source={{ uri: icon[0] }} style={{ height: 160 }} />
+                    <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
+                    <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160 }} />
                 </View>
                 <RestaurantInfo>
-                    <Title>{restaurantName}</Title>
+                    <Title>{Name}</Title>
                     <Section>
                         <RatingStyle>
                             <OpenContainer>
-                                {isOpen && <SvgXml xml={open} width={20} height={20} />}
+                                {isOpen == "true" ? (<SvgXml xml={open} width={20} height={20} />) : (<></>)}
                             </OpenContainer>
                         </RatingStyle>
                     </Section>

@@ -13,6 +13,7 @@ export const FavouritesContextProvider = ({ children }) => {
         try {
             const jsonValue = JSON.stringify(value);
             await AsyncStorage.setItem(`@favourites-${uid}`, jsonValue);
+            //await AsyncStorage.removeItem(`@favourites-${uid}`)
         } catch (e) {
             console.log("error storing", e);
         }
