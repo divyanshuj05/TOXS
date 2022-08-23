@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { restaurantsRequest, RestaurantsCopy } from "./resturant-block.services";
+import { restaurantsRequest } from "./resturant-block.services";
 
 export const RestaurantContext = createContext();
 
@@ -10,13 +10,17 @@ export const RestaurantContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
-    const retrieveRestaurants = (Name) => {
+    const retrieveRestaurants = (Name, flag = 0) => {
         setIsLoading(true)
         setRestaurants([])
         setTimeout(() => {
             restaurantsRequest(Name).then((result) => {
                 setIsLoading(false)
                 setRestaurants(result)
+                if (flag == 1) {
+                    setRestaurantCopy(result)
+                    setIsCopyLoading(false)
+                }
             }).catch(err => {
                 setIsError(err)
                 setIsLoading(false)
@@ -24,19 +28,8 @@ export const RestaurantContextProvider = ({ children }) => {
         }, 2000)
     }
 
-
-
     useEffect(() => {
-        retrieveRestaurants("Select All");
-    }, [])
-
-    useEffect(() => {
-        setTimeout(() => {
-            RestaurantsCopy().then((res) => {
-                setRestaurantCopy(res)
-                setIsCopyLoading(false)
-            })
-        }, 1000)
+        retrieveRestaurants("Select All", 1);
     }, [])
 
     return (

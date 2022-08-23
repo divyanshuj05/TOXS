@@ -32,20 +32,3 @@ export const restaurantsRequest = (Name) => {
         });
     }
 }
-
-export const RestaurantsCopy = async () => {
-
-    var copyArray = []
-
-    return new Promise(async (resolve, reject) => {
-        const Query = collection(db, "cafeterias")
-        const snapShot = await getDocs(Query)
-        snapShot.forEach(doc => {
-            copyArray.push(doc.data())
-        });
-        if (copyArray == "[]") {
-            reject("Problem getting data!!")
-        }
-        resolve(copyArray);
-    })
-} 
