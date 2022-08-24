@@ -10,7 +10,7 @@ import { FavouritesContextProvider } from "../../services/restaurant/favourites.
 import { CartContextProvider } from "../../services/restaurant/cart.context.js";
 import { RestaurantContextProvider } from "../../services/restaurant/restaurant-block.context.js";
 import { SafeArea } from "../../utils/components/safe-area.components.js";
-import { ProfileScreen } from "../../features/common/screens/profile.screens.js";
+import { ProfileScreen } from "../../features/settings/screens/profile.screens.js";
 
 const Tab = createBottomTabNavigator();
 
