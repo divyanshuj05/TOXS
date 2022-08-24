@@ -213,7 +213,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         return "Error: Length of your User Name should be greater than or equal to 5!!"
       }
       if (CheckUser(newFieldVal) === true) {
-        c
+
         setIsLoading(false)
         return "Error: User Name already taken!!"
       }
