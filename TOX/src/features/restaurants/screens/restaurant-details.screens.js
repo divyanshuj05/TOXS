@@ -1,16 +1,16 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Alert } from "react-native";
-import styled from 'styled-components';
+import styled from "styled-components";
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
 
 const RestaurantText = styled.Text`
-    margin-top:${(props) => props.theme.space[2]};
-    text-align:center;
-    color:${(props) => props.theme.text};
-    font-size: ${(props) => props.theme.fontSizes.h5};
-    font-weight: ${(props) => props.theme.fontWeights.medium};
-    font-family:${(props) => props.theme.fonts.body};
+  margin-top: ${(props) => props.theme.space[2]};
+  text-align: center;
+  color: ${(props) => props.theme.text};
+  font-size: ${(props) => props.theme.fontSizes.h5};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 const Container = styled.View`
@@ -19,75 +19,72 @@ const Container = styled.View`
 `;
 
 export const RestaurantDetails = ({ route, navigation }) => {
+  const { restaurent } = route.params;
 
-    const { restaurent } = route.params;
+  const { destroy } = useContext(CartContext);
 
-    const { destroy } = useContext(CartContext)
-
-    useEffect(() => {
-        navigation.addListener('beforeRemove', (block) => {
-            block.preventDefault();
-            Alert.alert(
-                "Discard cart?",
-                "Any changes will be discarded",
-                [
-
-                    {
-                        text: "Yes",
-                        onPress: () => { navigation.dispatch(block.data.action), destroy() }
-                    },
-                    {
-                        text: "No",
-                        onPress: () => { <></> }
-                    }
-                ]
-            )
-        })
-    }, [navigation])
-
-    const flatlistData = [
+  useEffect(() => {
+    navigation.addListener("beforeRemove", (block) => {
+      block.preventDefault();
+      Alert.alert("Discard cart?", "Any changes will be discarded", [
         {
-            title: "Veg Wrap",
-            price: 20,
-            notAdded: true
+          text: "Yes",
+          onPress: () => {
+            navigation.dispatch(block.data.action), destroy();
+          },
         },
         {
-            title: "Burger",
-            price: 25,
-            notAdded: true
+          text: "No",
+          onPress: () => {
+            <></>;
+          },
         },
-        {
-            title: "Cold Drink",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Chips",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Pizza",
-            price: 80,
-            notAdded: true
-        },
-        {
-            title: "Patties",
-            price: 25,
-            notAdded: true
-        },
-        {
-            title: "Sandwich",
-            price: 30,
-            notAdded: true
-        },
-    ];
+      ]);
+    });
+  }, [navigation]);
 
-    return (
-        <Container>
-            <RestaurantText>{restaurent}</RestaurantText>
-            <MenuList data={flatlistData} navigation={navigation} />
-        </Container>
+  const flatlistData = [
+    {
+      title: "Veg Wrap",
+      price: 20,
+      notAdded: true,
+    },
+    {
+      title: "Burger",
+      price: 25,
+      notAdded: true,
+    },
+    {
+      title: "Cold Drink",
+      price: 10,
+      notAdded: true,
+    },
+    {
+      title: "Chips",
+      price: 10,
+      notAdded: true,
+    },
+    {
+      title: "Pizza",
+      price: 80,
+      notAdded: true,
+    },
+    {
+      title: "Patties",
+      price: 25,
+      notAdded: true,
+    },
+    {
+      title: "Sandwich",
+      price: 30,
+      notAdded: true,
+    },
+  ];
 
-    );
-}
+  return (
+    <Container>
+      <RestaurantText>{restaurent}</RestaurantText>
+      <MenuList data={flatlistData} navigation={navigation} />
+    </Container>
+  );
+};
