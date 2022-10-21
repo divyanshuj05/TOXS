@@ -37,6 +37,7 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     const loginQuery = query(collection(db, "users"), where("userName", "==", userName), where("password", "==", password))
     const docs = await getDocs(loginQuery)
+    console.log(docs)
     docs.forEach(doc => {
       setUser({ ...doc.data(), "id": doc.id })
       saveUser({ ...doc.data(), "id": doc.id })

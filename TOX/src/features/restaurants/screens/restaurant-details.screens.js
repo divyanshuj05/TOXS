@@ -7,12 +7,12 @@ import { MenuListContext } from "../../../services/restaurant/menu-list.context"
 import { ActivityIndicator, Colors } from "react-native-paper";
 
 const RestaurantText = styled.Text`
-    margin-top:${(props) => props.theme.space[2]};
-    text-align:center;
-    color:${(props) => props.theme.text};
-    font-size: ${(props) => props.theme.fontSizes.h5};
-    font-weight: ${(props) => props.theme.fontWeights.medium};
-    font-family:${(props) => props.theme.fonts.body};
+  margin-top: ${(props) => props.theme.space[2]};
+  text-align: center;
+  color: ${(props) => props.theme.text};
+  font-size: ${(props) => props.theme.fontSizes.h5};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 const IndicatorView=styled.View`
@@ -24,11 +24,19 @@ const Container = styled.View`
     background-color:${(props) => props.theme.background};
 `;
 
-export const RestaurantDetails = ({ route, navigation }) => {
+const EmptyList=styled.Text`
+    margin-top: ${(props) => props.theme.space[5]};
+    text-align: center;
+    color: ${(props) => props.theme.text};
+    font-size: ${(props) => props.theme.fontSizes.title};
+    font-weight: ${(props) => props.theme.fontWeights.regular};
+    font-family: ${(props) => props.theme.fonts.body};
+`;
 
+export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
 
-    const { destroy } = useContext(CartContext)
+    const { destroy } = useContext(CartContext);
     const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
 
     useEffect(() => {
@@ -57,16 +65,6 @@ export const RestaurantDetails = ({ route, navigation }) => {
     },[])
 
     /*const flatlistData = [
-        {
-            title: "Veg Wrap",
-            price: 20,
-            notAdded: true
-        },
-        {
-            title: "Burger",
-            price: 25,
-            notAdded: true
-        },
         {
             title: "Cold Drink",
             price: 10,
@@ -105,10 +103,19 @@ export const RestaurantDetails = ({ route, navigation }) => {
             (
                 <>
                     <RestaurantText>{restaurent}</RestaurantText>
-                    <MenuList data={restaurantMenuList} navigation={navigation} />
+                    {!restaurantMenuList?
+                    (
+                        <EmptyList>No Menu List!!</EmptyList>
+                    ):
+                    (
+                        <>
+                        <MenuList data={restaurantMenuList} navigation={navigation} />
+                    </>
+                    )
+                    }
+                    
                 </>
             )}
         </Container>
-
-    );
-}
+    )
+};
