@@ -1,8 +1,10 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Alert } from "react-native";
+import React, { useEffect, useContext } from "react";
+import { Alert, View } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
+import { MenuListContext } from "../../../services/restaurant/menu-list.context";
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const RestaurantText = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
@@ -12,6 +14,10 @@ const RestaurantText = styled.Text`
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family:${(props) => props.theme.fonts.body};
 `;
+
+const IndicatorView=styled.View`
+    margin-top: ${(props) => props.theme.space[5]};
+`; 
 
 const Container = styled.View`
     flex:1
@@ -23,6 +29,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
 
     const { destroy } = useContext(CartContext)
+    const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {
@@ -44,8 +51,12 @@ export const RestaurantDetails = ({ route, navigation }) => {
             )
         })
     }, [navigation])
+    
+    useEffect(()=>{
+        Search(restaurent)
+    },[])
 
-    const flatlistData = [
+    /*const flatlistData = [
         {
             title: "Veg Wrap",
             price: 20,
@@ -81,12 +92,22 @@ export const RestaurantDetails = ({ route, navigation }) => {
             price: 30,
             notAdded: true
         },
-    ];
+    ];*/
 
     return (
         <Container>
-            <RestaurantText>{restaurent}</RestaurantText>
-            <MenuList data={flatlistData} navigation={navigation} />
+            {isLoading?
+            (
+                <IndicatorView>
+                    <ActivityIndicator color={Colors.red400} size={50} />
+                </IndicatorView>
+            ):
+            (
+                <>
+                    <RestaurantText>{restaurent}</RestaurantText>
+                    <MenuList data={restaurantMenuList} navigation={navigation} />
+                </>
+            )}
         </Container>
 
     );

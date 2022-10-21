@@ -6,7 +6,7 @@ import { colors } from '../../../infrastructure/theme/colors';
 import { SafeArea } from '../../../utils/components/safe-area.components';
 
 const Container = styled.View`
-    background-color:${(props) => props.theme.background}
+    background-color:${(props) => props.theme.background};
     flex:1;
 `;
 
