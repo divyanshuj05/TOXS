@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppNavigator } from "./app.navigator";
+import { VendorAppNavigator } from "./vendorApp.navigator";
 import { AccountNavigator } from "./account.navigator";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { View, Text } from "react-native"
 
 export const Navigation = () => {
-  const { isAuthenticated, isLogging } = useContext(AuthenticationContext);
+  const { isAuthenticated, isLogging, user } = useContext(AuthenticationContext);
 
   if (isLogging) {
     return (
@@ -19,7 +20,15 @@ export const Navigation = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (<AppNavigator />) : (<AccountNavigator />)}
+      {isAuthenticated ? 
+      (
+        user.type=="users"?
+        (
+          <AppNavigator />
+        ):(
+          <VendorAppNavigator />
+        )
+      ) : (<AccountNavigator />)}
     </NavigationContainer>
   );
 };

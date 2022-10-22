@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Alert, View } from "react-native";
+import { Alert } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
@@ -108,9 +108,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
                         <EmptyList>No Menu List!!</EmptyList>
                     ):
                     (
-                        <>
                         <MenuList data={restaurantMenuList} navigation={navigation} />
-                    </>
                     )
                     }
                     

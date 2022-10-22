@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import LottieView from "lottie-react-native";
 import { SafeArea } from "../../../utils/components/safe-area.components"
 import { Spacer } from "../../common/components/spacer/spacer.component";
@@ -24,9 +25,9 @@ export const AccountScreen = ({ navigation }) => {
           <AuthButton
             icon="login"
             mode="contained"
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("Login", {collection:"users"} )}
           >
-            Login
+            User Login
           </AuthButton>
           <Spacer size="large">
             <AuthButton
@@ -38,6 +39,17 @@ export const AccountScreen = ({ navigation }) => {
             </AuthButton>
           </Spacer>
         </AccountContainer>
+        <View style={{marginTop:50}}>
+        <AccountContainer>
+          <Spacer size="small">
+            <AuthButton
+              icon="login"
+              mode="contained"
+              onPress={() => navigation.navigate("Login",{collection:"vendors"})}>
+              Vendor Login
+            </AuthButton>
+          </Spacer>
+  </AccountContainer></View>
       </AccountBackground>
     </SafeArea>
   );

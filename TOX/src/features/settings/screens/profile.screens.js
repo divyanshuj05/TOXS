@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
-import { ActivityIndicator } from 'react-native-paper'
 
 const Scroll = styled.ScrollView`
     flex:1
@@ -62,7 +61,6 @@ const UpdateButtonCopy = styled(Ionicons)`
 `;
 
 const Button = styled.Text`
-    margin:130px;
     text-align:center;
     border: 1px solid ${(props) => props.theme.colors.ui.error};;
     color:white;
@@ -92,7 +90,6 @@ const Error = styled.Text`
 export const ProfileScreen = () => {
 
     const { user, UpdateDoc, removeDoc, isLoading } = useContext(AuthenticationContext)
-
     const [updateUser, setUpdateUser] = useState(false)
     const [updateMobile, setUpdateMobile] = useState(false)
     const [updatePass, setUpdatePass] = useState(false)
@@ -107,7 +104,6 @@ export const ProfileScreen = () => {
         <Scroll>
             <SafeArea>
                 <Title>User Details</Title>
-
                 <BorderView >
                     <View style={{ flexDirection: "row" }}>
                         <DetailsIcon name="person-outline" size={22} />
@@ -123,7 +119,7 @@ export const ProfileScreen = () => {
                                         onChangeText={(text) => { setNewUser(text) }} />
                                     <TouchableOpacity onPress={() => {
                                         setErrorUser(null)
-                                        let result = UpdateDoc("userName", newUser)
+                                        let result = UpdateDoc("userName", newUser,user.type)
                                         if (result === true) {
                                             setUpdateUser(false)
                                         }
@@ -173,7 +169,7 @@ export const ProfileScreen = () => {
                                         onChangeText={(text) => { setNewMobile(text) }} />
                                     <TouchableOpacity onPress={() => {
                                         setErrorMob(null)
-                                        const result = UpdateDoc("mobileNo", newMobile)
+                                        const result = UpdateDoc("mobileNo", newMobile,user.type)
                                         if (result === true) {
                                             setUpdateMobile(false)
                                         }
@@ -216,7 +212,7 @@ export const ProfileScreen = () => {
                                         onChangeText={(text) => { setNewPass(text) }} />
                                     <TouchableOpacity onPress={() => {
                                         setErrorPass(null)
-                                        const result = UpdateDoc("password", newPass)
+                                        const result = UpdateDoc("password", newPass,user.type)
                                         if (result === true) {
                                             setUpdatePass(false)
                                         }
@@ -243,26 +239,48 @@ export const ProfileScreen = () => {
                         ) : (<></>)
                     }
                 </BorderView>
+                
+                {user.type=="vendors"?
+                    (
+                        <BorderView>
+                            <View style={{ flexDirection: "row" }}>
+                                <DetailsIcon name="md-restaurant-outline" size={22} />
+                                <Details>{user.restaurant}</Details>
+                            </View>
+                        </BorderView>
+                    ):(<></>)}
+                
+                {user.type=="users"?
+                    (<>
+                        <View style={{margin:64}}></View>
+                        <View style={{flexDirection:"row"}}>
+                        <View style={{flex:0.3}}></View>
+                        <View style={{flex:0.4}}>
+                            <TouchableOpacity onPress={() => {
+                                Alert.alert(
+                                    "Delete Profile?",
+                                    `${user.userName}'s data will be removed!!`,
+                                    [
 
-                <TouchableOpacity onPress={() => {
-                    Alert.alert(
-                        "Delete Profile?",
-                        `${user.userName}'s data will be removed!!`,
-                        [
+                                        {
+                                            text: "Yes",
+                                            onPress: () => { removeDoc(user.type) }
+                                        },
+                                        {
+                                            text: "No",
+                                            onPress: () => { <></> }
+                                        }
+                                    ]
+                                )
+                            }}>
+                                <Button>Delete User</Button>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex:0.3}}></View>
+                        </View>
+                    </>):(<></>)
+                }
 
-                            {
-                                text: "Yes",
-                                onPress: () => { removeDoc() }
-                            },
-                            {
-                                text: "No",
-                                onPress: () => { <></> }
-                            }
-                        ]
-                    )
-                }}>
-                    <Button>Delete User</Button>
-                </TouchableOpacity>
             </SafeArea>
         </Scroll>
     )

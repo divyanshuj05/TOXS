@@ -1,6 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 import { loginCheck, RegisterCheck } from "./authentication.services";
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, deleteDoc } from "firebase/firestore";
@@ -24,7 +23,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   });*/
 
-  const onLogin = async (userName, password) => {
+  const onLogin = async (userName, password,Coll) => {
     let check = false;
     setIsLoading(true);
 
@@ -35,12 +34,11 @@ export const AuthenticationContextProvider = ({ children }) => {
       return
     }
 
-    const loginQuery = query(collection(db, "users"), where("userName", "==", userName), where("password", "==", password))
+    const loginQuery = query(collection(db, Coll), where("userName", "==", userName), where("password", "==", password))
     const docs = await getDocs(loginQuery)
-    console.log(docs)
     docs.forEach(doc => {
-      setUser({ ...doc.data(), "id": doc.id })
-      saveUser({ ...doc.data(), "id": doc.id })
+      setUser({ ...doc.data(), "id": doc.id, "type": Coll })
+      saveUser({ ...doc.data(), "id": doc.id, "type": Coll })
       check = true;
       setIsLoading(false)
     });
@@ -96,8 +94,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         .then(async (res) => {
           const docRef = doc(db, "users", res.id);
           const docRes = await getDoc(docRef);
-          setUser({ ...docRes.data(), "id": res.id })
-          saveUser({ ...docRes.data(), "id": res.id })
+          setUser({ ...docRes.data(), "id": res.id, "type": "users" })
+          saveUser({ ...docRes.data(), "id": res.id, "type": "users" })
           setIsLoading(false)
         })
         .catch((e) => {
@@ -112,7 +110,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   }
 
-  const UpdateDoc = (field, newFieldVal) => {
+  const UpdateDoc = (field, newFieldVal,Coll) => {
     setIsLoading(true)
     if (newFieldVal == "") {
       setIsLoading(false)
@@ -136,13 +134,14 @@ export const AuthenticationContextProvider = ({ children }) => {
 
       const data = { ...user, mobileNo: newFieldVal }
       delete data.id
-      const docRef = doc(db, "users", user.id)
+      delete data.type
+      const docRef = doc(db, Coll, user.id)
 
       setDoc(docRef, data)
         .then(res => {
-          setUser({ ...user, mobileNo: newFieldVal })
+          setUser({ ...user, mobileNo: newFieldVal,type:Coll })
           removeUser()
-          saveUser({ ...user, mobileNo: newFieldVal })
+          saveUser({ ...user, mobileNo: newFieldVal,type:Coll })
           setIsLoading(false)
           return true
         })
@@ -185,13 +184,14 @@ export const AuthenticationContextProvider = ({ children }) => {
       }
       const data = { ...user, password: newFieldVal }
       delete data.id;
-      const docRef = doc(db, "users", user.id)
+      delete data.type
+      const docRef = doc(db, Coll, user.id)
 
       setDoc(docRef, data, { merge: true })
         .then(res => {
-          setUser({ ...user, password: newFieldVal })
+          setUser({ ...user, password: newFieldVal,type:Coll })
           removeUser()
-          saveUser({ ...user, password: newFieldVal })
+          saveUser({ ...user, password: newFieldVal,type:Coll })
           setIsLoading(false)
           return true
         })
@@ -213,7 +213,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         setIsLoading(false);
         return "Error: Length of your User Name should be greater than or equal to 5!!"
       }
-      if (CheckUser(newFieldVal) === true) {
+      if (CheckUser(newFieldVal,Coll) === true) {
 
         setIsLoading(false)
         return "Error: User Name already taken!!"
@@ -221,13 +221,14 @@ export const AuthenticationContextProvider = ({ children }) => {
 
       const data = { ...user, userName: newFieldVal }
       delete data.id
-      const docRef = doc(db, "users", user.id)
+      delete data.type
+      const docRef = doc(db, Coll, user.id)
 
       setDoc(docRef, data)
         .then(res => {
-          setUser({ ...user, userName: newFieldVal })
+          setUser({ ...user, userName: newFieldVal,type:Coll })
           removeUser()
-          saveUser({ ...user, userName: newFieldVal })
+          saveUser({ ...user, userName: newFieldVal,type:Coll })
           setIsLoading(false)
           return true
         })
@@ -241,8 +242,8 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   }
 
-  const CheckUser = async (u) => {
-    const q = query(collection(db, "users"), where("userName", "==", u));
+  const CheckUser = async (u,Coll) => {
+    const q = query(collection(db, Coll), where("userName", "==", u));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(doc => {
       return true
@@ -250,7 +251,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     return false;
   }
 
-  const removeDoc = () => {
+  const removeDoc = (Coll) => {
     const docRef = doc(db, "users", user.id)
     deleteDoc(docRef)
       .then(() => {

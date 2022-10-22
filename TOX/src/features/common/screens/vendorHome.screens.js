@@ -1,30 +1,20 @@
-import React,{useContext} from 'react';
-import { FlatList, TouchableOpacity } from "react-native";
+import React,{useContext} from 'react'
+import { FlatList, TouchableOpacity } from 'react-native';
+import { logo_light,logo_dark, TPO_logo, Vendor_Image } from "../../../../assets/images";
+import { SafeArea } from '../../../utils/components/safe-area.components';
 import styled from 'styled-components';
 import { AppThemeContext } from '../../../services/common/theme.context';
-import { logo_light,logo_dark, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
-import { SafeArea } from '../../../utils/components/safe-area.components';
 
-const Container = styled.View`
-    background-color:${(props) => props.theme.background};
+const Container=styled.View`
     flex:1;
+    background-color:${props=>props.theme.background}
 `;
-
 const Main_Logo = styled.Image`
     margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
 `;
-
-const Facility_Logo = styled.Image`
-    height: ${(props) => props.theme.sizes[4]};
-    width:${(props) => props.theme.sizes[4]};
-    margin-left:25px;
-    margin-top:${(props) => props.theme.space[4]};
-    margin-right:25px;
-`;
-
 const App_Name = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
@@ -33,15 +23,13 @@ const App_Name = styled.Text`
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
 `;
-
-const Facility_Text = styled.Text`
-    font-weight:${(props) => props.theme.fontWeights.medium};
-    font-size:${(props) => props.theme.fontSizes.body};
-    font-family: ${props => props.theme.fonts.body};
-    color:${props => props.color}
-    text-align:center;
+const ListWrapper = styled.View`
+    background-color: ${(props) => props.theme.colors.ui.basic};
+    margin-left:${(props) => props.theme.space[2]};
+    margin-right:${(props) => props.theme.space[1]};
+    margin-top: ${(props) => props.theme.space[4]};
+    border-radius:${(props) => props.theme.space[3]};
 `;
-
 const Facility_SubText = styled.Text`
     font-weight:${(props) => props.theme.fontWeights.medium};
     font-size:${(props) => props.theme.fontSizes.button};
@@ -49,53 +37,57 @@ const Facility_SubText = styled.Text`
     color:${props => props.color}
     text-align:center;
 `;
-
-const ListWrapper = styled.View`
-    background-color: ${(props) => props.theme.colors.ui.basic};
-    margin-left:${(props) => props.theme.space[2]};
-    margin-right:${(props) => props.theme.space[1]};
-    margin-bottom:${(props) => props.theme.space[4]};
-    margin-top: ${(props) => props.theme.space[4]};
-    border-radius:${(props) => props.theme.space[3]};
+const Facility_Text = styled.Text`
+    font-weight:${(props) => props.theme.fontWeights.medium};
+    font-size:${(props) => props.theme.fontSizes.body};
+    font-family: ${props => props.theme.fonts.body};
+    color:${props => props.color}
+    text-align:center;
+`;
+const Facility_Logo = styled.Image`
+    height: ${(props) => props.theme.sizes[4]};
+    width:${(props) => props.theme.sizes[4]};
+    margin-left:25px;
+    margin-top:${(props) => props.theme.space[4]};
+    margin-right:25px;
 `;
 
 const flatlist_data = [
     {
-        icon: TPO_logo,
-        text: "TPO",
-        subText: "(Thapar Pre-Ordering)",
+        icon: Vendor_Image,
+        text: "Manage Cafeteria",
+        subText: "Add/Remove/Change food items",
         color: colors.bg.primary
     },
     {
-        icon: TLX_logo,
-        text: "TLX",
-        subText: "(Thapar Online Exchnage)",
+        icon: TPO_logo,
+        text: "Order List",
+        subText: "Get food orders ",
         color: colors.bg.primary
     }
 ]
 
-export const HomeScreen = ({ navigation }) => {
+export const VendorHome = ({ navigation }) => {
 
-    const { scheme } =useContext(AppThemeContext)
+    const { scheme }=useContext(AppThemeContext)
 
-    return (
-        <>
-            <SafeArea>
-                <Container>
+    return(
+        <SafeArea>
+            <Container>
                 {scheme=="light"?
                 (
                     <Main_Logo source={logo_light} />
                 ):(
                     <Main_Logo source={logo_dark} />
                 )}
-                    <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name> 
+                    <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
                     <FlatList
                         data={flatlist_data}
                         horizontal={true}
                         renderItem={({ item, index }) => {
                             if (index === 0) {
                                 return (
-                                    <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("VendorRestaurantNavigator")}>
                                         <ListWrapper>
                                             <Facility_Logo source={item.icon} />
                                             <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -106,7 +98,7 @@ export const HomeScreen = ({ navigation }) => {
                             }
                             else {
                                 return (
-                                    <TouchableOpacity onPress={() => navigation.navigate("Exchnage")}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("VendorOrders")}>
                                         <ListWrapper>
                                             <Facility_Logo source={item.icon} />
                                             <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -118,8 +110,7 @@ export const HomeScreen = ({ navigation }) => {
                         }}
                         keyExtractor={(item) => item.text}
                     />
-                </Container>
-            </SafeArea>
-        </>
+            </Container>
+        </SafeArea>
     )
 }

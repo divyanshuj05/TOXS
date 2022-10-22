@@ -6,7 +6,8 @@ import { createStackNavigator, TransitionPresets } from "@react-navigation/stack
 
 const SettingsStack = createStackNavigator();
 
-export const SettingsNavigator = ({ route, navigation }) => {
+export const SettingsNavigator = ({ navigation }) => {
+
   return (
     <SettingsStack.Navigator
       screenOptions={{

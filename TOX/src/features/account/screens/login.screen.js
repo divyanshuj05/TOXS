@@ -14,7 +14,9 @@ import { Text } from "../../common/components/typography/text.component";
 import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
-export const LoginScreen = ({ navigation }) => {
+export const LoginScreen = ({ route,navigation }) => {
+  const {collection}=route.params
+  
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const { onLogin, error, isLoading, setError } = useContext(AuthenticationContext);
@@ -51,7 +53,7 @@ export const LoginScreen = ({ navigation }) => {
             <AuthButton
               icon="food"
               mode="contained"
-              onPress={() => { setError(null), onLogin(userName, password) }}
+              onPress={() => { setError(null), onLogin(userName, password,collection) }}
             >
               Login
             </AuthButton>
