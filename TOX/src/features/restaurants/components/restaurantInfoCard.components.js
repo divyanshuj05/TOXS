@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View } from "react-native";
 import { Card } from 'react-native-paper';
 import styled from 'styled-components/native';
 import open from '../../../../assets/open';
 import { SvgXml } from 'react-native-svg';
 import { Favourite } from './favourite.components';
+import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
 export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites, add, remove }) => {
 
@@ -53,11 +54,17 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
         address = "Mock Address"
     } = restaurant;
 
+    const { user }=useContext(AuthenticationContext)
+
     return (
         <CardContainer>
             <Card elevation={5}>
                 <View>
-                    <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
+                    {user.type=="users"?
+                    (
+                        <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
+                    ):(<></>)
+                    }
                     <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160 }} />
                 </View>
                 <RestaurantInfo>

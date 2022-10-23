@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SettingsNavigator } from './settings.navigator';
 import { ProfileScreen } from '../../features/settings/screens/profile.screens';
 import { VendorHomeNavigator } from './vendorHome.navigator';
+import { VendorRestaurantContextProvider } from '../../services/restaurant/vendorRestaurant.context';
+import { MenuListContextProvider } from '../../services/restaurant/menu-list.context';
 
 const Tab=createBottomTabNavigator()
 
@@ -14,6 +16,8 @@ export const VendorAppNavigator = () => {
     const { scheme }=useContext(AppThemeContext)
 
     return(
+      <VendorRestaurantContextProvider>
+        <MenuListContextProvider>
         <Tab.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, size }) => {
@@ -39,5 +43,7 @@ export const VendorAppNavigator = () => {
               <Tab.Screen name="Profile" component={ProfileScreen} />
               <Tab.Screen name="Settings" component={SettingsNavigator} />
             </Tab.Navigator>
+            </MenuListContextProvider>
+            </VendorRestaurantContextProvider>
     )
 }
