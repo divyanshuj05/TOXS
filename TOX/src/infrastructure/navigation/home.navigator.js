@@ -1,8 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../../features/common/screens/home.screens";
-import { ExchangeScreen } from "../../features/exchnages/screens/exchnage.screens"
 import { RestaurantsNavigator } from "./restaurants.navigator";
+import { ExchangeNavigator } from "./exchange.navigator";
 
 const HomeStack = createStackNavigator();
 
@@ -21,7 +21,7 @@ export const HomeNavigator = () => {
       />
       <HomeStack.Screen
         name="Exchnage"
-        component={ExchangeScreen}
+        component={ExchangeNavigator}
       />
     </HomeStack.Navigator>
   );
