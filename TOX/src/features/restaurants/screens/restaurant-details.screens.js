@@ -62,6 +62,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
     
     useEffect(()=>{
         Search(restaurent)
+        destroy()
     },[])
 
     /*const flatlistData = [

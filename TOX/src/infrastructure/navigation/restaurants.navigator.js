@@ -1,5 +1,6 @@
 import React from "react";
 import { TransitionPresets, createStackNavigator } from "@react-navigation/stack";
+import { RestaurantHome } from "../../features/restaurants/screens/restaurantHome.screens";
 import { RestaurantScreen } from "../../features/restaurants/screens/restaurants.screens";
 import { RestaurantDetails } from "../../features/restaurants/screens/restaurant-details.screens";
 import { OrderListScreen } from "../../features/restaurants/screens/order-list.screens";
@@ -10,6 +11,10 @@ const RestaurantStack = createStackNavigator();
 export const RestaurantsNavigator = () => {
   return (
     <RestaurantStack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.ModalPresentationIOS }}>
+      <RestaurantStack.Screen
+        name="RestaurantsHome"
+        component={RestaurantHome}
+      />
       <RestaurantStack.Screen
         name="Restaurants"
         component={RestaurantScreen}

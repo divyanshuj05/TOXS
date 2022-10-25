@@ -11,7 +11,6 @@ import { FavBar } from "../components/favouritesBar.components.js";
 
 const Container = styled.SafeAreaView`
     flex:1;
-    margin-top: ${StatusBar.currentHeight}px;
 `;
 
 const DropDownContainer = styled.View`
