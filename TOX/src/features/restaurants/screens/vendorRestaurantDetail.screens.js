@@ -1,9 +1,11 @@
-import React, {useContext ,useState} from "react";
-import { FlatList,View,Text, TouchableOpacity } from "react-native";
+import React, {useState ,useContext} from "react";
+import { FlatList,View, TouchableOpacity } from "react-native";
 import styled from 'styled-components';
 import { TextInput } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
 import { VendorMenuDetail } from "../components/vendorMenuDetails.components";
+import { VendorRestaurantContext } from "../../../services/restaurant/vendorRestaurant.context";
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const RestaurantText = styled.Text`
   margin-top: ${(props) => props.theme.space[2]};
@@ -56,66 +58,87 @@ const Touch=styled.TouchableOpacity`
     margin-top:${(props) => props.theme.space[2]};
 `;
 
-export const VendorRestaurantDetail = ({ route,navigation }) => {
-    const { restaurant } = route.params;
+export const VendorRestaurantDetail = () => {
+
+    const { addItem,isLoading,restaurant } = useContext(VendorRestaurantContext)
     
     const [add,setAdd]=useState(false)
     const [item,setItem]=useState("")
     const [cost,setCost]=useState("")
+    const [error,setError]=useState(null)
+
+    if(!!error)
+    {
+        setTimeout(()=>{setError(null)},5000)
+    }
 
     const renderItem = ({ item }) => {
         return (
-            <VendorMenuDetail foodItem={item} navigation={navigation} />
+            <VendorMenuDetail foodItem={item} Restaurant={restaurant[0].Name} />
         );
     };
 
     return (
         <Container>
-            <RestaurantText>{restaurant.Name}</RestaurantText>                    
-            <FlatListStyle
-                data={restaurant.menuList}
-                renderItem={renderItem}
-                keyExtractor={(item)=>item.Name}
-            />
-            <BottomBar>
-                {add?
-                    (
-                            <View style={{flexDirection:"row", flex:1}}>
-                                <View style={{flex:0.45}}>
-                                    <Add>Name: </Add>  
-                                    <Input
-                                        label="New item"
-                                        value={item}
-                                        textContentType="username"
-                                        keyboardType="default"
-                                        autoCapitalize="words"
-                                        onChangeText={(text) => setItem(text)} />  
-                                </View>  
-                                <View style={{flex:0.55}}>
-                                    <Add>Cost: </Add> 
-                                    <View style={{flexDirection:"row"}}>
-                                    <Input
-                                        label="Item Cost"
-                                        value={cost}
-                                        textContentType="telephoneNumber"
-                                        keyboardType="phone-pad"
-                                        autoCapitalize="none"
-                                        onChangeText={(text) => setCost(text)} /> 
-                                    <Touch onPress={()=>setAdd(!add)}>
-                                        <Ionicons name="checkmark-circle-outline" size={28} color="white" />
-                                    </Touch>
-                                    </View> 
-                                </View>  
-                            </View>
-                        
-                    ):
-                    (
-                        <TouchableOpacity onPress={()=>setAdd(!add)} style={{marginLeft:125}}>
-                            <AddText>Add food item</AddText>
-                        </TouchableOpacity>
-                    )
-                }
-            </BottomBar>    
+            <RestaurantText>{restaurant[0].Name}</RestaurantText>   
+            {isLoading?
+            (
+                <View style={{marginTop:50}}>
+                    <ActivityIndicator color={Colors.red400} size={50} />
+                </View>
+            ):(
+                <>
+                    <FlatListStyle
+                    data={restaurant[0].menuList}
+                    renderItem={renderItem}
+                    keyExtractor={(item)=>item.Name}
+                    />
+                    <BottomBar>
+                        {!!error?
+                        (
+                            <AddText>Error: {error}</AddText>
+                        ):
+                        (add?
+                            (
+                                <View style={{flexDirection:"row", flex:1}}>
+                                    <View style={{flex:0.45}}>
+                                        <Add>Name: </Add>  
+                                        <Input
+                                            label="New item"
+                                            textContentType="username"
+                                            keyboardType="default"
+                                            autoCapitalize="words"
+                                            onChangeText={(text) => setItem(text)} />  
+                                    </View>  
+                                    <View style={{flex:0.55}}>
+                                        <Add>Cost: </Add> 
+                                        <View style={{flexDirection:"row"}}>
+                                        <Input
+                                            label="Item Cost"
+                                            textContentType="telephoneNumber"
+                                            keyboardType="phone-pad"
+                                            autoCapitalize="none"
+                                            onChangeText={(text) => setCost(text)} /> 
+                                        <Touch onPress={async ()=>{
+                                            setError(await (addItem(item,cost,restaurant[0].Name)))
+                                            setAdd(!add)}}>
+                                            <Ionicons name="checkmark-circle-outline" size={28} color="white" />
+                                        </Touch>
+                                        </View> 
+                                    </View>  
+                                </View>
+                            ):
+                            (
+                                <TouchableOpacity onPress={()=>setAdd(!add)} style={{marginLeft:125}}>
+                                    <AddText>Add food item</AddText>
+                                </TouchableOpacity>
+                            )
+                        )
+                        }
+                    </BottomBar> 
+                </>
+            )
+            }                 
         </Container>
     )
 };

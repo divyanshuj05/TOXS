@@ -132,9 +132,13 @@ export const ProfileScreen = () => {
                             (
                                 <>
                                     <Details>{user.userName}</Details>
-                                    <TouchableOpacity onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
-                                        <UpdateButton name="spinner-refresh" size={22} />
-                                    </TouchableOpacity>
+                                    {user.type=="users"?
+                                    (
+                                        <TouchableOpacity onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
+                                            <UpdateButton name="spinner-refresh" size={22} />
+                                        </TouchableOpacity>
+                                    ):
+                                    (<></>)}
                                 </>
                             )
 

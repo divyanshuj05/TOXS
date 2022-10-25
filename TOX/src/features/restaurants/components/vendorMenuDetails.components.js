@@ -5,6 +5,7 @@ import { TextInput } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AppThemeContext } from '../../../services/common/theme.context';
+import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 
 const ListView = styled(View)`
     font-family:${(props) => props.theme.fonts.body};
@@ -28,8 +29,8 @@ const ListPrice = styled(Text)`
 `;
 
 const Touch=styled.TouchableOpacity`
-margin-left:${(props) => props.theme.space[2]};
-margin-top:${(props) => props.theme.space[2]};
+    margin-left:${(props) => props.theme.space[2]};
+    margin-top:${(props) => props.theme.space[2]};
 `;
 
 const Input=styled(TextInput)`
@@ -37,11 +38,19 @@ const Input=styled(TextInput)`
     width:100px;
 `;
 
-export const VendorMenuDetail= ({ foodItem, navigation }) => {
+const Error=styled(Text)`
+    margin-left:${(props) => props.theme.space[3]}; 
+    color:${props => props.theme.colors.ui.error}
+`;
+
+export const VendorMenuDetail= ({ foodItem,Restaurant }) => {
 
     const [edit,setEdit]=useState(false)
     const [cost,setCost]=useState("")
-    const { scheme } =useContext(AppThemeContext)
+    const [error,setError]=useState(null)
+
+    const { scheme } = useContext(AppThemeContext)
+    const { editItem,deleteItem } = useContext(VendorRestaurantContext)
 
     const deleteButton = () => {
             Alert.alert(
@@ -50,7 +59,7 @@ export const VendorMenuDetail= ({ foodItem, navigation }) => {
                 [
                     {
                         text: "Yes",
-                        onPress: () => { <></> }
+                        onPress: async () => {setError(await (deleteItem(foodItem.title,foodItem.price,Restaurant))) }
                     },
                     {
                         text: "No",
@@ -58,6 +67,11 @@ export const VendorMenuDetail= ({ foodItem, navigation }) => {
                     }
                 ]
             )
+    }
+
+    if(!!error)
+    {
+        setTimeout(()=>{setError(null)},5000)
     }
 
     return(
@@ -73,15 +87,17 @@ export const VendorMenuDetail= ({ foodItem, navigation }) => {
                             <View style={{flexDirection:"row"}}>
                                     <Input
                                         label="Item Cost"
-                                        value={cost}
                                         textContentType="telephoneNumber"
                                         keyboardType="phone-pad"
                                         autoCapitalize="none"
                                         onChangeText={(text) => setCost(text)} /> 
-                                    <Touch onPress={()=>setEdit(!edit)}>
-                                        <Ionicons name="checkmark-circle-outline" size={26} color="white" />
+                                    <Touch onPress={async()=>{
+                                        setEdit(!edit)
+                                        setError(await (editItem(foodItem.title,foodItem.price,cost,Restaurant)))
+                                        }}>
+                                        <Ionicons name="checkmark-circle-outline" size={26} color={scheme == "light" ? "black" : "white"} />
                                     </Touch>
-                                    </View> 
+                            </View>
                         ):
                         (
                             <>
@@ -99,6 +115,12 @@ export const VendorMenuDetail= ({ foodItem, navigation }) => {
                 <ListPrice>
                     ₹{foodItem.price}
                 </ListPrice>
+                {!!error?
+                (
+                    <Error>{error}</Error>
+                ):(<></>)
+
+                }
             </ListView>
     )
 }
