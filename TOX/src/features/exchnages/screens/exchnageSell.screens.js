@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View,ScrollView,StyleSheet,TouchableOpacity,Image } from "react-native"
 import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
 import { Dropdown } from 'react-native-element-dropdown';
+import { ExchangeContext } from '../../../services/exchnage/exchange.context';
 import * as ImagePicker from "expo-image-picker"
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const Wrapper = styled(View)`
     flex:1;
@@ -87,10 +89,12 @@ export const SellScreen = ({ navigation }) => {
 
     const [item,setItem]=useState("")
     const [desc,setDesc]=useState("")
-    const [price,setPrice]=useState(0)
+    const [price,setPrice]=useState("")
     const [category,setCategory]=useState("")
     const [image,setImage]=useState(null)
     const [error,setError]=useState(null)
+
+    const { addItem,isLoading } =useContext(ExchangeContext)
 
     const imageHandler =async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -101,8 +105,16 @@ export const SellScreen = ({ navigation }) => {
           });
       
           if (!result.cancelled) {
-            setImage(result.uri);
+            if(result.type!="image") setError("Only images are allowed")
+            else setImage(result);
           }
+    }
+
+    if(error!=null)
+    {
+        setTimeout(()=>{
+            setError(null)
+        },7000)
     }
 
     const data=[
@@ -115,61 +127,73 @@ export const SellScreen = ({ navigation }) => {
     return (
         <Wrapper>
             <Head>Submit Details of item</Head>
-            <ScrollView style={{flex:0.92}}>
-                <Row>
-                    <Item>Name of item </Item>
-                    <Input placeholder='Name' onChangeText={(text)=>setItem(text)} keyboardType="default" />
-                </Row>
-                <Row>
-                    <Item>Description of item</Item>
-                    <Input placeholder='Within 200 characters' onChangeText={(text)=>setDesc(text)} keyboardType="default" />
-                </Row>
-                <Row>
-                    <Item1>Category</Item1>
-                    <DropDownView>
-                    <Dropdown style={styles.dropdown}
-                        data={data}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        iconStyle={styles.iconStyle}
-                        value={category}
-                        onChange={item=>setCategory(item)}
-                        placeholder="Select Category"
-                        valueField="value"
-                        labelField="label"
-                    /></DropDownView>
-                </Row>
-                <Row>
-                    <Item>Expected Price of item</Item>
-                    <Input placeholder='Price' onChangeText={(text)=>setPrice(text)} keyboardType="number-pad" />
-                </Row>
-                <Row>
-                    <Item>Select Image</Item>
-                    <TouchableOpacity onPress={()=>imageHandler()}>
-                        <Photo>Add Photo</Photo>
-                    </TouchableOpacity>
-                </Row>
-                {image?
-                (<Image style={{flex: 1,
-                    width: 128,
-                    height: 128,
-                    resizeMode: 'contain',marginLeft:28}} source={{uri:image}} />):(<></>)
-                }
-                {error?
-                (
-                    <Error>{error}</Error>
-                ):
-                (<></>)
-                }
-            </ScrollView>
-            <View style={{ flex: 0.08, flexDirection: "row" }}>
-                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
-                    <Cancel>Cancel</Cancel>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { null }}>
-                    <Submit>Submit</Submit>
-                </TouchableOpacity>
-            </View>
+            {isLoading?
+            (
+                <View style={{ marginTop: 50 }}>
+                    <ActivityIndicator color={Colors.red400} size={50} />
+                </View>
+            ):
+            (
+                <>
+                    <ScrollView style={{flex:0.92}}>
+                        <Row>
+                            <Item>Name of item </Item>
+                            <Input placeholder='Name' onChangeText={(text)=>setItem(text)} keyboardType="default" />
+                        </Row>
+                        <Row>
+                            <Item>Description of item</Item>
+                            <Input placeholder='Within 200 characters' onChangeText={(text)=>setDesc(text)} keyboardType="default" />
+                        </Row>
+                        <Row>
+                            <Item1>Category</Item1>
+                            <DropDownView>
+                            <Dropdown style={styles.dropdown}
+                                data={data}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                iconStyle={styles.iconStyle}
+                                value={category}
+                                onChange={item=>setCategory(item)}
+                                placeholder="Select Category"
+                                valueField="value"
+                                labelField="label"
+                            /></DropDownView>
+                        </Row>
+                        <Row>
+                            <Item>Expected Price of item</Item>
+                            <Input placeholder='Price' onChangeText={(text)=>setPrice(text)} keyboardType="number-pad" />
+                        </Row>
+                        <Row>
+                            <Item>Select Image</Item>
+                            <TouchableOpacity onPress={()=>imageHandler()}>
+                                <Photo>Add Photo</Photo>
+                            </TouchableOpacity>
+                        </Row>
+                        {image?
+                        (<Image style={{flex: 1,
+                            width: 128,
+                            height: 128,
+                            resizeMode: 'contain',marginLeft:28}} source={{uri:image.uri}} />):(<></>)
+                        }
+                        {error?
+                        (
+                            <Error>{error}</Error>
+                        ):
+                        (<></>)
+                        }
+                    </ScrollView>
+                    <View style={{ flexDirection: "row" }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
+                            <Cancel>Cancel</Cancel>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={async() => { 
+                            setError(await (addItem(item,desc,price,category.label,image,navigation))) 
+                        }}>
+                            <Submit>Submit</Submit>
+                        </TouchableOpacity>
+                    </View>
+                </>
+            )}
         </Wrapper>
     )
 }
