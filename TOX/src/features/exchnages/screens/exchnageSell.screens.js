@@ -1,6 +1,9 @@
-import React from 'react';
-import { View } from "react-native"
+import React, { useState } from 'react';
+import { View,ScrollView,StyleSheet,TouchableOpacity,Image } from "react-native"
+import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
+import { Dropdown } from 'react-native-element-dropdown';
+import * as ImagePicker from "expo-image-picker"
 
 const Wrapper = styled(View)`
     flex:1;
@@ -8,13 +11,180 @@ const Wrapper = styled(View)`
 `;
 
 const Head=styled.Text`
+    text-align:center
     color:${props=>props.theme.text}
+    margin-vertical:${props=>props.theme.space[4]}
+    font-family:${props=>props.theme.fonts.heading}
+    font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-export const SellScreen = () => {
+const Item=styled.Text`
+    padding-horizontal:28px;
+    color:${props=>props.theme.text}
+    font-size:${props=>props.theme.fontSizes.title}
+    flex:0.7
+`;
+
+const Item1=styled.Text`
+    padding-horizontal:28px;
+    color:${props=>props.theme.text}
+    font-size:${props=>props.theme.fontSizes.title}
+    flex:0.38
+`;
+
+const Row=styled.View`
+    flex-direction:row
+    margin-bottom: 50px;
+`;
+
+const Input=styled(TextInput)`
+    height:36px;
+    width: 150px;
+`;
+
+const DropDownView=styled.View`
+    background-color:rgb(230,230,230)
+    flex:0.50
+    margin-right:42px;
+`;
+
+const Photo=styled.Text`
+    color:rgb(230,230,230)
+    border-radius:${props=>props.theme.space[2]}
+    background-color:${props=>props.theme.colors.ui.basic}
+    padding-horizontal:40px
+    padding-vertical:${props=>props.theme.space[3]}
+    font-family:${props=>props.theme.fonts.heading}
+    font-size:${props=>props.theme.fontSizes.body}
+`;
+
+const Error = styled.Text`
+    margin-left:${(props) => props.theme.space[4]}; 
+    color:${props => props.theme.colors.ui.error}
+`;
+
+const Cancel = styled.Text`
+    text-align:center;
+    font-size: 16px;
+    padding:12px;
+    font-family:${(props) => props.theme.fonts.heading};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+    color:${(props) => props.theme.colors.bg.primary};
+    background-color:${(props) => props.theme.colors.ui.error};
+`;
+
+const Submit = styled.Text`
+    text-align:center;
+    font-size: 16px;
+    padding:12px;
+    font-family:${(props) => props.theme.fonts.heading};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+    color:${(props) => props.theme.colors.bg.primary};
+    background-color:${(props) => props.theme.colors.ui.success};
+`;
+
+export const SellScreen = ({ navigation }) => {
+
+    const [item,setItem]=useState("")
+    const [desc,setDesc]=useState("")
+    const [price,setPrice]=useState(0)
+    const [category,setCategory]=useState("")
+    const [image,setImage]=useState(null)
+    const [error,setError]=useState(null)
+
+    const imageHandler =async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+      
+          if (!result.cancelled) {
+            setImage(result.uri);
+          }
+    }
+
+    const data=[
+    { label: 'Lab Coat', value: 'Lab Coat' },
+    { label: 'Books', value: 'Books' },
+    { label: 'Drafters', value: 'Drafters' },
+    { label: 'Misc', value: 'Misc' }
+    ]
+
     return (
         <Wrapper>
-            <Head>Buy Screen</Head>
+            <Head>Submit Details of item</Head>
+            <ScrollView style={{flex:0.92}}>
+                <Row>
+                    <Item>Name of item </Item>
+                    <Input placeholder='Name' onChangeText={(text)=>setItem(text)} keyboardType="default" />
+                </Row>
+                <Row>
+                    <Item>Description of item</Item>
+                    <Input placeholder='Within 200 characters' onChangeText={(text)=>setDesc(text)} keyboardType="default" />
+                </Row>
+                <Row>
+                    <Item1>Category</Item1>
+                    <DropDownView>
+                    <Dropdown style={styles.dropdown}
+                        data={data}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        iconStyle={styles.iconStyle}
+                        value={category}
+                        onChange={item=>setCategory(item)}
+                        placeholder="Select Category"
+                        valueField="value"
+                        labelField="label"
+                    /></DropDownView>
+                </Row>
+                <Row>
+                    <Item>Expected Price of item</Item>
+                    <Input placeholder='Price' onChangeText={(text)=>setPrice(text)} keyboardType="number-pad" />
+                </Row>
+                <Row>
+                    <Item>Select Image</Item>
+                    <TouchableOpacity onPress={()=>imageHandler()}>
+                        <Photo>Add Photo</Photo>
+                    </TouchableOpacity>
+                </Row>
+                {image?
+                (<Image style={{flex: 1,
+                    width: 128,
+                    height: 128,
+                    resizeMode: 'contain',marginLeft:28}} source={{uri:image}} />):(<></>)
+                }
+                {error?
+                (
+                    <Error>{error}</Error>
+                ):
+                (<></>)
+                }
+            </ScrollView>
+            <View style={{ flex: 0.08, flexDirection: "row" }}>
+                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
+                    <Cancel>Cancel</Cancel>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { null }}>
+                    <Submit>Submit</Submit>
+                </TouchableOpacity>
+            </View>
         </Wrapper>
     )
 }
+
+const styles = StyleSheet.create({
+    dropdown: {
+        margin: 12,
+        height: 20
+    },
+    placeholderStyle: {
+        fontSize: 16,
+        color: "rgb(100,100,100)"
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+        color: "rgb(100,100,100)"
+    }
+});
