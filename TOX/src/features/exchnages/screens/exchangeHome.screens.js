@@ -77,8 +77,8 @@ export const ExchangeHome = ({ navigation }) => {
                 </TouchableOpacity>
             </Exchange_Facility>
             <Exchange_Facility>
-                <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>null}>
-                    <Exchange_Text>My History</Exchange_Text>
+                <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("History")}>
+                    <Exchange_Text>My Orders and History</Exchange_Text>
                     <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                 </TouchableOpacity>
             </Exchange_Facility>

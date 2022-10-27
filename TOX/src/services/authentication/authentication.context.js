@@ -84,6 +84,15 @@ export const AuthenticationContextProvider = ({ children }) => {
       })
     }
 
+    if(result===true)
+    {
+      const q = query(collection(db, "users"), where("email", "==", email))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(doc => {
+        result = "Error: Email already taken!!"
+      })
+    }
+
     if (result === true) {
       addDoc(usersRef, {
         userName: userName,

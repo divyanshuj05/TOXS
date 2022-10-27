@@ -91,7 +91,7 @@ export const VendorRestaurantDetail = () => {
                     <FlatListStyle
                     data={restaurant[0].menuList}
                     renderItem={renderItem}
-                    keyExtractor={(item)=>item.Name}
+                    keyExtractor={(item)=>item.title}
                     />
                     <BottomBar>
                         {!!error?

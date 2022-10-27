@@ -16,7 +16,7 @@ const Head=styled.Text`
     text-align:center
     color:${props=>props.theme.text}
     margin-vertical:${props=>props.theme.space[4]}
-    font-family:${props=>props.theme.fonts.heading}
+    font-family:${props=>props.theme.fonts.body}
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
