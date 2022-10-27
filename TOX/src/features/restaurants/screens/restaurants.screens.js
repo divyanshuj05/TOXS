@@ -64,7 +64,7 @@ export const RestaurantScreen = ({ navigation }) => {
                         <FlatList
                             data={restaurants}
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name })}>
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0 })}>
                                     <FadeInView>
                                         <RestaurantInfoCard restaurant={item} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                                     </FadeInView>

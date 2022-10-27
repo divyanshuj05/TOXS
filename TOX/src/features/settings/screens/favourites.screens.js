@@ -48,7 +48,7 @@ export const FavSettingsScreen = ({ navigation }) => {
                     }
                     return (
                         <Wrapper key={key} onPress={() => {
-                            navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
+                            navigation.navigate("Home",{ screen:"RestaurantNavigator" ,params:{screen:"RestaurantsDetail" ,params:{ restaurent: restaurant, tag:1 }}} )
                         }}>
                             <RestaurantInfoCard restaurant={data} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
                         </Wrapper>

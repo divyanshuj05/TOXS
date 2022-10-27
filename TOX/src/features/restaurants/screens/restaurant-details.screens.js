@@ -5,6 +5,7 @@ import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
 import { MenuListContext } from "../../../services/restaurant/menu-list.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { SafeArea } from "../../../utils/components/safe-area.components"
 
 const RestaurantText = styled.Text`
   margin-top: ${(props) => props.theme.space[2]};
@@ -35,6 +36,7 @@ const EmptyList=styled.Text`
 
 export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
+    const { tag } = route.params
 
     const { destroy } = useContext(CartContext);
     const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
@@ -102,18 +104,34 @@ export const RestaurantDetails = ({ route, navigation }) => {
                 </IndicatorView>
             ):
             (
-                <>
-                    <RestaurantText>{restaurent}</RestaurantText>
-                    {!restaurantMenuList?
-                    (
-                        <EmptyList>No Menu List!!</EmptyList>
-                    ):
-                    (
-                        <MenuList data={restaurantMenuList} navigation={navigation} />
-                    )
-                    }
-                    
-                </>
+                tag==1?
+                (
+                    <SafeArea>
+                        <RestaurantText>{restaurent}</RestaurantText>
+                        {!restaurantMenuList?
+                        (
+                            <EmptyList>No Menu List!!</EmptyList>
+                        ):
+                        (
+                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                        )
+                        }
+                    </SafeArea>
+                ):
+                (
+                    <>
+                        <RestaurantText>{restaurent}</RestaurantText>
+                        {!restaurantMenuList?
+                        (
+                            <EmptyList>No Menu List!!</EmptyList>
+                        ):
+                        (
+                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                        )
+                        }   
+                    </>
+                )
+                
             )}
         </Container>
     )
