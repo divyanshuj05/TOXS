@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { TouchableOpacity, View, Alert } from 'react-native';
+import { TouchableOpacity, View,Alert } from 'react-native';
 import styled from 'styled-components'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const Container=styled.View`
     flex:1
@@ -21,15 +22,22 @@ const Head=styled.Text`
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};
-    margin-vertical:${(props) => props.theme.space[4]};
+    margin-vertical:${(props) => props.theme.space[3]};
 `;
 
-const ImageStyle=styled.Image`
+const ImageStylePot=styled.Image`
     width:200px
     height:200px
     resize-mode:contain
     margin-left:${(props) => props.theme.space[3]};
     flex:0.65
+`;
+
+const ImageStyle=styled.Image`
+    width:225px
+    height:225px
+    margin-left:${(props) => props.theme.space[4]};
+    margin-top:${(props) => props.theme.space[4]};
 `;
 
 const Title=styled.Text`
@@ -59,7 +67,7 @@ const Row=styled.View`
 
 const BottomBar = styled.View`
     background-color:${(props) => props.theme.colors.ui.basic};
-    padding: ${(props) => props.theme.space[4]};
+    padding: 10px
     border-radius: ${(props) => props.theme.space[2]};
     margin-horizontal: ${(props) => props.theme.space[2]};
 `;
@@ -84,6 +92,7 @@ export const ItemDetails = ({ route,navigation }) => {
     const { user } = useContext(AuthenticationContext)
     const { isLoading, UpdateExchanges } = useContext(ExchangeContext)
     const { RetrieveMobile, detailsLoading, mobile } = useContext(ExchangeHistoryContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     const [error,setError]=useState(null)
     
@@ -106,148 +115,68 @@ export const ItemDetails = ({ route,navigation }) => {
             RetrieveMobile(details.seller)
         }
     },[])
-    
 
-    const handleRemove = () => {
-        Alert.alert(
-            "Sure you want to remove item?",
-            "Item will no be shown to other users for selling",
-            [
-
-                {
-                    text: "Yes",
-                    onPress: async () => { setError(await(UpdateExchanges(details,"Removed by seller",navigation))) }
-                },
-                {
-                    text: "No",
-                    onPress: () => { <></> }
-                } 
-            ]
-        )
-    }
-
-    const handleBought = () => {
-        Alert.alert(
-            "Has the item been bought?",
-            "Item will be removed from your holding list",
-            [
-
-                {
-                    text: "Yes",
-                    onPress: async() => { setError(await(UpdateExchanges(details,"Sold",navigation))) }
-                },
-                {
-                    text: "No",
-                    onPress: () => { <></> }
+    const DetailsView = () => {
+        return(
+            <>
+                <Row>
+                    <F1><Desc>Description: </Desc></F1>
+                   <F2><Desc>{details.description}</Desc></F2>
+                </Row>
+                <Row>
+                    <F1><Desc>Expected Cost: </Desc></F1>
+                    <F2><Desc>₹{details.cost}</Desc></F2>
+                </Row>
+                <Row>
+                     <F1><Desc>Category: </Desc></F1>
+                    <F2><Desc>{details.category}</Desc></F2>
+                </Row>
+                <Row>
+                    <F1><Desc>Status: </Desc></F1>
+                    <F2><Desc>{details.status}</Desc></F2>
+                </Row>
+                {isSeller?
+                    (
+                        details.buyer=="null"?
+                        (<></>):
+                        (
+                            <>
+                                <Row>
+                                    <F1><Desc>Buyer Details: </Desc></F1>
+                                    <F2><Desc>{details.buyer}</Desc></F2>
+                                </Row>
+                                <Row>
+                                    <F1><Desc>Buyer Number: </Desc></F1>
+                                    <F2><Desc>{mobile}</Desc></F2>
+                                </Row>
+                            </>
+                        )
+                    ):
+                    (<></>)
                 }
-            ]
-        )
-    }
-
-    const handleHold = () => {
-        Alert.alert(
-            "Put the item on hold?",
-            "Contact the seller to buy the product",
-            [
-
-                {
-                    text: "Yes",
-                    onPress: async () => { setError(await(UpdateExchanges(details,"On Hold",navigation))) }
-                },
-                {
-                    text: "No",
-                    onPress: () => { <></> }
-                }
-            ]
-        )
-    }
-
-    const handleRelease = () => {
-        Alert.alert(
-            "Release the item?",
-            "Item will be visible to other users",
-            [
-
-                {
-                    text: "Yes",
-                    onPress: async () => { setError(await(UpdateExchanges(details,"Available",navigation))) }
-                },
-                {
-                    text: "No",
-                    onPress: () => { <></> }
-                }
-            ]
-        )
-    }
-
-    return(
-        <Container>
-                <Head>Details of Item</Head>
-                {detailsLoading?
-                (
-                    <View style={{flex:1}}>
-                        <ActivityIndicator size={50} color={Colors.red400} />
-                    </View>
-                ):
+                {isBuyer?
                 (
                     <>
-                        <Scroll>
-                            <Row>
-                                <ImageStyle source={{uri:details.imageURL}} />
-                                <Title>{details.name}</Title>
-                            </Row>
-                            <Row>
-                                <F1><Desc>Description: </Desc></F1>
-                                <F2><Desc>{details.description}</Desc></F2>
-                            </Row>
-                            <Row>
-                                <F1><Desc>Expected Cost: </Desc></F1>
-                                <F2><Desc>₹{details.cost}</Desc></F2>
-                            </Row>
-                            <Row>
-                                <F1><Desc>Category: </Desc></F1>
-                                <F2><Desc>{details.category}</Desc></F2>
-                            </Row>
-                            <Row>
-                                <F1><Desc>Status: </Desc></F1>
-                                <F2><Desc>{details.status}</Desc></F2>
-                            </Row>
-                            {isSeller?
-                                (
-                                    details.buyer=="null"?
-                                    (<></>):
-                                    (
-                                        <>
-                                            <Row>
-                                                <F1><Desc>Buyer Details: </Desc></F1>
-                                                <F2><Desc>{details.buyer}</Desc></F2>
-                                            </Row>
-                                            <Row>
-                                                <F1><Desc>Buyer Number: </Desc></F1>
-                                                <F2><Desc>{mobile}</Desc></F2>
-                                            </Row>
-                                        </>
-                                    )
-                                ):
-                                (<></>)
-                            }
-                            {isBuyer?
-                            (
-                                <>
-                                    <Row>
-                                        <F1><Desc>Seller Email: </Desc></F1>
-                                        <F2><Desc>{details.seller}</Desc></F2>
-                                    </Row>
-                                    <Row>
-                                        <F1><Desc>Seller Number: </Desc></F1>
-                                        <F2><Desc>{mobile}</Desc></F2>
-                                    </Row>
-                                </>
-                            ):
-                            (<></>) 
-                            }
-                        </Scroll>
-                        {details.status=="Available"||details.status=="On Hold"?
+                        <Row>
+                            <F1><Desc>Seller Email: </Desc></F1>
+                            <F2><Desc>{details.seller}</Desc></F2>
+                        </Row>
+                        <Row>
+                            <F1><Desc>Seller Number: </Desc></F1>
+                            <F2><Desc>{mobile}</Desc></F2>
+                        </Row>
+                    </>
+                ):
+                (<></>) 
+                }
+            </>
+        )
+    }
+
+    const BottomBarView = () => {
+        return(
+            <>
+                {details.status=="Available"||details.status=="On Hold"?
                 (   
                     <BottomBar>
                         <View style={{flexDirection:"row"}}>
@@ -260,7 +189,23 @@ export const ItemDetails = ({ route,navigation }) => {
                                 (
                                     isSeller?
                                         (
-                                            <TouchableOpacity style={{flex:1}} onPress={()=>handleRemove()}>
+                                            <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                Alert.alert(
+                                                    "Sure you want to remove item?",
+                                                    "Item will no be shown to other users for selling",
+                                                    [
+                                            
+                                                        {
+                                                            text: "Yes",
+                                                            onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                        },
+                                                        {
+                                                            text: "No",
+                                                            onPress: () => { <></> }
+                                                        } 
+                                                    ]
+                                                )
+                                                }}>
                                                 <Option>Remove item?</Option>
                                             </TouchableOpacity>
                                         ):
@@ -268,16 +213,64 @@ export const ItemDetails = ({ route,navigation }) => {
                                             isBuyer?
                                             (
                                                 <>
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>handleBought()}>
+                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                        Alert.alert(
+                                                            "Has the item been bought?",
+                                                            "Item will be removed from your holding list",
+                                                            [
+                                                    
+                                                                {
+                                                                    text: "Yes",
+                                                                    onPress: async() => { setError (await(UpdateExchanges(details,"Sold",navigation))) }
+                                                                },
+                                                                {
+                                                                    text: "No",
+                                                                    onPress: () => { <></> }
+                                                                }
+                                                            ]
+                                                        )
+                                                        }}>
                                                         <Option>Already Bought?</Option>
                                                     </TouchableOpacity>
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>handleRelease()}>
+                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                        Alert.alert(
+                                                            "Release the item?",
+                                                            "Item will be visible to other users",
+                                                            [
+                                                    
+                                                                {
+                                                                    text: "Yes",
+                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Available",navigation))) }
+                                                                },
+                                                                {
+                                                                    text: "No",
+                                                                    onPress: () => { <></> }
+                                                                }
+                                                            ]
+                                                        )
+                                                        }}>
                                                         <Option>Release item</Option>
                                                     </TouchableOpacity>
                                                 </>
                                             ):
                                             (
-                                                <TouchableOpacity style={{flex:1}} onPress={()=>handleHold()}>
+                                                <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                    Alert.alert(
+                                                        "Put the item on hold?",
+                                                        "Contact the seller to buy the product",
+                                                        [
+                                                
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: async () => { setError (await(UpdateExchanges(details,"On Hold",navigation))) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            }
+                                                        ]
+                                                    )
+                                                    }}>
                                                     <Option>Put on hold</Option>
                                                 </TouchableOpacity>
                                             )
@@ -294,9 +287,74 @@ export const ItemDetails = ({ route,navigation }) => {
                 ):
                 (<></>)
             }
+            </>
+        )
+    }
+    
+    if(orientation==1||orientation==2)
+    {
+        return(
+            <Container>
+                <Head>Details of Item</Head>
+                {detailsLoading?
+                    (
+                        <View style={{flex:1,marginTop: 50 }}>
+                            <ActivityIndicator size={50} color={Colors.red400} />
+                        </View>
+                    ):
+                    (
+                        <>
+                            <Scroll>
+                                <Row>
+                                    <ImageStylePot source={{uri:details.imageURL}} />
+                                    <Title>{details.name}</Title>
+                                </Row>
+                                {DetailsView()}
+                            </Scroll>
+                            {BottomBarView()}
+                        </>
+                    )
+                }
+            </Container>
+        )
+    }
+    else{
+        return(
+            <Container>
+                
+                {detailsLoading?
+                (
+                    <View style={{flex:1,marginTop:50}}>
+                        <ActivityIndicator size={50} color={Colors.red400} />
+                    </View>
+                ): 
+                (
+                    <>
+                        <Row>
+                            <View style={{flex:0.35}}>
+                                <Scroll>
+                                    <ImageStyle source={{uri:details.imageURL}} />
+                                </Scroll>
+                            </View>
+                            <View style={{flex:0.65}}>
+                            <Head>Details of Item</Head>
+                                <View style={{height:200}}>
+                                    <Scroll>
+                                        <Row>
+                                            <F1><Desc>Item Name: </Desc></F1>
+                                            <F2><Desc>{details.name}</Desc></F2>
+                                        </Row>
+                                        {DetailsView()}
+                                    </Scroll>
+                                    
+                                </View>
+                            </View>
+                        </Row>
+                        {BottomBarView()}
                     </>
                 )
                 }
-        </Container>
-    )
+            </Container>
+        )
+    }
 }

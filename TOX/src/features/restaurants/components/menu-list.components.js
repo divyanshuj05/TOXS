@@ -16,6 +16,7 @@ const ListView = styled(View)`
     font-size: ${(props) => props.theme.fontSizes.body};
     padding-vertical:${(props) => props.theme.space[3]};
     margin-bottom:${(props) => props.theme.space[2]};
+    padding-right:${(props) => props.theme.space[3]};
 `;
 
 const ListTitle = styled(Text)`
@@ -66,17 +67,19 @@ export const MenuList = ({ data, navigation }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <ListView>
-                <ListTitle>
-                    {item.title}
-                </ListTitle>
-                <View style={{ flexDirection: 'row' }}>
-                    <ListPrice>
-                        ₹{item.price}
-                    </ListPrice>
-                    <AddFoodItems foodDetail={item} />
-                </View>
-            </ListView>
+            <View style={{alignItems:"center"}}>
+                <ListView>
+                    <ListTitle>
+                        {item.title}
+                    </ListTitle>
+                    <View style={{ flexDirection: 'row' }}>
+                        <ListPrice>
+                            ₹{item.price}
+                        </ListPrice>
+                        <AddFoodItems foodDetail={item} />
+                    </View>
+                </ListView>
+            </View>
         );
     };
 
@@ -88,14 +91,16 @@ export const MenuList = ({ data, navigation }) => {
                 keyExtractor={(item) => item.title}
             />
             <BottomBar>
-                <ItemText>Items {items}</ItemText>
-                <CostText>Cost {cost}</CostText>
+                <View style={{flex:0.4,flexDirection:'row'}}>
+                    <ItemText>Items {items}</ItemText>
+                    <CostText>Cost {cost}</CostText>
+                </View>
                 {items === 0 ?
                     (
                         <></>
                     ) :
                     (
-                        <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("OrderList")}>
+                        <TouchableOpacity style={{ flex: 0.6, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList")}>
                             <Proceed>Proceed to pay</Proceed>
                             <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
                         </TouchableOpacity>

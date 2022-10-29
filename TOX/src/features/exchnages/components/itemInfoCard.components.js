@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View } from "react-native"
 import styled from 'styled-components'
 import { Card } from 'react-native-paper';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const CardContainer = styled.View`
     margin:${(props) => props.theme.space[3]};
@@ -40,10 +41,13 @@ const Cost=styled.Text`
 `;
 
 export const ItemInfoCard = ({ item }) => {
+
+    const { orientation } = useContext(DeviceOrientationContext)
+
     return(
         <CardContainer>
-            <Card elevation={5}>
-                <Card.Cover key={item.item.imgName} source={{ uri: item.item.imageURL }} style={{ height: 150 }} />
+            <Card elevation={5} style={{width:orientation==1||orientation==2?undefined:300}}>
+                <Card.Cover key={item.item.imgName} source={{ uri: item.item.imageURL }} style={{ height:orientation==1||orientation==2?150:140 }} />
                 <ItemInfo>
                     <View style={{flexDirection:"row"}}>
                         <Title>{item.item.name}</Title>

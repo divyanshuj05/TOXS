@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { View,ScrollView,StyleSheet,TouchableOpacity,Image } from "react-native"
+import { View,ScrollView,StyleSheet,TouchableOpacity,Image, DeviceEventEmitter } from "react-native"
 import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
 import * as ImagePicker from "expo-image-picker"
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { Alert } from 'react-native'
 
 const Wrapper = styled(View)`
     flex:1;
@@ -20,18 +22,19 @@ const Head=styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
+const HeadLand=styled.Text`
+    text-align:center
+    color:${props=>props.theme.text}
+    margin-vertical:${props=>props.theme.space[3]}
+    font-family:${props=>props.theme.fonts.body}
+    font-size:${props=>props.theme.fontSizes.h5}
+`;
+
 const Item=styled.Text`
     padding-horizontal:28px;
     color:${props=>props.theme.text}
     font-size:${props=>props.theme.fontSizes.title}
     flex:0.7
-`;
-
-const Item1=styled.Text`
-    padding-horizontal:28px;
-    color:${props=>props.theme.text}
-    font-size:${props=>props.theme.fontSizes.title}
-    flex:0.38
 `;
 
 const Row=styled.View`
@@ -46,8 +49,6 @@ const Input=styled(TextInput)`
 
 const DropDownView=styled.View`
     background-color:rgb(230,230,230)
-    flex:0.50
-    margin-right:42px;
 `;
 
 const Photo=styled.Text`
@@ -94,7 +95,8 @@ export const SellScreen = ({ navigation }) => {
     const [image,setImage]=useState(null)
     const [error,setError]=useState(null)
 
-    const { addItem,isLoading } =useContext(ExchangeContext)
+    const { addItem,isLoading } = useContext(ExchangeContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     const imageHandler =async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -112,9 +114,20 @@ export const SellScreen = ({ navigation }) => {
 
     if(error!=null)
     {
+        Alert.alert(
+            "Error!!",
+            `${error}`,
+            [
+
+                {
+                    text: "Ok",
+                    onPress: () => { <></> }
+                }
+            ]
+            )
         setTimeout(()=>{
             setError(null)
-        },7000)
+        },500)
     }
 
     const data=[
@@ -126,7 +139,14 @@ export const SellScreen = ({ navigation }) => {
 
     return (
         <Wrapper>
-            <Head>Submit Details of item</Head>
+            {orientation==1||orientation==2?
+            (
+                <Head>Submit Details of item</Head>
+            ):
+            (
+                <HeadLand>Submit Details of item</HeadLand>
+            )
+            }
             {isLoading?
             (
                 <View style={{ marginTop: 50 }}>
@@ -145,19 +165,20 @@ export const SellScreen = ({ navigation }) => {
                             <Input placeholder='Within 200 characters' onChangeText={(text)=>setDesc(text)} keyboardType="default" />
                         </Row>
                         <Row>
-                            <Item1>Category</Item1>
+                            <Item>Category</Item>
                             <DropDownView>
-                            <Dropdown style={styles.dropdown}
-                                data={data}
-                                placeholderStyle={styles.placeholderStyle}
-                                selectedTextStyle={styles.selectedTextStyle}
-                                iconStyle={styles.iconStyle}
-                                value={category}
-                                onChange={item=>setCategory(item)}
-                                placeholder="Select Category"
-                                valueField="value"
-                                labelField="label"
-                            /></DropDownView>
+                                <Dropdown style={styles.dropdown}
+                                    data={data}
+                                    placeholderStyle={styles.placeholderStyle}
+                                    selectedTextStyle={styles.selectedTextStyle}
+                                    iconStyle={styles.iconStyle}
+                                    value={category}
+                                    onChange={item=>setCategory(item)}
+                                    placeholder="Select Category"
+                                    valueField="value"
+                                    labelField="label"
+                                />
+                            </DropDownView>
                         </Row>
                         <Row>
                             <Item>Expected Price of item</Item>
@@ -201,7 +222,8 @@ export const SellScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     dropdown: {
         margin: 12,
-        height: 20
+        height: 20,
+        width: 125,
     },
     placeholderStyle: {
         fontSize: 16,

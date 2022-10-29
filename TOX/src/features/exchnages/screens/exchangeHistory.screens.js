@@ -5,6 +5,7 @@ import { ItemInfoCard } from "../components/itemInfoCard.components"
 import styled from 'styled-components'
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context'
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const Container=styled.View`
     flex:1
@@ -17,7 +18,7 @@ const Head=styled.Text`
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};
-    margin-vertical:${(props) => props.theme.space[3]};
+    margin-vertical:${(props) => props.theme.space[2]};
 `;
 
 const Empty=styled.Text`
@@ -31,6 +32,7 @@ const Empty=styled.Text`
 export const ExchangeHistory = ({ navigation }) => {
 
     const { detailsLoading, history, UserData } = useContext(ExchangeHistoryContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     useEffect(()=>{
         UserData()
@@ -59,6 +61,7 @@ export const ExchangeHistory = ({ navigation }) => {
                 history.length?
                     (
                         <FlatList 
+                            horizontal={orientation==1||orientation==2?false:true}
                             data={history}
                             renderItem={renderItem}
                             keyExtractor={(item)=>item.imgName}

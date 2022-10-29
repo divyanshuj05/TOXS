@@ -61,10 +61,15 @@ export const ExchangeContextProvider = ({ children }) => {
         {
             desc=desc.substring(0,199)
         }
-        if(category=="")
+        if(category==""||category==undefined||category==null)
         {
             setIsLoading(false)
             return "Fill category of item"
+        }
+        if(price==""||price==undefined)
+        {
+            setIsLoading(false)
+            return "Fill price of item"
         }
         if(price<=0)
         {

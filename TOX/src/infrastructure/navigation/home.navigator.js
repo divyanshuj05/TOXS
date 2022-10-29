@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "../../features/common/screens/home.screens";
 import { RestaurantsNavigator } from "./restaurants.navigator";
@@ -7,22 +8,23 @@ import { ExchangeNavigator } from "./exchange.navigator";
 const HomeStack = createStackNavigator();
 
 export const HomeNavigator = () => {
+
   return (
     <HomeStack.Navigator screenOptions={{
-      headerShown: false
-    }} >
-      <HomeStack.Screen
-        name="home"
-        component={HomeScreen}
-      />
-      <HomeStack.Screen
-        name="RestaurantNavigator"
-        component={RestaurantsNavigator}
-      />
-      <HomeStack.Screen
-        name="Exchnage"
-        component={ExchangeNavigator}
-      />
-    </HomeStack.Navigator>
+        headerShown: false
+      }} >
+        <HomeStack.Screen
+          name="home"
+          component={HomeScreen}
+        />
+        <HomeStack.Screen
+          name="RestaurantNavigator"
+          component={RestaurantsNavigator}
+        />
+        <HomeStack.Screen
+          name="Exchnage"
+          component={ExchangeNavigator}
+        />
+      </HomeStack.Navigator>
   );
 };

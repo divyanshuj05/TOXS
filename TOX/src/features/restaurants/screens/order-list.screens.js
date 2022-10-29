@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { View, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity, ScrollView } from "react-native"
 import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const Container = styled.View`
     flex:1;
@@ -15,7 +16,7 @@ const MainText = styled.Text`
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family:${(props) => props.theme.fonts.body};
-    padding-bottom:${(props) => props.theme.space[4]};
+    padding-bottom:${(props) => props.theme.space[3]};
 `;
 
 const FlatListStyle = styled.FlatList`
@@ -67,9 +68,30 @@ const Pay = styled.Text`
     background-color:${(props) => props.theme.colors.ui.success};
 `;
 
+const CancelLand = styled.Text`
+    text-align:center;
+    font-size: 18px;
+    padding:8px;
+    font-family:${(props) => props.theme.fonts.heading};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+    color:${(props) => props.theme.colors.bg.primary};
+    background-color:${(props) => props.theme.colors.ui.error};
+`;
+
+const PayLand = styled.Text`
+    text-align:center;
+    font-size: 18px;
+    padding:8px;
+    font-family:${(props) => props.theme.fonts.heading};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+    color:${(props) => props.theme.colors.bg.primary};
+    background-color:${(props) => props.theme.colors.ui.success};
+`;
+
 export const OrderListScreen = ({ navigation }) => {
 
     const { cost, items, order, unique, costItem } = useContext(CartContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     var data = []
 
@@ -113,7 +135,7 @@ export const OrderListScreen = ({ navigation }) => {
             {cal()}
             <ViewFlex>
                 <View style={{ flex: 0.5 }}>
-                    <ListText>Name of {"\n"}item</ListText>
+                    <ListText>Name of item</ListText>
                 </View>
                 <View style={{ flex: 0.2 }}>
                     <ListText>No of Items</ListText>
@@ -132,20 +154,36 @@ export const OrderListScreen = ({ navigation }) => {
                     <TotalText>TOTAL</TotalText>
                 </View>
                 <View style={{ flex: 0.2 }}>
-                    <TotalText>{items}</TotalText>
+                    <TotalText>   {items}</TotalText>
                 </View>
                 <View style={{ flex: 0.3 }}>
                     <TotalText>₹{cost}</TotalText>
                 </View>
             </Total>
-            <View style={{ flex: 0.15, flexDirection: "row" }}>
-                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
-                    <Cancel>Go Back</Cancel>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
-                    <Pay>Pay amount</Pay>
-                </TouchableOpacity>
-            </View>
+            {
+                orientation==1||orientation==2?
+                (
+                    <View style={{flexDirection: "row" }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
+                            <Cancel>Go Back</Cancel>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
+                            <Pay>Pay amount</Pay>
+                        </TouchableOpacity>
+                    </View>
+                ):
+                (
+                    <View style={{flexDirection: "row" }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
+                            <CancelLand>Go Back</CancelLand>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
+                            <PayLand>Pay amount</PayLand>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
+            
         </Container>
     )
 }

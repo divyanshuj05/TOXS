@@ -4,6 +4,7 @@ import { FavouritesContext } from '../../../services/restaurant/favourites.conte
 import { RestaurantInfoCard } from '../../restaurants/components/restaurantInfoCard.components';
 import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 import styled from 'styled-components';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const Container = styled.View`
     flex:1;
@@ -27,6 +28,7 @@ export const FavSettingsScreen = ({ navigation }) => {
 
     const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext);
     const { restaurantCopy } = useContext(RestaurantContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     if (!favourites.length) {
         return (<Container><TextContainer>No favourites!!</TextContainer></Container>)
@@ -35,7 +37,7 @@ export const FavSettingsScreen = ({ navigation }) => {
     return (
         <Container>
             <TextContainer>My Favourites</TextContainer>
-            <ScrollView>
+            <ScrollView horizontal={orientation==1||orientation==2?false:true}>
                 {favourites.map((restaurant) => {
                     const key = restaurant;
                     let data = []
@@ -50,7 +52,7 @@ export const FavSettingsScreen = ({ navigation }) => {
                         <Wrapper key={key} onPress={() => {
                             navigation.navigate("Home",{ screen:"RestaurantNavigator" ,params:{screen:"RestaurantsDetail" ,params:{ restaurent: restaurant, tag:1 }}} )
                         }}>
-                            <RestaurantInfoCard restaurant={data} favourites={favourites} add={addFavoutites} remove={removeFavorites} />
+                            <RestaurantInfoCard restaurant={data} favourites={favourites} add={addFavoutites} remove={removeFavorites} oriTag={orientation==1||orientation==2?0:1} />
                         </Wrapper>
                     );
                 })}

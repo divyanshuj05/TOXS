@@ -6,6 +6,7 @@ import { CartContext } from "../../../services/restaurant/cart.context";
 import { MenuListContext } from "../../../services/restaurant/menu-list.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { SafeArea } from "../../../utils/components/safe-area.components"
+import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
 const RestaurantText = styled.Text`
   margin-top: ${(props) => props.theme.space[2]};
@@ -39,6 +40,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
     const { tag } = route.params
 
     const { destroy } = useContext(CartContext);
+    const { LockOrientation, UnlockOrientation } = useContext(DeviceOrientationContext)
     const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
 
     useEffect(() => {
@@ -63,8 +65,13 @@ export const RestaurantDetails = ({ route, navigation }) => {
     }, [navigation])
     
     useEffect(()=>{
+        LockOrientation()
         Search(restaurent)
         destroy()
+    },[])
+
+    useEffect(()=>()=>{
+        UnlockOrientation()
     },[])
 
     /*const flatlistData = [

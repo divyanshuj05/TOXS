@@ -3,7 +3,6 @@
     "name": "TOX",
     "slug": "TOX",
     "version": "1.0.0",
-    "orientation": "portrait",
     "icon": "./assets/TOX_LOGO.png",
     "userInterfaceStyle": "light",
     "splash": {

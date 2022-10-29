@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.TouchableOpacity`
     margin:${props => props.theme.space[2]}
+    align-items:center
 `;
 
 const Img = styled.Image`
@@ -19,17 +20,19 @@ const FavText = styled.Text`
 `;
 
 const FavTitle = styled.Text`
+    font-size:${props => props.theme.fontSizes.body};
     font-family: ${props => props.theme.fonts.body};
     color:${props => props.theme.text}
+    text-align:center
     padding-left: ${(props) => props.theme.space[2]}
 `;
 
-export const FavBar = ({ favourites, restaurants, navigation }) => {
+export const FavBar = ({ favourites, restaurants, navigation, oriTag }) => {
 
     return (
         <>
             <FavTitle>Favourites</FavTitle>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal={oriTag==1?false:true} showsHorizontalScrollIndicator={false}>
                 {favourites.map((restaurant) => {
                     const key = restaurant;
                     let icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU"

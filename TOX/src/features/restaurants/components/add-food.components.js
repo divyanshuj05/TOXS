@@ -65,7 +65,7 @@ export const AddFoodItems = ({ foodDetail }) => {
                         <TouchableOpacity onPress={() => { setSubjectCount(subjectCount + 1), cal(parseInt(price,10), 1, title) }} >
                             <Add>+</Add>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount - 1), cal(parseInt(price,10), -1, title) }}>
+                        <TouchableOpacity onPress={() => { setSubjectCount(subjectCount - 1), cal(parseInt(-price,10), -1, title) }}>
                             <Subtract>-</Subtract>
                         </TouchableOpacity>
                     </Wrapper>

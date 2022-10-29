@@ -7,7 +7,7 @@ import { SvgXml } from 'react-native-svg';
 import { Favourite } from './favourite.components';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
-export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites, add, remove }) => {
+export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites, add, remove, oriTag }) => {
 
     const RestaurantInfo = styled.View`
     padding: ${(props) => props.theme.space[2]}
@@ -28,8 +28,6 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
 
     const RatingStyle = styled.View`
     flex-direction:row;
-    padding-top: ${(props) => props.theme.space[1]}
-    padding-bottom: ${(props) => props.theme.space[1]}
     `;
 
     const OpenContainer = styled(View)`
@@ -43,10 +41,36 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     align-items:center
     `;
 
-    const CardContainer = styled.View`
-    margin:${(props) => props.theme.space[1]};
-    `;
+    let CardContainer=styled.View``
 
+    if(oriTag==0)
+    {
+        CardContainer = styled.View`
+            margin-vertical:${(props) => props.theme.space[1]};
+        `;
+    }
+    else
+    {
+        CardContainer = styled.View`
+            margin-vertical:${(props) => props.theme.space[1]};
+            margin-horizontal:${(props) => props.theme.space[1]};
+        `;
+    }
+
+    let CardStyle=styled(Card)``;
+
+    if(oriTag==0)
+    {
+            CardStyle = styled(Card)`
+        `;
+    }
+    else
+    {
+        CardStyle = styled(Card)`
+            width:300px
+        `;
+    }
+    
     const {
         Name = "Mock Restaurant Name",
         icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU",
@@ -57,28 +81,37 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     const { user }=useContext(AuthenticationContext)
 
     return (
-        <CardContainer>
-            <Card elevation={5}>
-                <View>
-                    {user.type=="users"?
-                    (
-                        <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
-                    ):(<></>)
-                    }
-                    <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160 }} />
-                </View>
-                <RestaurantInfo>
-                    <Title>{Name}</Title>
-                    <Section>
-                        <RatingStyle>
-                            <OpenContainer>
-                                {isOpen == "true" ? (<SvgXml xml={open} width={20} height={20} />) : (<></>)}
-                            </OpenContainer>
-                        </RatingStyle>
-                    </Section>
-                    <Address>{address}</Address>
-                </RestaurantInfo>
-            </Card>
-        </CardContainer>
+        <>
+            <CardContainer>
+                <CardStyle elevation={5}>
+                    <View>
+                        {user.type=="users"?
+                        (
+                            <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
+                        ):(<></>)
+                        }
+                        <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160 }} />
+                    </View>
+                    <RestaurantInfo>
+                        <Title>{Name}</Title>
+                        <View style={{flexDirection:"row"}}>
+                            <View style={{flex:0.8}}>
+                                <Address>{address}</Address>
+                            </View>
+                            <View style={{flex:0.2}}>
+                                <Section>
+                                    <RatingStyle>
+                                        <OpenContainer>
+                                            {isOpen == "true" ? (<SvgXml xml={open} width={20} height={20} />) : (<></>)}
+                                        </OpenContainer>
+                                    </RatingStyle>
+                                </Section>
+                            </View>
+                            
+                        </View>
+                    </RestaurantInfo>
+                </CardStyle>
+            </CardContainer>
+            </>
     );
 }
