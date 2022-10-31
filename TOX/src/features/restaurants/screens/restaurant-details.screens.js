@@ -74,34 +74,6 @@ export const RestaurantDetails = ({ route, navigation }) => {
         UnlockOrientation()
     },[])
 
-    /*const flatlistData = [
-        {
-            title: "Cold Drink",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Chips",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Pizza",
-            price: 80,
-            notAdded: true
-        },
-        {
-            title: "Patties",
-            price: 25,
-            notAdded: true
-        },
-        {
-            title: "Sandwich",
-            price: 30,
-            notAdded: true
-        },
-    ];*/
-
     return (
         <Container>
             {isLoading?

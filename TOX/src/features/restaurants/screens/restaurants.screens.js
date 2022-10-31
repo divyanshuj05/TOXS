@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TouchableOpacity, FlatList, View } from "react-native";
+import { TouchableOpacity, FlatList, View, Alert } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
 import { FadeInView } from "../../common/components/animations/fade.animation"
@@ -84,7 +84,31 @@ export const RestaurantScreen = ({ navigation }) => {
                                 <FlatList
                                     data={restaurants}
                                     renderItem={({ item }) =>
-                                        <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0})}>
+                                        <TouchableOpacity onPress={() => 
+                                            {
+                                                if(item.isOpen=="false")
+                                                {
+                                                    Alert.alert(
+                                                        "Cafeteria is closed right now!",
+                                                        "Still want to order?",
+                                                        [
+                                        
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: () => { navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0}) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            }
+                                                        ]
+                                                    )
+                                                }
+                                                else{
+                                                    navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0})
+                                                }
+                                            }
+                                        }>
                                             <FadeInView>
                                                 <RestaurantInfoCard restaurant={item} favourites={favourites} add={addFavoutites} remove={removeFavorites} oriTag={0} />
                                             </FadeInView>
@@ -131,7 +155,29 @@ export const RestaurantScreen = ({ navigation }) => {
                                         horizontal
                                         data={restaurants}
                                         renderItem={({ item }) =>
-                                            <TouchableOpacity onPress={() => navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0 })}>
+                                            <TouchableOpacity onPress={() => {
+                                                if(item.isOpen=="false")
+                                                {
+                                                    Alert.alert(
+                                                        "Cafeteria is closed right now!",
+                                                        "Still want to order?",
+                                                        [
+                                        
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: () => { navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0}) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            }
+                                                        ]
+                                                    )
+                                                }
+                                                else{
+                                                    navigation.navigate("RestaurantsDetail", { restaurent: item.Name,tag:0})
+                                                }
+                                            }}>
                                                 <FadeInView>
                                                     <RestaurantInfoCard restaurant={item} favourites={favourites} add={addFavoutites} remove={removeFavorites} oriTag={1} />
                                                 </FadeInView>
