@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { Text, View, TouchableOpacity, Alert, ScrollView } from "react-native"
+import { View, TouchableOpacity, Alert } from "react-native"
 import { AuthenticationContext } from '../../../services/authentication/authentication.context'
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context'
 
 const Scroll = styled.ScrollView`
     flex:1
@@ -89,7 +91,8 @@ const Error = styled.Text`
 
 export const ProfileScreen = () => {
 
-    const { user, UpdateDoc, removeDoc, isLoading } = useContext(AuthenticationContext)
+    const { user, UpdateDoc, removeDoc } = useContext(AuthenticationContext)
+    const { isOrientationLoading } = useContext(DeviceOrientationContext)
     const [updateUser, setUpdateUser] = useState(false)
     const [updateMobile, setUpdateMobile] = useState(false)
     const [updatePass, setUpdatePass] = useState(false)
@@ -99,6 +102,15 @@ export const ProfileScreen = () => {
     const [newUser, setNewUser] = useState("")
     const [newMobile, setNewMobile] = useState("")
     const [newPass, setNewPass] = useState("")
+
+    if(isOrientationLoading)
+    {
+        return(
+            <Scroll>
+                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+            </Scroll>
+        )
+    }
 
     return (
         <Scroll>

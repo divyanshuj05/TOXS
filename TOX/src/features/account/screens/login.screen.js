@@ -1,18 +1,32 @@
 import React, { useState, useContext } from "react";
+import { View } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
-
+import { SafeArea } from "../../../utils/components/safe-area.components";
 import {
   AccountBackground,
-  AccountCover,
-  AccountContainer,
   AuthButton,
   AuthInput,
   ErrorContainer,
-  Title,
+  AuthInputLand
 } from "../components/account.styles";
 import { Text } from "../../common/components/typography/text.component";
 import { Spacer } from "../../common/components/spacer/spacer.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+import styled from "styled-components";
+import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
+
+const Title = styled(Text)`
+  text-align:center
+  font-size: 30px;
+  margin-top:92px
+`;
+
+const AccountContainer = styled.View`
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: ${(props) => props.theme.space[4]};
+  margin-top:${(props) => props.theme.space[4]};
+  margin-horizontal: ${(props) => props.theme.space[3]};
+`;
 
 export const LoginScreen = ({ route,navigation }) => {
   const {collection}=route.params
@@ -20,35 +34,62 @@ export const LoginScreen = ({ route,navigation }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const { onLogin, error, isLoading, setError } = useContext(AuthenticationContext);
-  return (
-    <AccountBackground>
-      <AccountCover />
-      <Title>TOXs</Title>
-      <AccountContainer>
-        <AuthInput
-          label="User Name"
-          value={userName}
-          textContentType="username"
-          keyboardType="default"
-          autoCapitalize="words"
-          onChangeText={(u) => setUserName(u)}
-        />
-        <Spacer size="large">
-          <AuthInput
-            label="Password"
-            value={password}
-            textContentType="password"
-            secureTextEntry
-            autoCapitalize="none"
-            onChangeText={(p) => setPassword(p)}
-          />
-        </Spacer>
+  const { orientation } = useContext(DeviceOrientationContext)
+
+  const ContentView = () => {
+    return(
+      <>
+        <AccountContainer>
+          {orientation==1||orientation==2?
+          (
+            <>
+              <AuthInput
+              label="User Name"
+              value={userName}
+              textContentType="username"
+              keyboardType="default"
+              autoCapitalize="words"
+              onChangeText={(u) => setUserName(u)}
+            />
+            <Spacer size="large">
+              <AuthInput
+                label="Password"
+                value={password}
+                textContentType="password"
+                secureTextEntry
+                autoCapitalize="none"
+                onChangeText={(p) => setPassword(p)}
+              />
+              </Spacer>
+            </>
+          ):(
+            <>
+              <AuthInputLand
+              label="User Name"
+              value={userName}
+              textContentType="username"
+              keyboardType="default"
+              autoCapitalize="words"
+              onChangeText={(u) => setUserName(u)}
+            />
+            <Spacer size="large">
+              <AuthInputLand
+                label="Password"
+                value={password}
+                textContentType="password"
+                secureTextEntry
+                autoCapitalize="none"
+                onChangeText={(p) => setPassword(p)}
+              />
+              </Spacer>
+            </>
+          )}
         {error && (
           <ErrorContainer size="large">
             <Text variant="error">{error}</Text>
           </ErrorContainer>
         )}
-        <Spacer size="large">
+        <Spacer size="xl">
           {!isLoading ? (
             <AuthButton
               icon="food"
@@ -62,11 +103,49 @@ export const LoginScreen = ({ route,navigation }) => {
           )}
         </Spacer>
       </AccountContainer>
-      <Spacer size="large">
+      </>
+    )
+  }
+
+  const BackButtonView = () => {
+    return(
+      <Spacer size="xl">
+        <View style={{marginHorizontal:48, marginTop:32}}>
         <AuthButton mode="contained" onPress={() => { setError(null), navigation.goBack() }}>
           Back
         </AuthButton>
+        </View>
       </Spacer>
-    </AccountBackground>
-  );
+    )
+  }
+
+  if(orientation==1||orientation==2)
+  {
+    return(
+      <SafeArea>
+        <AccountBackground>
+          <Title>TOXs</Title>
+          {ContentView()}
+          {BackButtonView()}
+        </AccountBackground>
+      </SafeArea>
+    )
+  }
+  else{
+    return(
+      <SafeArea>
+        <AccountBackground>
+          <View style={{flexDirection:"row"}}>
+            <View style={{flex:0.4}}>
+              <Title>TOXs</Title>
+              {BackButtonView()}
+            </View>
+            <View style={{flex:0.6}}>
+              {ContentView()}
+            </View>
+          </View>
+        </AccountBackground>
+      </SafeArea>
+    )
+  }
 };

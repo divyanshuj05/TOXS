@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { RestaurantInfoCard } from '../components/restaurantInfoCard.components';
 import { FadeInView } from '../../common/components/animations/fade.animation';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
 const Container=styled.View`
     flex:1
@@ -15,7 +16,11 @@ const Container=styled.View`
 const HeaderContainer = styled.View`
     padding: ${(props) => props.theme.space[3]};
     background-color:${(props) => props.theme.colors.ui.basic};
-    margin-bottom: ${(props) => props.theme.space[4]};
+`;
+
+const HeaderContainerLand = styled.View`
+    padding: ${(props) => props.theme.space[2]};
+    background-color:${(props) => props.theme.colors.ui.basic};
 `;
 
 const CardContainer = styled.View`
@@ -35,8 +40,11 @@ const HeaderText=styled.Text`
 export const VendorRestaurantScreen = ({ navigation }) => {
 
     const { restaurant,isLoading } =useContext(VendorRestaurantContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
-    return(
+    if(orientation==1||orientation==2)
+    {
+        return(
         <SafeArea>
             <Container>
                 <HeaderContainer>
@@ -55,7 +63,39 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                             renderItem={({ item }) =>
                                 <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails")}>
                                     <FadeInView>
-                                        <RestaurantInfoCard restaurant={item} />
+                                        <RestaurantInfoCard restaurant={item} oriTag={0} />
+                                    </FadeInView>
+                                </TouchableOpacity>}
+                            keyExtractor={(item) => item.Name}
+                        />
+                    )
+                }
+            </CardContainer>
+            </Container>
+        </SafeArea>
+        )
+    }
+    return(
+        <SafeArea>
+            <Container>
+                <HeaderContainerLand>
+                    <HeaderText>Manage Restaurants</HeaderText>
+                </HeaderContainerLand>
+            <CardContainer>
+                {isLoading ?
+                    (
+                        <View>
+                            <ActivityIndicator color={Colors.red400} size={50} />
+                        </View>
+                    ) :
+                    (
+                        <FlatList
+                            horizontal
+                            data={restaurant}
+                            renderItem={({ item }) =>
+                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails")}>
+                                    <FadeInView>
+                                        <RestaurantInfoCard restaurant={item} oriTag={1} />
                                     </FadeInView>
                                 </TouchableOpacity>}
                             keyExtractor={(item) => item.Name}

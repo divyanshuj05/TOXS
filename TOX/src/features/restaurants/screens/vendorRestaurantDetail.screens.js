@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { VendorMenuDetail } from "../components/vendorMenuDetails.components";
 import { VendorRestaurantContext } from "../../../services/restaurant/vendorRestaurant.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
 const RestaurantText = styled.Text`
   margin-top: ${(props) => props.theme.space[2]};
@@ -20,6 +21,7 @@ const FlatListStyle = styled(FlatList)`
     padding-top:${(props) => props.theme.space[3]};
     padding-left:${(props) => props.theme.space[1]};
     padding-right:${(props) => props.theme.space[1]};
+    flex:1
 `;
 
 const Container = styled.View`
@@ -31,7 +33,7 @@ const BottomBar = styled(View)`
     background-color:${(props) => props.theme.colors.ui.basic};
     flex-direction:row
     padding-horizontal: ${(props) => props.theme.space[2]};
-    padding-vertical: ${(props) => props.theme.space[4]};
+    padding-vertical: ${(props) => props.theme.space[3]};
     border-radius: ${(props) => props.theme.space[2]};
     margin-horizontal: ${(props) => props.theme.space[2]};
 `;
@@ -39,6 +41,7 @@ const BottomBar = styled(View)`
 const AddText=styled.Text`
     color:${(props) => props.theme.colors.bg.primary};
     font-size:18px;
+    text-align:center
     font-family:${(props) => props.theme.fonts.heading};
 `;
 
@@ -66,6 +69,7 @@ export const VendorRestaurantDetail = () => {
     const [item,setItem]=useState("")
     const [cost,setCost]=useState("")
     const [error,setError]=useState(null)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     if(!!error)
     {
@@ -74,7 +78,7 @@ export const VendorRestaurantDetail = () => {
 
     const renderItem = ({ item }) => {
         return (
-            <VendorMenuDetail foodItem={item} Restaurant={restaurant[0].Name} />
+            <VendorMenuDetail foodItem={item} Restaurant={restaurant[0].Name} oriTag={orientation==1||orientation==2?0:1} />
         );
     };
 
@@ -91,7 +95,7 @@ export const VendorRestaurantDetail = () => {
                     <FlatListStyle
                     data={restaurant[0].menuList}
                     renderItem={renderItem}
-                    keyExtractor={(item)=>item.Name}
+                    keyExtractor={(item)=>item.title}
                     />
                     <BottomBar>
                         {!!error?
@@ -101,7 +105,7 @@ export const VendorRestaurantDetail = () => {
                         (add?
                             (
                                 <View style={{flexDirection:"row", flex:1}}>
-                                    <View style={{flex:0.45}}>
+                                    <View style={{flex:0.4,alignItems:"center"}}>
                                         <Add>Name: </Add>  
                                         <Input
                                             label="New item"
@@ -110,26 +114,26 @@ export const VendorRestaurantDetail = () => {
                                             autoCapitalize="words"
                                             onChangeText={(text) => setItem(text)} />  
                                     </View>  
-                                    <View style={{flex:0.55}}>
+                                    <View style={{flex:0.4,alignItems:"center"}}>
                                         <Add>Cost: </Add> 
-                                        <View style={{flexDirection:"row"}}>
                                         <Input
                                             label="Item Cost"
                                             textContentType="telephoneNumber"
                                             keyboardType="phone-pad"
                                             autoCapitalize="none"
                                             onChangeText={(text) => setCost(text)} /> 
+                                    </View>       
+                                    <View style={{flex:0.2,alignItems:"flex-start"}}>
                                         <Touch onPress={async ()=>{
                                             setError(await (addItem(item,cost,restaurant[0].Name)))
                                             setAdd(!add)}}>
-                                            <Ionicons name="checkmark-circle-outline" size={28} color="white" />
+                                            <Ionicons name="checkmark-circle-outline" size={28} style={{marginTop:16}} color="white" />
                                         </Touch>
-                                        </View> 
-                                    </View>  
+                                    </View>   
                                 </View>
                             ):
                             (
-                                <TouchableOpacity onPress={()=>setAdd(!add)} style={{marginLeft:125}}>
+                                <TouchableOpacity onPress={()=>setAdd(!add)} style={{flex:1,alignItems:"center"}}>
                                     <AddText>Add food item</AddText>
                                 </TouchableOpacity>
                             )

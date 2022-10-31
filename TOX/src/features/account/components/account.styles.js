@@ -6,8 +6,6 @@ export const AccountBackground = styled.ImageBackground.attrs({
   source: require("../../../../assets/home_bg.jpg"),
 })`
   flex: 1;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const AccountCover = styled.View`
@@ -17,6 +15,8 @@ export const AccountCover = styled.View`
 export const AccountContainer = styled.View`
   background-color: rgba(255, 255, 255, 0.7);
   padding: ${(props) => props.theme.space[4]};
+  margin-horizontal: ${(props) => props.theme.space[5]};
+  margin-vertical:${(props) => props.theme.space[3]};
 `;
 
 export const AuthButton = styled(Button).attrs({
@@ -26,11 +26,15 @@ export const AuthButton = styled(Button).attrs({
 `;
 
 export const AuthInput = styled(TextInput)`
-  width: 300px;
+  width: 287px;
+`;
+
+export const AuthInputLand = styled(TextInput)`
+  width: 400px;
 `;
 
 export const Title = styled(Text)`
-margin:${(props) => props.theme.space[3]};;
+  text-align:center
   font-size: 30px;
 `;
 
@@ -48,4 +52,11 @@ export const AnimationWrapper = styled.View`
   position: absolute;
   top: 1px;
   padding: ${(props) => props.theme.space[2]};
+`;
+
+export const AnimationWrapperLand = styled.View`
+  flex:0.4
+  justify-content:center
+  align-items:center
+  margin-top:25px
 `;

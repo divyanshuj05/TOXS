@@ -5,6 +5,7 @@ import 'firebase/compat/firestore';
 import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../database.config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 
 export const AuthenticationContext = createContext();
 
@@ -49,10 +50,26 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
 
   const onLogout = () => {
-    setTimeout(() => {
-      setUser(null);
-      removeUser();
-    }, 800)
+    Alert.alert(
+      "Sure want to logout?",
+      "Some features may not perist between logins",
+      [
+
+          {
+              text: "Yes",
+              onPress: () => {
+                setTimeout(() => {
+                  setUser(null);
+                  removeUser();
+                }, 800)
+              }
+          },
+          {
+            text: "No",
+            onPress: () => { return }
+          }
+      ]
+      )
   };
 
   const onRegister = async (userName, email, MobileNo, password, repeatedPassword) => {
@@ -81,6 +98,15 @@ export const AuthenticationContextProvider = ({ children }) => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(doc => {
         result = "Error: User Name already taken!!"
+      })
+    }
+
+    if(result===true)
+    {
+      const q = query(collection(db, "users"), where("email", "==", email))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(doc => {
+        result = "Error: Email already taken!!"
       })
     }
 

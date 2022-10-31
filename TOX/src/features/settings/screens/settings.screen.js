@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { View } from "react-native";
 import styled from "styled-components/native";
 import { List, Avatar } from "react-native-paper";
 import { Text } from "../../common/components/typography/text.component";
@@ -6,8 +7,9 @@ import { Spacer } from "../../common/components/spacer/spacer.component";
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { AppThemeContext } from "../../../services/common/theme.context";
+import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex:1;
   background-color:${props => props.theme.background};
 `;
@@ -26,18 +28,22 @@ export const SettingsScreen = ({ navigation }) => {
   const { onLogout, user } = useContext(AuthenticationContext);
   const { scheme, setScheme } = useContext(AppThemeContext)
   const [count, setCount] = useState(true);
+  const { orientation } = useContext(DeviceOrientationContext)
 
-  return (
-    <SafeArea>
-      <Container>
-        <AvatarContainer>
+  const UserNameView = () => {
+    return(
+      <AvatarContainer>
           <Avatar.Icon size={180} icon="account" backgroundColor="purple" />
           <Spacer position="top" size="large">
             <Text variant="label" style={{ color: scheme == "light" ? "black" : "white" }}>{user.userName}</Text>
           </Spacer>
-        </AvatarContainer>
+      </AvatarContainer>
+    )
+  }
 
-        <List.Section>
+  const ListView = () => {
+    return(
+      <List.Section>
           {
             user.type=="vendors"?
             (<></>):
@@ -65,7 +71,38 @@ export const SettingsScreen = ({ navigation }) => {
             titleStyle={{ color: scheme == "light" ? "black" : "white" }}
           />
         </List.Section>
-      </Container>
-    </SafeArea>
-  );
+    )
+  }
+
+  if(orientation==1||orientation==2)
+  {
+    return(
+      <SafeArea>
+        <Container>
+          {UserNameView()}
+          {ListView()}
+        </Container>
+      </SafeArea>
+    )
+  }
+  else{
+    return(
+      <SafeArea>
+        <Container>
+          <View style={{flexDirection:"row"}}>
+            <View style={{flex:0.4}}>
+              {UserNameView()}
+            </View>
+            <View style={{flex:0.6}}>
+              <View style={{flex:1,justifyContent:"center"}}>
+                {ListView()}
+              </View>
+            </View>
+          </View>
+        </Container>
+      </SafeArea>
+
+    )
+  }
+
 };

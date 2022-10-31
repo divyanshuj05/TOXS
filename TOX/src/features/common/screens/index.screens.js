@@ -11,9 +11,9 @@ export const Index = () => {
   const { scheme } = useContext(AppThemeContext);
 
   return (
-    <ThemeProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
-      <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
-      <Navigation />
-    </ThemeProvider>
+      <ThemeProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
+        <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
+          <Navigation />
+      </ThemeProvider> 
   )
 }

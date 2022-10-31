@@ -4,6 +4,7 @@ import { useFonts as LatoFont, Lato_400Regular } from '@expo-google-fonts/lato';
 import { AppThemeContextProvider } from "./src/services/common/theme.context";
 import { Index } from "./src/features/common/screens/index.screens";
 import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { DeviceOrientationContextProvider } from "./src/services/common/deviceOrientation.context";
 
 export default function App() {
 
@@ -19,11 +20,13 @@ export default function App() {
 
   return (
     <>
-      <AuthenticationContextProvider>
-        <AppThemeContextProvider>
-          <Index />
-        </AppThemeContextProvider>
-      </AuthenticationContextProvider>
+    <DeviceOrientationContextProvider>
+        <AuthenticationContextProvider>
+          <AppThemeContextProvider>
+            <Index />
+          </AppThemeContextProvider>
+        </AuthenticationContextProvider>
+      </DeviceOrientationContextProvider>
     </>
   );
 }

@@ -1,10 +1,12 @@
 import React,{useContext} from 'react'
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { logo_light,logo_dark, TPO_logo, Vendor_Image } from "../../../../assets/images";
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import styled from 'styled-components';
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { colors } from '../../../infrastructure/theme/colors';
+import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { ActivityIndicator, Colors } from "react-native-paper";
 
 const Container=styled.View`
     flex:1;
@@ -15,6 +17,13 @@ const Main_Logo = styled.Image`
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
 `;
+
+const Main_Logo_Land = styled.Image`
+    margin-top:${(props) => props.theme.space[4]};
+    margin-left:${(props) => props.theme.space[4]};
+    height: ${(props) => props.theme.sizes[5]};
+`;
+
 const App_Name = styled.Text`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
@@ -70,17 +79,13 @@ const flatlist_data = [
 export const VendorHome = ({ navigation }) => {
 
     const { scheme }=useContext(AppThemeContext)
+    const { orientation,isOrientationLoading }=useContext(DeviceOrientationContext)
 
-    return(
-        <SafeArea>
-            <Container>
-                {scheme=="light"?
-                (
-                    <Main_Logo source={logo_light} />
-                ):(
-                    <Main_Logo source={logo_dark} />
-                )}
-                    <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
+    const ContentView = () => {
+        return(
+            <>
+            <App_Name>Thapar Pre-Ordering and Exchange Service</App_Name>
+                <View style={{alignItems:"center"}}>
                     <FlatList
                         data={flatlist_data}
                         horizontal={true}
@@ -110,6 +115,64 @@ export const VendorHome = ({ navigation }) => {
                         }}
                         keyExtractor={(item) => item.text}
                     />
+                    </View>
+            </>
+        )
+    }
+
+    if(isOrientationLoading)
+    {
+        return(
+            <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
+                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+            </View>
+        )
+    }
+
+    if(orientation==1||orientation==2)
+    {
+        return(
+            <SafeArea>
+                <Container>
+                    {scheme=="light"?
+                    (
+                        <Main_Logo source={logo_light} />
+                    ):(
+                        <Main_Logo source={logo_dark} />
+                    )}
+                    {ContentView()}
+                </Container>
+            </SafeArea>
+        )
+    }
+    else{
+        return(
+            <SafeArea>
+                <Container>
+                    <View style={{flexDirection:"row"}}>
+                        <View style={{flex:0.4}}>
+                            {scheme=="light"?
+                            (
+                                <Main_Logo_Land source={logo_light} />
+                            ):(
+                                <Main_Logo_Land source={logo_dark} />
+                            )}
+                        </View>
+                        <View style={{flex:0.6}}>
+                            {ContentView()}
+                        </View>
+                    </View>
+                    
+                </Container>
+            </SafeArea>
+        )
+    }
+
+    return(
+        <SafeArea>
+            <Container>
+                
+                    
             </Container>
         </SafeArea>
     )

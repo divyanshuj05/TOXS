@@ -5,6 +5,8 @@ import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
 import { MenuListContext } from "../../../services/restaurant/menu-list.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { SafeArea } from "../../../utils/components/safe-area.components"
+import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
 const RestaurantText = styled.Text`
   margin-top: ${(props) => props.theme.space[2]};
@@ -35,8 +37,10 @@ const EmptyList=styled.Text`
 
 export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
+    const { tag } = route.params
 
     const { destroy } = useContext(CartContext);
+    const { LockOrientation, UnlockOrientation } = useContext(DeviceOrientationContext)
     const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
 
     useEffect(() => {
@@ -61,37 +65,14 @@ export const RestaurantDetails = ({ route, navigation }) => {
     }, [navigation])
     
     useEffect(()=>{
+        LockOrientation()
         Search(restaurent)
         destroy()
     },[])
 
-    /*const flatlistData = [
-        {
-            title: "Cold Drink",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Chips",
-            price: 10,
-            notAdded: true
-        },
-        {
-            title: "Pizza",
-            price: 80,
-            notAdded: true
-        },
-        {
-            title: "Patties",
-            price: 25,
-            notAdded: true
-        },
-        {
-            title: "Sandwich",
-            price: 30,
-            notAdded: true
-        },
-    ];*/
+    useEffect(()=>()=>{
+        UnlockOrientation()
+    },[])
 
     return (
         <Container>
@@ -102,18 +83,34 @@ export const RestaurantDetails = ({ route, navigation }) => {
                 </IndicatorView>
             ):
             (
-                <>
-                    <RestaurantText>{restaurent}</RestaurantText>
-                    {!restaurantMenuList?
-                    (
-                        <EmptyList>No Menu List!!</EmptyList>
-                    ):
-                    (
-                        <MenuList data={restaurantMenuList} navigation={navigation} />
-                    )
-                    }
-                    
-                </>
+                tag==1?
+                (
+                    <SafeArea>
+                        <RestaurantText>{restaurent}</RestaurantText>
+                        {!restaurantMenuList?
+                        (
+                            <EmptyList>No Menu List!!</EmptyList>
+                        ):
+                        (
+                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                        )
+                        }
+                    </SafeArea>
+                ):
+                (
+                    <>
+                        <RestaurantText>{restaurent}</RestaurantText>
+                        {!restaurantMenuList?
+                        (
+                            <EmptyList>No Menu List!!</EmptyList>
+                        ):
+                        (
+                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                        )
+                        }   
+                    </>
+                )
+                
             )}
         </Container>
     )

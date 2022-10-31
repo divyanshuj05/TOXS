@@ -10,7 +10,24 @@ export const restaurantsRequest = (Name) => {
             const Query = collection(db, "cafeterias")
             const snapShot = await getDocs(Query)
             snapShot.forEach(doc => {
-                array.push(doc.data())
+                if(doc.data().timings)
+                {
+                    let openingTime=doc.data().timings.substring(0,8)
+                    let closingTime=doc.data().timings.substring(9,17)
+                    let dateRef=new Date()
+                    let currentTime=dateRef.toLocaleTimeString('en-us',{hour12:false})
+                    if(openingTime<=currentTime&&closingTime>currentTime)
+                    {
+                        let temp=Object.assign(doc.data(),{"isOpen":"true"}) 
+                        array.push(temp)
+                    }
+                    else{
+                        let temp=Object.assign(doc.data(),{"isOpen":"false"}) 
+                        array.push(temp)
+                    }
+                }
+                else{
+                array.push(doc.data())}
             });
             if (array == "[]") {
                 reject("Problem getting data!!")
@@ -23,7 +40,23 @@ export const restaurantsRequest = (Name) => {
             const Query = query(collection(db, "cafeterias"), where("address", "==", Name))
             const snapShot = await getDocs(Query)
             snapShot.forEach(doc => {
-                array.push(doc.data())
+                if(doc.data().timings)
+                {
+                    let openingTime=doc.data().timings.substring(0,8)
+                    let closingTime=doc.data().timings.substring(9,17)
+                    let dateRef=new Date()
+                    let currentTime=dateRef.toLocaleTimeString('en-us',{hour12:false})
+                    if(openingTime<=currentTime&&closingTime>currentTime)
+                    {
+                        let temp=Object.assign(doc.data(),{"isOpen":"true"}) 
+                        array.push(temp)   
+                    }
+                    else{
+                        let temp=Object.assign(doc.data(),{"isOpen":"false"}) 
+                        array.push(temp)
+                    }
+                } else{
+                array.push(doc.data())}
             });
             if (array == "[]") {
                 reject("Problem getting data!!")
