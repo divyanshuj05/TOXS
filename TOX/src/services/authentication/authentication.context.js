@@ -1,8 +1,9 @@
 import React, { useState, createContext, useEffect } from "react";
+import { registerForPushNotificationsAsync } from "../common/notisFunctions.services";
 import { loginCheck, RegisterCheck } from "./authentication.services";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../database.config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
@@ -14,6 +15,13 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [isLogging, setIsLogging] = useState(true)
+
+  if(error)
+  {
+    setTimeout(()=>{
+      setError(null)
+    },5000)
+  }
 
   /*firebase.auth().onAuthStateChanged((u) => {
     if (u) {
@@ -37,10 +45,15 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     const loginQuery = query(collection(db, Coll), where("userName", "==", userName), where("password", "==", password))
     const docs = await getDocs(loginQuery)
-    docs.forEach(doc => {
-      setUser({ ...doc.data(), "id": doc.id, "type": Coll })
-      saveUser({ ...doc.data(), "id": doc.id, "type": Coll })
-      check = true;
+    docs.forEach(async(Doc) => {
+      check=true
+      var token=await registerForPushNotificationsAsync()
+      let ID=Doc.id
+      const userRef=doc(db,Coll,ID)
+      await updateDoc(userRef,{"token":token})
+      
+      setUser({ ...Doc.data(), "id": Doc.id, "type": Coll,"token":token })
+      saveUser({ ...Doc.data(), "id": Doc.id, "type": Coll,"token":token })
       setIsLoading(false)
     });
     if (!check) {
@@ -59,9 +72,11 @@ export const AuthenticationContextProvider = ({ children }) => {
               text: "Yes",
               onPress: () => {
                 setTimeout(() => {
+                  const userRef=doc(db,user.type,user.id)
+                  updateDoc(userRef,{"token":"null"})
                   setUser(null);
                   removeUser();
-                }, 800)
+                }, 400)
               }
           },
           {
@@ -111,11 +126,13 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
 
     if (result === true) {
+      let token=await registerForPushNotificationsAsync()
       addDoc(usersRef, {
         userName: userName,
         email: email,
         mobileNo: MobileNo,
-        password: password
+        password: password,
+        token:token
       })
         .then(async (res) => {
           const docRef = doc(db, "users", res.id);

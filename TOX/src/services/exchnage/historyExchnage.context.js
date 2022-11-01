@@ -31,7 +31,7 @@ export const ExchangeHistoryContextProvider = ({children}) => {
         setTimeout(()=>{
             GetMobileData(email).then(res=>{
                 setDetailsLoading(false)
-                setMobile(res)
+                setMobile(res.mobileNo)
                 return
             }).catch(err=>{
                 setDetailsLoading(false)

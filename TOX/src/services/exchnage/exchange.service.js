@@ -1,6 +1,7 @@
 import { collection, addDoc,query,where, getDocs, setDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db,storage } from "../../../database.config"
+import { SendNotification } from "../common/notisFunctions.services";
 
 export const StoreImage = async (image) => {
     let randomstring=require("randomstring")
@@ -95,7 +96,13 @@ export const UpdateData = async (obj,status,mail) => {
         return new Promise(async(resolve,reject)=>{
             const newData={...obj,"status":status,"buyer":"null"}
             setDoc(docRef,newData).then(res=>{
-                resolve("Done")
+                GetMobileData(obj.seller).then(res=>{
+                    if(res.token!="null")
+                    {
+                        SendNotification(res.token,`Exchnage of ${obj.name}`,"Buyer has removed item from hold.")
+                    }
+                    resolve("Done")
+                })
             }).catch(err=>{
                 console.log(err)
                 reject("Operatoin failed!! Please try again")
@@ -107,7 +114,13 @@ export const UpdateData = async (obj,status,mail) => {
         return new Promise(async(resolve,reject)=>{
             const newData={...obj,"status":status,"buyer":mail}
             setDoc(docRef,newData).then(res=>{
-                resolve("Done")
+                GetMobileData(obj.seller).then(res=>{
+                    if(res.token!="null")
+                    {
+                        SendNotification(res.token,`Exchnage of ${obj.name}`,"Someone has put your item on hold. Kindly contact the buyer")
+                    }
+                    resolve("Done")
+                })
             }).catch(err=>{
                 console.log(err)
                 reject("Operatoin failed!! Please try again")
@@ -121,7 +134,7 @@ export const UpdateData = async (obj,status,mail) => {
                 resolve("Done")
             }).catch(err=>{
                 console.log(err)
-                reject("Operatoin failed!! Please try again")
+                reject("Operation failed!! Please try again")
             })
         })
     }
@@ -157,7 +170,7 @@ export const GetMobileData = (email) => {
     const Query = query(collection(db, "users"), where("email", "==", email))
     const docs = await getDocs(Query)
     docs.forEach(doc => {
-      resolve(doc.data().mobileNo)
+      resolve(doc.data())
     });
     reject("Operation failed!! Please try again")
     })

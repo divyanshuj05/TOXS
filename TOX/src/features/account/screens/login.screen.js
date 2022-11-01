@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import {
@@ -122,13 +122,14 @@ export const LoginScreen = ({ route,navigation }) => {
   if(orientation==1||orientation==2)
   {
     return(
+      <ScrollView contentContainerStyle={{flexGrow:1}}>
       <SafeArea>
         <AccountBackground>
           <Title>TOXs</Title>
           {ContentView()}
           {BackButtonView()}
         </AccountBackground>
-      </SafeArea>
+      </SafeArea></ScrollView>
     )
   }
   else{

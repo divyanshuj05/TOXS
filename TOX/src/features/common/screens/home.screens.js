@@ -85,7 +85,7 @@ export const HomeScreen = ({ navigation }) => {
 
     const { scheme } =useContext(AppThemeContext)
     const { orientation, isOrientationLoading } = useContext(DeviceOrientationContext)
-
+    
     if(isOrientationLoading)
     {
         return(

@@ -35,7 +35,7 @@ export const RegisterScreen = ({ navigation }) => {
   const RegisterView = () => {
     return(
         <AccountContainer>
-          <View style={{ height: orientation==1||orientation==2?350:undefined }}>
+          <View style={{ height: orientation==1||orientation==2?400:undefined }}>
             <ScrollView>
               <AuthInput
                 style={{width:orientation==1||orientation==2?287:400}}
@@ -129,6 +129,7 @@ export const RegisterScreen = ({ navigation }) => {
   if(orientation==1||orientation==2)
   {
     return(
+      <ScrollView contentContainerStyle={{flexGrow:1}}>
       <SafeArea>
         <AccountBackground>
           <Title>TOXs</Title>
@@ -136,6 +137,7 @@ export const RegisterScreen = ({ navigation }) => {
           {BackButtonView()}
         </AccountBackground>
       </SafeArea>
+      </ScrollView>
     )
   }
   else{
