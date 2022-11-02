@@ -20,5 +20,8 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 const app = firebase.initializeApp(firebaseConfig);
+
+firebase.firestore().settings({ experimentalAutoDetectLongPolling: true, merge: true })
+
 export const db = getFirestore(app);
 export const storage=getStorage(app)

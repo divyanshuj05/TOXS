@@ -6,6 +6,7 @@ import { AppThemeContext } from "../../services/common/theme.context";
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { View } from "react-native"
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { FeedbackScreen } from "../../features/settings/screens/feedback.screens";
 
 const SettingsStack = createStackNavigator();
 
@@ -39,6 +40,9 @@ export const SettingsNavigator = ({ navigation }) => {
         <SettingsStack.Screen 
           name="Favourites" 
           component={FavSettingsScreen} />
+        <SettingsStack.Screen 
+          name="Feedback" 
+          component={FeedbackScreen} />
       </SettingsStack.Navigator>
       )
     }

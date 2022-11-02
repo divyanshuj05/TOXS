@@ -9,7 +9,7 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 export const Index = () => {
 
   const { scheme } = useContext(AppThemeContext);
-
+  
   return (
       <ThemeProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
         <ExpoStatusBar style={scheme === "dark" ? "light" : "dark"} backgroundColor={scheme === "dark" ? "black" : "white"} />
