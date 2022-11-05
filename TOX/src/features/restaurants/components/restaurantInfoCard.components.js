@@ -46,7 +46,7 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     if(oriTag==0)
     {
         CardContainer = styled.View`
-            margin-vertical:${(props) => props.theme.space[1]};
+            margin-vertical:${(props) => props.theme.space[3]};
         `;
     }
     else

@@ -167,7 +167,7 @@ export const OrderListScreen = ({ navigation }) => {
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <Cancel>Go Back</Cancel>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost}) }}>
                             <Pay>Pay amount</Pay>
                         </TouchableOpacity>
                     </View>
@@ -177,7 +177,7 @@ export const OrderListScreen = ({ navigation }) => {
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments") }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>

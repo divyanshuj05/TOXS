@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react"
+import React, { createContext, useState, useRef } from "react"
 import { MenuListServices } from "./menu-list.services";
 
 export const MenuListContext = createContext();
@@ -6,15 +6,18 @@ export const MenuListContext = createContext();
 export const MenuListContextProvider = ({ children }) => {
 
     const [restaurantMenuList, setRestaurantMenuList] = useState([])
+    const vendorName=useRef(null)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
     const Search = (Name) => {
         setIsLoading(true)
         setRestaurantMenuList([])
+        vendorName.current=null
         setTimeout(() => {
             MenuListServices(Name).then((result) => {
                 setRestaurantMenuList(result[0].menuList)
+                vendorName.current=result[0].vendor
                 setIsLoading(false)
             }).catch(err => {
                 setIsError(err)
@@ -24,7 +27,7 @@ export const MenuListContextProvider = ({ children }) => {
     }
 
     return (
-        <MenuListContext.Provider value={{ restaurantMenuList, isLoading, isError, Search }}>
+        <MenuListContext.Provider value={{ restaurantMenuList, isLoading, isError, Search, vendor:vendorName.current }}>
             {children}
         </MenuListContext.Provider>
     )

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { SettingsScreen } from "../../features/settings/screens/settings.screen";
-import { FavSettingsScreen } from "../../features/settings/screens/favourites.screens";
 import { DeviceOrientationContext } from "../../services/common/deviceOrientation.context";
 import { AppThemeContext } from "../../services/common/theme.context";
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
@@ -37,9 +36,6 @@ export const SettingsNavigator = ({ navigation }) => {
           name="SettingsHome"
           component={SettingsScreen}
         />
-        <SettingsStack.Screen 
-          name="Favourites" 
-          component={FavSettingsScreen} />
         <SettingsStack.Screen 
           name="Feedback" 
           component={FeedbackScreen} />

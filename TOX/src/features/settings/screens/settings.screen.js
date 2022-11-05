@@ -50,14 +50,6 @@ export const SettingsScreen = ({ navigation }) => {
             (
               <>
                 <SettingsItem
-                title="Favourites"
-                description="View your favourites"
-                left={(props) => <List.Icon {...props} color={scheme == "light" ? "black" : "white"} icon="heart" />}
-                onPress={() => navigation.navigate("Favourites")}
-                titleStyle={{ color: scheme == "light" ? "black" : "white" }}
-                descriptionStyle={{ color: scheme == "light" ? "black" : "white" }}
-                />
-                <SettingsItem
                 title="Feedback"
                 left={(props) => <List.Icon {...props} color={scheme == "light" ? "black" : "white"} icon="message-alert" />}
                 onPress={() => navigation.navigate("Feedback")}

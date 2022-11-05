@@ -91,7 +91,7 @@ const Error = styled.Text`
 
 export const ProfileScreen = () => {
 
-    const { user, UpdateDoc, removeDoc } = useContext(AuthenticationContext)
+    const { user, UpdateDoc } = useContext(AuthenticationContext)
     const { isOrientationLoading } = useContext(DeviceOrientationContext)
     const [updateUser, setUpdateUser] = useState(false)
     const [updateMobile, setUpdateMobile] = useState(false)
@@ -265,38 +265,6 @@ export const ProfileScreen = () => {
                             </View>
                         </BorderView>
                     ):(<></>)}
-                
-                {user.type=="users"?
-                    (<>
-                        <View style={{margin:64}}></View>
-                        <View style={{flexDirection:"row"}}>
-                        <View style={{flex:0.3}}></View>
-                        <View style={{flex:0.4}}>
-                            <TouchableOpacity onPress={() => {
-                                Alert.alert(
-                                    "Delete Profile?",
-                                    `${user.userName}'s data will be removed!!`,
-                                    [
-
-                                        {
-                                            text: "Yes",
-                                            onPress: () => { removeDoc(user.type) }
-                                        },
-                                        {
-                                            text: "No",
-                                            onPress: () => { <></> }
-                                        }
-                                    ]
-                                )
-                            }}>
-                                <Button>Delete User</Button>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{flex:0.3}}></View>
-                        </View>
-                    </>):(<></>)
-                }
-
             </SafeArea>
         </Scroll>
     )

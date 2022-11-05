@@ -41,7 +41,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
 
     const { destroy } = useContext(CartContext);
     const { LockOrientation, UnlockOrientation } = useContext(DeviceOrientationContext)
-    const { restaurantMenuList, isLoading, isError, Search } = useContext(MenuListContext)
+    const { restaurantMenuList, isLoading, isError, Search,vendor } = useContext(MenuListContext)
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {

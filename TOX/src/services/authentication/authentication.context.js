@@ -294,18 +294,6 @@ export const AuthenticationContextProvider = ({ children }) => {
     return false;
   }
 
-  const removeDoc = (Coll) => {
-    const docRef = doc(db, "users", user.id)
-    deleteDoc(docRef)
-      .then(() => {
-        removeUser()
-        setUser(null)
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
   const removeUser = async () => {
     try {
       await AsyncStorage.removeItem("@userLogin");
@@ -354,8 +342,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogout,
         setError,
         isLogging,
-        UpdateDoc,
-        removeDoc
+        UpdateDoc
       }}
     >
       {children}
