@@ -61,7 +61,7 @@ const Proceed = styled(Text)`
     margin-left: 64px;
 `;
 
-export const MenuList = ({ data, navigation }) => {
+export const MenuList = ({ data, navigation, restaurant }) => {
 
     const { items, cost } = useContext(CartContext)
 
@@ -100,7 +100,7 @@ export const MenuList = ({ data, navigation }) => {
                         <></>
                     ) :
                     (
-                        <TouchableOpacity style={{ flex: 0.6, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList")}>
+                        <TouchableOpacity style={{ flex: 0.6, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
                             <Proceed>Proceed to pay</Proceed>
                             <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
                         </TouchableOpacity>

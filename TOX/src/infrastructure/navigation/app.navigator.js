@@ -13,6 +13,7 @@ import { MenuListContextProvider } from "../../services/restaurant/menu-list.con
 import { ProfileScreen } from "../../features/settings/screens/profile.screens.js";
 import { ExchangeContextProvider } from "../../services/exchnage/exchange.context.js";
 import { ExchangeHistoryContextProvider } from "../../services/exchnage/historyExchnage.context.js";
+import { RestaurantHistoryContextProvider } from "../../services/restaurant/orderHistory.context.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,35 +26,37 @@ export const AppNavigator = () => {
       <RestaurantContextProvider>
         <ExchangeContextProvider>
           <ExchangeHistoryContextProvider>
-            <MenuListContextProvider>
-              <CartContextProvider>
-                <Tab.Navigator
-                  screenOptions={({ route }) => ({
-                    tabBarIcon: ({ color, size }) => {
-                      let iconName;
+            <RestaurantHistoryContextProvider>
+              <MenuListContextProvider>
+                <CartContextProvider>
+                  <Tab.Navigator
+                    screenOptions={({ route }) => ({
+                      tabBarIcon: ({ color, size }) => {
+                        let iconName;
 
-                      if (route.name === 'Home') {
-                        iconName = "home-outline"
-                      } else if (route.name === 'Profile') {
-                        return <AntDesign name="profile" size={size} color={color} />
-                      } else if (route.name === "Settings") {
-                        iconName = "settings-outline"
-                      }
+                        if (route.name === 'Home') {
+                          iconName = "home-outline"
+                        } else if (route.name === 'Profile') {
+                          return <AntDesign name="profile" size={size} color={color} />
+                        } else if (route.name === "Settings") {
+                          iconName = "settings-outline"
+                        }
 
-                      return <Ionicons name={iconName} size={size} color={color} />;
-                    },
-                    tabBarActiveTintColor: 'red',
-                    tabBarInactiveTintColor: 'gray',
-                    tabBarStyle: { backgroundColor: scheme === 'dark' ? "black" : "white" },
-                    headerShown: false
-                  })}
-                >
-                  <Tab.Screen name="Home" component={HomeNavigator} />
-                  <Tab.Screen name="Profile" component={ProfileScreen} />
-                  <Tab.Screen name="Settings" component={SettingsNavigator} />
-                </Tab.Navigator>
-              </CartContextProvider>
-              </MenuListContextProvider>
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                      },
+                      tabBarActiveTintColor: 'red',
+                      tabBarInactiveTintColor: 'gray',
+                      tabBarStyle: { backgroundColor: scheme === 'dark' ? "black" : "white" },
+                      headerShown: false
+                    })}
+                  >
+                    <Tab.Screen name="Home" component={HomeNavigator} />
+                    <Tab.Screen name="Profile" component={ProfileScreen} />
+                    <Tab.Screen name="Settings" component={SettingsNavigator} />
+                  </Tab.Navigator>
+                </CartContextProvider>
+                </MenuListContextProvider>
+              </RestaurantHistoryContextProvider>
             </ExchangeHistoryContextProvider>
           </ExchangeContextProvider>
       </RestaurantContextProvider>

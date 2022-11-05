@@ -88,10 +88,11 @@ const PayLand = styled.Text`
     background-color:${(props) => props.theme.colors.ui.success};
 `;
 
-export const OrderListScreen = ({ navigation }) => {
+export const OrderListScreen = ({ navigation,route }) => {
 
     const { cost, items, order, unique, costItem } = useContext(CartContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const { restaurant } = route.params
 
     var data = []
 
@@ -112,7 +113,7 @@ export const OrderListScreen = ({ navigation }) => {
             count = 0
         }
     }
-
+    
     const renderItem = ({ item }) => {
         return (
             <ViewFlex>
@@ -167,7 +168,7 @@ export const OrderListScreen = ({ navigation }) => {
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <Cancel>Go Back</Cancel>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost}) }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant}) }}>
                             <Pay>Pay amount</Pay>
                         </TouchableOpacity>
                     </View>
@@ -177,7 +178,7 @@ export const OrderListScreen = ({ navigation }) => {
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost}) }}>
+                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>

@@ -9,6 +9,8 @@ import { PaymentScreen } from "../../features/restaurants/screens/payment.screen
 import { AppThemeContext } from "../../services/common/theme.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from "../../services/common/deviceOrientation.context";
+import { OrderHistory } from "../../features/restaurants/screens/orderHistory.screens";
+import { OrderDetails } from "../../features/restaurants/screens/historyData.screens";
 
 const RestaurantStack = createStackNavigator();
 
@@ -31,6 +33,14 @@ export const RestaurantsNavigator = () => {
       <RestaurantStack.Screen
         name="RestaurantsHome"
         component={RestaurantHome}
+      />
+      <RestaurantStack.Screen
+        name="OrderHistory"
+        component={OrderHistory}
+      />
+      <RestaurantStack.Screen
+        name="OrderDetail"
+        component={OrderDetails}
       />
       <RestaurantStack.Screen
         name="Restaurants"

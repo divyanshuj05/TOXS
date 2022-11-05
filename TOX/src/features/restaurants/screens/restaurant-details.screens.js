@@ -92,7 +92,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
                             <EmptyList>No Menu List!!</EmptyList>
                         ):
                         (
-                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                            <MenuList data={restaurantMenuList} navigation={navigation} restaurant={restaurent}/>
                         )
                         }
                     </SafeArea>
@@ -105,7 +105,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
                             <EmptyList>No Menu List!!</EmptyList>
                         ):
                         (
-                            <MenuList data={restaurantMenuList} navigation={navigation} />
+                            <MenuList data={restaurantMenuList} navigation={navigation} restaurant={restaurent}/>
                         )
                         }   
                     </>

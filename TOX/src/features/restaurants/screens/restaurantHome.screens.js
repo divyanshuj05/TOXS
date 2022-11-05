@@ -74,7 +74,7 @@ export const RestaurantHome = ({ navigation }) => {
                         </TouchableOpacity>
                     </Restuarant_Facility>
                     <Restuarant_Facility>
-                        <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}}>
+                        <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
                             <Restaurant_Text>My Order History</Restaurant_Text>
                             <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                         </TouchableOpacity>
@@ -105,7 +105,7 @@ export const RestaurantHome = ({ navigation }) => {
                             </TouchableOpacity>
                         </Restuarant_Facility>
                         <Restuarant_Facility>
-                            <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}}>
+                            <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
                                 <Restaurant_Text>My Order History</Restaurant_Text>
                                 <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                             </TouchableOpacity>

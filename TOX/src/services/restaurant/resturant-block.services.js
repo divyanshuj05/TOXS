@@ -1,5 +1,5 @@
 import { db } from "../../../database.config"
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 
 export const restaurantsRequest = (Name) => {
 
@@ -65,3 +65,36 @@ export const restaurantsRequest = (Name) => {
         });
     }
 }
+
+export const Orders = (email,amount,vendor,data,restaurant) => {
+    var data={
+        orderBy:email,
+        vendor:vendor,
+        amount:amount,
+        order:data,
+        status:"Not Ready",
+        paymentType:"Card",
+        restaurant:restaurant
+    }
+    
+    return new Promise(async(resolve,reject)=>{
+        const orderRef=collection(db,"cafeteriaOrders")
+        await addDoc(orderRef,data).then(res=>{
+            resolve("Done")
+        }).catch(e=>{
+            console.log(e)
+            reject("Some error occured")
+        })
+    })
+}
+
+export const SendVendorNoti = (name) => {
+    return new Promise(async(resolve,reject)=>{
+        const Query = query(collection(db, "vendors"), where("userName", "==", name))
+        const docs = await getDocs(Query)
+        docs.forEach(doc => {
+          resolve(doc.data().token)
+        });
+        reject("Operation failed!! Please try again")
+        })
+} 

@@ -46,7 +46,7 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     if(oriTag==0)
     {
         CardContainer = styled.View`
-            margin-vertical:${(props) => props.theme.space[3]};
+            margin:${(props) => props.theme.space[2]};
         `;
     }
     else
@@ -62,11 +62,13 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     if(oriTag==0)
     {
             CardStyle = styled(Card)`
-        `;
+            border-radius:16px
+            `;
     }
     else
     {
         CardStyle = styled(Card)`
+        border-radius:16px
             width:300px
         `;
     }
@@ -84,15 +86,15 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
         <>
             <CardContainer>
                 <CardStyle elevation={5}>
-                    <View>
+                    <View style={{}}>
                         {user.type=="users"?
                         (
                             <Favourite restaurant={Name} favourites={favourites} add={add} remove={remove} />
                         ):(<></>)
                         }
-                        <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160 }} />
+                        <Card.Cover key={Name} source={{ uri: icon }} style={{ height: 160, borderTopStartRadius:16,borderTopEndRadius:16 }} />
                     </View>
-                    <RestaurantInfo>
+                    <RestaurantInfo style={{borderBottomEndRadius:16,borderBottomStartRadius:16}}>
                         <Title>{Name}</Title>
                         <View style={{flexDirection:"row"}}>
                             <View style={{flex:0.8}}>

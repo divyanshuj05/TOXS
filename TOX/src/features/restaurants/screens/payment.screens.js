@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
-import { Text,View, Button, Alert, TouchableOpacity,ScrollView } from "react-native";
+import { Text,View, Alert, TouchableOpacity,ScrollView } from "react-native";
 import styled from 'styled-components';
 import { StripeProvider, CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { handleStripePay } from '../../../services/restaurant/stripePay.services';
 import { ActivityIndicator, Colors } from 'react-native-paper';
+import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
+import { MenuListContext } from '../../../services/restaurant/menu-list.context';
 
 const Container = styled.View`
     flex:1;
@@ -39,22 +41,28 @@ const Pay=styled.TouchableOpacity`
 export const PaymentScreen = ({ route,navigation }) => {
 
   const { cost } = route.params
+  const { data } = route.params
+  const { restaurant } = route.params
+  
   var tempCost=cost+((cost*3.5)/100)
   const { user } = useContext(AuthenticationContext)
   const [ cardDetails,setCardDetails ] = useState()
   const [ stripe,setStripe ] = useState(false)
   const [ amount,setAmount ] = useState(cost)
+  const { SendOrder,isLoading } = useContext(RestaurantContext)
+  const { vendor } = useContext(MenuListContext)
   const { confirmPayment,loading } = useConfirmPayment()
 
   const handleStripe = () => {
-    if(!cardDetails?.complete || !user.email)
+    if(!cardDetails?.complete)
     {
-        Alert.alert("Please enter card details first!!")
-        return
+        alert("Please enter card details first!!")
+        return false
     }
-    handleStripePay(confirmPayment,user.email,user.userName,amount)
+    const res=handleStripePay(confirmPayment,user.email,user.userName,amount)
+    return res
   }
-
+  
   return (
       <StripeProvider 
       publishableKey='pk_test_51M0GsnSAPvupGE4O3mgiMNJi70yYTwW5nS7VLVQHMePEzoFVOR8D7nNba8qgNf8g22vDamhmJ9pYXrEJYaCp0bup00qi1tqYzK'>
@@ -63,7 +71,7 @@ export const PaymentScreen = ({ route,navigation }) => {
             <TextWrap style={{fontSize:18}}>Amount to be paid: ₹{amount}</TextWrap>
             {stripe?
             (
-              loading?
+              loading||isLoading?
                 (
                   <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />
                 ):
@@ -89,7 +97,22 @@ export const PaymentScreen = ({ route,navigation }) => {
                         />
                       </View>
                       <TextWrap style={{fontSize:12}}>*This may incur some extra cost</TextWrap>
-                      <Pay onPress={()=>{{handleStripe()}}}>
+                      <Pay onPress={async()=>{
+                        const res=await handleStripe()
+                        if(res)
+                        {
+                          Alert.alert(
+                            "Payment successful",
+                            "Send order to cafeteria vendor",
+                            [
+                                {
+                                    text: "Send",
+                                    onPress: () => { SendOrder(user.email,amount,vendor,data,restaurant,navigation) }
+                                }
+                            ]
+                          )
+                        }
+                      }}>
                           <Text style={{color:"white",textAlign:"center"}}>Pay</Text>
                       </Pay>
                     </View>
