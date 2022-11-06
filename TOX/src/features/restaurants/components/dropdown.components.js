@@ -53,10 +53,11 @@ const styles = StyleSheet.create({
         margin: 16,
         height: 50,
         borderBottomColor: 'gray',
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 0.5
     },
     icon: {
         marginRight: 16,
+        marginLeft:8
     },
     placeholderStyle: {
         fontSize: 16,
@@ -69,7 +70,8 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         width: 20,
-        height: 20
+        height: 20,
+        marginRight:8
     },
     inputSearchStyle: {
         height: 40,

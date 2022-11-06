@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { View } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { HomeScreen } from "../../features/common/screens/home.screens";
 import { RestaurantsNavigator } from "./restaurants.navigator";
 import { ExchangeNavigator } from "./exchange.navigator";
@@ -11,7 +10,8 @@ export const HomeNavigator = () => {
 
   return (
     <HomeStack.Navigator screenOptions={{
-        headerShown: false
+        headerShown: false,
+        ...TransitionPresets.SlideFromRightIOS  
       }} >
         <HomeStack.Screen
           name="home"

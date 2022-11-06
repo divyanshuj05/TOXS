@@ -48,9 +48,9 @@ const Information=styled.Text`
 const SendButton=styled.TouchableOpacity`
     background-color:${props=>props.theme.colors.ui.basic}
     margin-horizontal:120px;
-    padding-vertical:14px
-    padding-horizontal:30px
-    border-radius:8px;
+    padding-vertical:12px
+    padding-horizontal:28px
+    border-radius:32px;
     align-items:center
 `;
 
@@ -82,7 +82,7 @@ export const FeedbackScreen = ({ navigation }) => {
                 <Input
                     multiline={true}
                     numberOfLines={15}
-                    style={{ textAlignVertical: 'top',color:"black"}}
+                    style={{ textAlignVertical: 'top',color:"black",borderRadius:3}}
                     placeholder="Tell us how we can improve our product"  
                     onChangeText={(text)=>{feedback.current=text}}  
                     value={feedback}

@@ -16,7 +16,10 @@ const Wrapper = styled(View)`
 const Head=styled.View`
     flex-direction:row
     background-color:${props=>props.theme.colors.ui.basic}
-    padding:${props=>props.theme.space[2]}
+    padding:${props=>props.theme.space[1]}
+    border-radius:${(props) => props.theme.space[4]};
+    margin-horizontal:16px
+    margin-top:${(props) => props.theme.space[3]};
 `;
 
 const Empty=styled.Text`
@@ -41,7 +44,10 @@ export const BuyScreen = ({ navigation }) => {
 
     const renderItem = (item) => {
         return(
-            <TouchableOpacity onPress={()=>navigation.navigate("ItemDetails",{details:item.item,get:0})}>
+            <TouchableOpacity onPress={()=>{
+                if(item.item.status=="Available") navigation.navigate("ItemDetails",{details:item.item,get:0})
+                else alert("Item is already on hold!")
+            }}>
                 <FadeInView>
                     <ItemInfoCard item={item} />
                 </FadeInView>

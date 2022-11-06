@@ -37,8 +37,9 @@ const BottomBar = styled(View)`
     background-color:${(props) => props.theme.colors.ui.basic};
     flex-direction:row
     padding: ${(props) => props.theme.space[3]};
-    border-radius: ${(props) => props.theme.space[2]};
+    border-radius: ${(props) => props.theme.space[4]};
     margin-horizontal: ${(props) => props.theme.space[2]};
+    margin-bottom:${(props) => props.theme.space[2]};
 `;
 
 const ItemText = styled(Text)`
@@ -58,7 +59,6 @@ const Proceed = styled(Text)`
     color:${(props) => props.theme.colors.bg.primary};
     font-size: ${(props) => props.theme.fontSizes.body};
     font-family:${(props) => props.theme.fonts.heading};
-    margin-left: 64px;
 `;
 
 export const MenuList = ({ data, navigation, restaurant }) => {
@@ -91,7 +91,7 @@ export const MenuList = ({ data, navigation, restaurant }) => {
                 keyExtractor={(item) => item.title}
             />
             <BottomBar>
-                <View style={{flex:0.4,flexDirection:'row'}}>
+                <View style={{flex:0.6,flexDirection:'row'}}>
                     <ItemText>Items {items}</ItemText>
                     <CostText>Cost {cost}</CostText>
                 </View>
@@ -100,7 +100,7 @@ export const MenuList = ({ data, navigation, restaurant }) => {
                         <></>
                     ) :
                     (
-                        <TouchableOpacity style={{ flex: 0.6, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
+                        <TouchableOpacity style={{ flex: 0.4, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
                             <Proceed>Proceed to pay</Proceed>
                             <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
                         </TouchableOpacity>

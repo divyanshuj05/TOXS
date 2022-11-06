@@ -15,15 +15,13 @@ export const ExchangeContextProvider = ({ children }) => {
     const Search = (category) => {
         setIsLoading(true)
         exchange.current=[]
-        setTimeout(()=>{
-            RetrieveData(category).then(res=>{
-                exchange.current=res
-                setIsLoading(false)
-            }).catch(err=>{
-                console.log(err)
-                setIsLoading(false)
-            })
-        },1500)
+        RetrieveData(category).then(res=>{
+            exchange.current=res
+            setIsLoading(false)
+        }).catch(err=>{
+            console.log(err)
+            setIsLoading(false)
+        })
     }
 
     const Sort = (index) => {
@@ -89,56 +87,50 @@ export const ExchangeContextProvider = ({ children }) => {
             setIsLoading(false)
             return "Image not added"
         }
-        setTimeout(()=>{
-            StoreImage(image).then(res=>{
-                    AddItem(item,desc,price,category,res.url,res.imgName,user.email).then(res=>{
-                        setIsLoading(false)
-                        Alert.alert(
-                        "Item added Successfully",
-                        "Item will be displayed to other users",
-                        [
-        
-                            {
-                                text: "Ok",
-                                onPress: () => { navigation.goBack() }
-                            }
-                        ]
-                        )
-                        return null
-                    }).catch(err=>{
-                        setIsLoading(false)
-                        return err
-                    })
-                })
-                .catch(err=>{
+        StoreImage(image).then(res=>{
+                AddItem(item,desc,price,category,res.url,res.imgName,user.email).then(res=>{
+                    setIsLoading(false)
+                    Alert.alert(
+                    "Item added Successfully",
+                    "Item will be displayed to other users",
+                    [
+                        {
+                            text: "Ok",
+                            onPress: () => { navigation.goBack() }
+                        }
+                    ]
+                    )
+                    return null
+                }).catch(err=>{
                     setIsLoading(false)
                     return err
                 })
-        },500)
+            })
+            .catch(err=>{
+                setIsLoading(false)
+                return err
+            })
     }
 
     const UpdateExchanges = (obj,status,navigation) => {
         setIsLoading(true)
-        setTimeout(()=>{
-            UpdateData(obj,status,user.email).then(res=>{
-                Alert.alert(
-                    "Done",
-                    "Changes were successfully made",
-                    [
-    
-                        {
-                            text: "Ok",
-                            onPress: () => { navigation.navigate("ExchangeHome") }
-                        }
-                    ]
-                    )
-                setIsLoading(false)
-                return null
-            }).catch(err=>{ 
-                setIsLoading(false)
-                return err
-            })
-        },500)
+        UpdateData(obj,status,user.email).then(res=>{
+            Alert.alert(
+                "Done",
+                "Changes were successfully made",
+                [
+                    {
+                        text: "Ok",
+                        onPress: () => { navigation.navigate("ExchangeHome") }
+                    }
+                ]
+            )
+            setIsLoading(false)
+            return null
+        }).catch(err=>{ 
+            setIsLoading(false)
+            return err
+        })
     }
 
     return(

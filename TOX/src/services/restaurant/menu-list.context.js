@@ -14,16 +14,14 @@ export const MenuListContextProvider = ({ children }) => {
         setIsLoading(true)
         setRestaurantMenuList([])
         vendorName.current=null
-        setTimeout(() => {
-            MenuListServices(Name).then((result) => {
-                setRestaurantMenuList(result[0].menuList)
-                vendorName.current=result[0].vendor
-                setIsLoading(false)
-            }).catch(err => {
-                setIsError(err)
-                setIsLoading(false)
-            })
-        }, 2000)
+        MenuListServices(Name).then((result) => {
+            setRestaurantMenuList(result[0].menuList)
+            vendorName.current=result[0].vendor
+            setIsLoading(false)
+        }).catch(err => {
+            setIsError(err)
+            setIsLoading(false)
+        })
     }
 
     return (

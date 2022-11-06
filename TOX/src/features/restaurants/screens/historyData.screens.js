@@ -42,9 +42,11 @@ const Row=styled.View`
 
 const BottomBar = styled.View`
     background-color:${(props) => props.theme.colors.ui.basic};
-    padding: 20px
-    border-radius: ${(props) => props.theme.space[2]};
+    padding: ${(props) => props.theme.space[3]};
+    border-radius: ${(props) => props.theme.space[4]};
     margin-horizontal: ${(props) => props.theme.space[2]};
+    margin-horizontal: ${(props) => props.theme.space[2]};
+    margin-bottom:${(props) => props.theme.space[2]};
 `;
 
 const Touch=styled.TouchableOpacity`
@@ -63,15 +65,15 @@ export const OrderDetails = ({route,navigation}) => {
     const { user } = useContext(AuthenticationContext)
     const { OrderReady,isLoading } = useContext(RestaurantHistoryContext)
 
-    const handleOrderReady = () => {
+    const handleOrderReady = (type,status) => {
         Alert.alert(
             "Sure?",
-            "Order Ready",
+            `Order ${status}`,
             [
 
                 {
                     text: "Yes",
-                    onPress: () => { OrderReady(item.id,item.orderBy,navigation) }
+                    onPress: () => { OrderReady(item.id,item.orderBy,navigation,type,status) }
                 },
                 {
                     text: "No",
@@ -141,7 +143,7 @@ export const OrderDetails = ({route,navigation}) => {
                         </View>
                     ):
                     (
-                        <Touch onPress={()=>handleOrderReady()}>
+                        <Touch onPress={()=>handleOrderReady(user.type,"Ready")}>
                             <TextTouch>Order ready?</TextTouch>
                         </Touch>
                     )
@@ -153,7 +155,26 @@ export const OrderDetails = ({route,navigation}) => {
                 )
             ):
             (
-                <></>
+                item.status=="Ready"?
+                (
+                    <BottomBar>
+                    {isLoading?
+                    (
+                        <View style={{flex:1}}>
+                            <ActivityIndicator size={20} color={Colors.blue300} />
+                        </View>
+                    ):
+                    (
+                        <Touch onPress={()=>handleOrderReady(user.type,"Delivered")}>
+                            <TextTouch>Order taken?</TextTouch>
+                        </Touch>
+                    )
+                    }
+                    </BottomBar>
+                ):
+                (
+                    <></>
+                )
             )
             }
         </Container>

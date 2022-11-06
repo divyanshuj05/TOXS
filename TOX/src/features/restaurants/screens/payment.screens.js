@@ -35,7 +35,7 @@ const Pay=styled.TouchableOpacity`
   padding-vertical:14px
   padding-horizontal:30px
   margin-horizontal:120px
-  border-radius:${props=>props.theme.space[2]}
+  border-radius:${props=>props.theme.space[4]}
 `;
 
 export const PaymentScreen = ({ route,navigation }) => {
@@ -113,7 +113,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                           )
                         }
                       }}>
-                          <Text style={{color:"white",textAlign:"center"}}>Pay</Text>
+                          <Text style={{color:"white",textAlign:"center",fontSize:16}}>Pay</Text>
                       </Pay>
                     </View>
                   </ScrollView>
@@ -125,7 +125,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                   <View style={{flex:0.7}}>
                     <TextWrap style={{marginTop:50}}>Pay via Card</TextWrap>
                   </View>
-                  <TouchableOpacity style={{flex:0.15,marginTop:50,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:8}} onPress={()=>{setStripe(true),setAmount(Math.floor(tempCost))}}>
+                  <TouchableOpacity style={{flex:0.15,marginTop:50,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setStripe(true),setAmount(Math.floor(tempCost))}}>
                     <Text style={{color:"white",textAlign:"center"}}>Choose</Text>
                   </TouchableOpacity> 
                 </View>

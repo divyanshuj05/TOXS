@@ -71,12 +71,10 @@ export const AuthenticationContextProvider = ({ children }) => {
           {
               text: "Yes",
               onPress: () => {
-                setTimeout(() => {
-                  const userRef=doc(db,user.type,user.id)
-                  updateDoc(userRef,{"token":"null"})
-                  setUser(null);
-                  removeUser();
-                }, 400)
+                const userRef=doc(db,user.type,user.id)
+                updateDoc(userRef,{"token":"null"})
+                setUser(null);
+                removeUser();
               }
           },
           {

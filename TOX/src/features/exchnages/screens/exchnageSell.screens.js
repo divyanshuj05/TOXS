@@ -53,7 +53,7 @@ const DropDownView=styled.View`
 
 const Photo=styled.Text`
     color:rgb(230,230,230)
-    border-radius:${props=>props.theme.space[2]}
+    border-radius:${props=>props.theme.space[4]}
     background-color:${props=>props.theme.colors.ui.basic}
     padding-horizontal:40px
     padding-vertical:${props=>props.theme.space[3]}
@@ -69,21 +69,25 @@ const Error = styled.Text`
 const Cancel = styled.Text`
     text-align:center;
     font-size: 16px;
-    padding:12px;
+    padding:10px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
     background-color:${(props) => props.theme.colors.ui.error};
+    border-top-left-radius:32px
+    border-bottom-left-radius:32px
 `;
 
 const Submit = styled.Text`
     text-align:center;
     font-size: 16px;
-    padding:12px;
+    padding:10px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
     background-color:${(props) => props.theme.colors.ui.success};
+    border-top-right-radius:32px
+    border-bottom-right-radius:32px
 `;
 
 export const SellScreen = ({ navigation }) => {

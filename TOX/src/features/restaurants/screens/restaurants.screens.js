@@ -12,33 +12,35 @@ import { DeviceOrientationContext } from "../../../services/common/deviceOrienta
 
 const Container = styled.SafeAreaView`
     flex:1;
-`;
-
-const Orientation=styled.View`
-    flex:1
-    background-color: ${(props) => props.theme.background}; 
+    background-color:${props=>props.theme.background}
 `;
 
 const DropDownContainer = styled.View`
-    padding: ${(props) => props.theme.space[3]};
+    padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
+    border-radius:${(props) => props.theme.space[4]};
+    margin-horizontal:16px
+    margin-top:${(props) => props.theme.space[3]};
 `;
 
 const DropDownContainerLand =  styled.View`
-padding: ${(props) => props.theme.space[2]};
-background-color:${(props) => props.theme.colors.ui.basic};
+    padding: ${(props) => props.theme.space[2]};
+    background-color:${(props) => props.theme.colors.ui.basic};
+    border-radius:${(props) => props.theme.space[4]};
+    margin-horizontal:16px
+    margin-top:${(props) => props.theme.space[1]};
 `;
 
 const CardContainer = styled.View`
     flex:1;
-    padding: ${(props) => props.theme.space[3]};
+    padding: ${(props) => props.theme.space[2]};
     background-color: ${(props) => props.theme.background};
 `;
 
 const FavWrap = styled.View`
-    flex:0.3;
+    flex:0.23;
     background-color: ${(props) => props.theme.background};
-    padding: ${(props) => props.theme.space[1]};
+    padding: ${(props) => props.theme.space[2]};
 `;
 
 const FavWrapLand = styled.View`

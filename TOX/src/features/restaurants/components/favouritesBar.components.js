@@ -8,9 +8,9 @@ const Wrapper = styled.TouchableOpacity`
 `;
 
 const Img = styled.Image`
-    width:75px;
-    height:75px;
-    border-radius:${(props) => props.theme.space[2]};
+    width:70px;
+    height:70px;
+    border-radius:${(props) => props.theme.space[3]};
 `;
 
 const FavText = styled.Text`

@@ -62,21 +62,10 @@ const UpdateButtonCopy = styled(Ionicons)`
     color:${props => props.theme.text};
 `;
 
-const Button = styled.Text`
-    text-align:center;
-    border: 1px solid ${(props) => props.theme.colors.ui.error};;
-    color:white;
-    background-color:${(props) => props.theme.colors.ui.error};;
-    font-family:${(props) => props.theme.fonts.heading};
-    padding: ${(props) => props.theme.space[3]};
-    border-radius: ${(props) => props.theme.space[2]};
-    font-size:${(props) => props.theme.fontSizes.button};
-`;
-
 const BorderView = styled.View`
-    border-bottom-width: 1px;
-    border-bottom-color:${props => props.theme.text};
-    width: 100%
+    border-bottom-width: 0.5px;
+    border-bottom-color:${props => props.theme.colors.brand.basic};
+    margin-horizontal:18px
 `;
 
 const Input = styled(TextInput)`

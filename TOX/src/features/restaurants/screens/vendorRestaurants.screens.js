@@ -14,13 +14,19 @@ const Container=styled.View`
 `;
 
 const HeaderContainer = styled.View`
-    padding: ${(props) => props.theme.space[3]};
+    padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
+    border-radius:${(props) => props.theme.space[4]};
+    margin-horizontal:4px
+    margin-top:${(props) => props.theme.space[3]};
 `;
 
 const HeaderContainerLand = styled.View`
     padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
+    border-radius:${(props) => props.theme.space[4]};
+    margin-horizontal:4px
+    margin-top:${(props) => props.theme.space[3]};
 `;
 
 const CardContainer = styled.View`
@@ -35,6 +41,7 @@ const HeaderText=styled.Text`
     font-size: ${(props) => props.theme.fontSizes.title};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
+    text-align:center
 `;
 
 export const VendorRestaurantScreen = ({ navigation }) => {

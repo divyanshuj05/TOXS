@@ -15,29 +15,25 @@ export const ExchangeHistoryContextProvider = ({children}) => {
     const UserData = () => {
         setDetailsLoading(true)
         history.current=[]
-        setTimeout(()=>{
-            RetrieveHistory(user.email).then(res=>{
-                history.current=res
-                setDetailsLoading(false)
-            }).catch(err=>{
-                console.log(err)
-                setDetailsLoading(false)
-            })
-        },1500)
+        RetrieveHistory(user.email).then(res=>{
+            history.current=res
+            setDetailsLoading(false)
+        }).catch(err=>{
+            console.log(err)
+            setDetailsLoading(false)
+        })
     }
 
     const RetrieveMobile = (email) => {
         setDetailsLoading(true)
-        setTimeout(()=>{
-            GetMobileData(email).then(res=>{
-                setDetailsLoading(false)
-                setMobile(res.mobileNo)
-                return
-            }).catch(err=>{
-                setDetailsLoading(false)
-                return null
-            })
-        },1000)
+        GetMobileData(email).then(res=>{
+            setDetailsLoading(false)
+            setMobile(res.mobileNo)
+            return
+        }).catch(err=>{
+            setDetailsLoading(false)
+            return null
+        })
     }
 
     return(

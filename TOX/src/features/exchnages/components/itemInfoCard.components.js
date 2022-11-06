@@ -11,7 +11,7 @@ const CardContainer = styled.View`
 const ItemInfo = styled.View`
     padding: ${(props) => props.theme.space[2]}
     background-color:${props => props.theme.colors.brand.basic};
-    broder-radius:px;
+    broder-radius:32px;
 `;
 
 const Title = styled.Text`
@@ -38,6 +38,7 @@ const Cost=styled.Text`
     font-size: ${(props) => props.theme.fontSizes.body};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};
+    flex:0.8
 `;
 
 export const ItemInfoCard = ({ item }) => {
@@ -46,15 +47,18 @@ export const ItemInfoCard = ({ item }) => {
 
     return(
         <CardContainer>
-            <Card elevation={5} style={{width:orientation==1||orientation==2?undefined:300}}>
-                <Card.Cover key={item.item.imgName} source={{ uri: item.item.imageURL }} style={{ height:orientation==1||orientation==2?150:140 }} />
-                <ItemInfo>
+            <Card elevation={5} style={{ borderRadius:16, width:orientation==1||orientation==2?undefined:300}}>
+                <Card.Cover key={item.item.imgName} source={{ uri: item.item.imageURL }} style={{ borderTopStartRadius:16,borderTopEndRadius:16, height:orientation==1||orientation==2?150:140 }} />
+                <ItemInfo style={{borderBottomStartRadius:16,borderBottomEndRadius:16}}>
                     <View style={{flexDirection:"row"}}>
                         <Title>{item.item.name}</Title>
                         <Category>{item.item.category}</Category>
                     </View>
                     <Desc>{item.item.description}</Desc>
-                    <Cost>Expected Price: ₹{item.item.cost}</Cost>
+                    <View style={{flexDirection:"row"}}>
+                        <Cost>Expected Price: ₹{item.item.cost}</Cost>
+                        <Category>{item.item.status}</Category>
+                    </View>
                 </ItemInfo>
             </Card>
         </CardContainer>

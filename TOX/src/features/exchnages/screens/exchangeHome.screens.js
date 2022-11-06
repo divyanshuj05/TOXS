@@ -38,7 +38,7 @@ const Exchange_Facility=styled.View`
     background-color:${(props) => props.theme.colors.ui.basic};
     margin-vertical:${(props) => props.theme.space[3]};
     margin-horizontal:${(props) => props.theme.space[2]};
-    border-radius:${(props) => props.theme.space[3]};
+    border-radius:${(props) => props.theme.space[4]};
 `;
 
 const Exchange_Text=styled.Text`

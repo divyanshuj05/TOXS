@@ -48,26 +48,6 @@ const Total = styled.View`
     padding-left:${(props) => props.theme.space[4]};
 `;
 
-const Cancel = styled.Text`
-    text-align:center;
-    font-size: 18px;
-    padding:20px;
-    font-family:${(props) => props.theme.fonts.heading};
-    font-weight:${(props) => props.theme.fontWeights.bold};
-    color:${(props) => props.theme.colors.bg.primary};
-    background-color:${(props) => props.theme.colors.ui.error};
-`;
-
-const Pay = styled.Text`
-    text-align:center;
-    font-size: 18px;
-    padding:20px;
-    font-family:${(props) => props.theme.fonts.heading};
-    font-weight:${(props) => props.theme.fontWeights.bold};
-    color:${(props) => props.theme.colors.bg.primary};
-    background-color:${(props) => props.theme.colors.ui.success};
-`;
-
 const CancelLand = styled.Text`
     text-align:center;
     font-size: 18px;
@@ -76,6 +56,9 @@ const CancelLand = styled.Text`
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
     background-color:${(props) => props.theme.colors.ui.error};
+    border-top-left-radius:32px
+    border-bottom-left-radius:32px
+    margin-bottom:${(props) => props.theme.space[1]};
 `;
 
 const PayLand = styled.Text`
@@ -86,6 +69,9 @@ const PayLand = styled.Text`
     font-weight:${(props) => props.theme.fontWeights.bold};
     color:${(props) => props.theme.colors.bg.primary};
     background-color:${(props) => props.theme.colors.ui.success};
+    border-top-right-radius:32px
+    border-bottom-right-radius:32px
+    margin-bottom:${(props) => props.theme.space[1]};
 `;
 
 export const OrderListScreen = ({ navigation,route }) => {
@@ -166,10 +152,10 @@ export const OrderListScreen = ({ navigation,route }) => {
                 (
                     <View style={{flexDirection: "row" }}>
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
-                            <Cancel>Go Back</Cancel>
+                            <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant}) }}>
-                            <Pay>Pay amount</Pay>
+                            <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>
                 ):

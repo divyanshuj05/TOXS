@@ -30,6 +30,7 @@ const Facility_Logo = styled.Image`
     margin-left:25px;
     margin-top:${(props) => props.theme.space[4]};
     margin-right:25px;
+    border-radius:16px
 `;
 
 const App_Name = styled.Text`
@@ -55,6 +56,7 @@ const Facility_SubText = styled.Text`
     font-family: ${props => props.theme.fonts.body};
     color:${props => props.color}
     text-align:center;
+    margin-bottom:${(props) => props.theme.space[3]};
 `;
 
 const ListWrapper = styled.View`

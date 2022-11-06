@@ -45,6 +45,7 @@ const Facility_SubText = styled.Text`
     font-family: ${props => props.theme.fonts.body};
     color:${props => props.color}
     text-align:center;
+    margin-bottom:${(props) => props.theme.space[3]};
 `;
 const Facility_Text = styled.Text`
     font-weight:${(props) => props.theme.fontWeights.medium};
@@ -59,6 +60,7 @@ const Facility_Logo = styled.Image`
     margin-left:25px;
     margin-top:${(props) => props.theme.space[4]};
     margin-right:25px;
+    border-radius:16px
 `;
 
 const flatlist_data = [
@@ -103,7 +105,7 @@ export const VendorHome = ({ navigation }) => {
                             }
                             else {
                                 return (
-                                    <TouchableOpacity onPress={() => navigation.navigate("VendorOrders")}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("RestaurantsHome")}>
                                         <ListWrapper>
                                             <Facility_Logo source={item.icon} />
                                             <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -167,13 +169,4 @@ export const VendorHome = ({ navigation }) => {
             </SafeArea>
         )
     }
-
-    return(
-        <SafeArea>
-            <Container>
-                
-                    
-            </Container>
-        </SafeArea>
-    )
 }

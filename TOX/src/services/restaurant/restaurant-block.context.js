@@ -15,19 +15,17 @@ export const RestaurantContextProvider = ({ children }) => {
     const retrieveRestaurants = (Name, flag = 0) => {
         setIsLoading(true)
         setRestaurants([])
-        setTimeout(() => {
-            restaurantsRequest(Name).then((result) => {
-                setIsLoading(false)
-                setRestaurants(result)
-                if (flag == 1) {
-                    setRestaurantCopy(result)
-                    setIsCopyLoading(false)
-                }
-            }).catch(err => {
-                setIsError(err)
-                setIsLoading(false)
-            })
-        }, 2000)
+        restaurantsRequest(Name).then((result) => {
+            setIsLoading(false)
+            setRestaurants(result)
+            if (flag == 1) {
+                setRestaurantCopy(result)
+                setIsCopyLoading(false)
+            }
+        }).catch(err => {
+            setIsError(err)
+            setIsLoading(false)
+        })
     }
 
     const SendOrder= (email,amount,vendor,data,restaurant,navigation) => {

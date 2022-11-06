@@ -26,11 +26,12 @@ const Head=styled.Text`
 `;
 
 const ImageStylePot=styled.Image`
-    width:200px
-    height:200px
-    resize-mode:contain
+    width:160px
+    height:160px
+    resize-mode:cover
     margin-left:${(props) => props.theme.space[3]};
     flex:0.65
+    border-radius:${(props) => props.theme.space[3]};
 `;
 
 const ImageStyle=styled.Image`
@@ -38,6 +39,7 @@ const ImageStyle=styled.Image`
     height:225px
     margin-left:${(props) => props.theme.space[4]};
     margin-top:${(props) => props.theme.space[4]};
+    border-radius:${(props) => props.theme.space[3]};
 `;
 
 const Title=styled.Text`
@@ -68,7 +70,7 @@ const Row=styled.View`
 const BottomBar = styled.View`
     background-color:${(props) => props.theme.colors.ui.basic};
     padding: 10px
-    border-radius: ${(props) => props.theme.space[2]};
+    border-radius: ${(props) => props.theme.space[4]};
     margin-horizontal: ${(props) => props.theme.space[2]};
 `;
 
@@ -189,69 +191,67 @@ export const ItemDetails = ({ route,navigation }) => {
                                 (
                                     isSeller?
                                         (
-                                            <TouchableOpacity style={{flex:1}} onPress={()=>{
-                                                Alert.alert(
-                                                    "Sure you want to remove item?",
-                                                    "Item will no be shown to other users for selling",
-                                                    [
-                                            
-                                                        {
-                                                            text: "Yes",
-                                                            onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
-                                                        },
-                                                        {
-                                                            text: "No",
-                                                            onPress: () => { <></> }
-                                                        } 
-                                                    ]
-                                                )
-                                                }}>
-                                                <Option>Remove item?</Option>
-                                            </TouchableOpacity>
+                                            <>
+                                                <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                    Alert.alert(
+                                                        "Has the item been bought?",
+                                                        "Item will be removed from your holding list",
+                                                        [                    
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: async() => { setError (await(UpdateExchanges(details,"Sold",navigation))) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            }
+                                                        ]
+                                                    )
+                                                    }}>
+                                                    <Option>Already Sold?</Option>
+                                                </TouchableOpacity>       
+                                                <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                    Alert.alert(
+                                                        "Sure you want to remove item?",
+                                                        "Item will no be shown to other users for selling",
+                                                        [
+                                                
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            } 
+                                                        ]
+                                                    )
+                                                    }}>
+                                                    <Option>Remove item?</Option>
+                                                </TouchableOpacity>
+                                            </>
                                         ):
                                         (
                                             isBuyer?
                                             (
-                                                <>
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
-                                                        Alert.alert(
-                                                            "Has the item been bought?",
-                                                            "Item will be removed from your holding list",
-                                                            [
-                                                    
-                                                                {
-                                                                    text: "Yes",
-                                                                    onPress: async() => { setError (await(UpdateExchanges(details,"Sold",navigation))) }
-                                                                },
-                                                                {
-                                                                    text: "No",
-                                                                    onPress: () => { <></> }
-                                                                }
-                                                            ]
-                                                        )
-                                                        }}>
-                                                        <Option>Already Bought?</Option>
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
-                                                        Alert.alert(
-                                                            "Release the item?",
-                                                            "Item will be visible to other users",
-                                                            [
-                                                    
-                                                                {
-                                                                    text: "Yes",
-                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Available",navigation))) }
-                                                                },
-                                                                {
-                                                                    text: "No",
-                                                                    onPress: () => { <></> }
-                                                                }
-                                                            ]
-                                                        )
-                                                        }}>
-                                                        <Option>Release item</Option>
-                                                    </TouchableOpacity>
-                                                </>
+                                                <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                    Alert.alert(
+                                                        "Release the item?",
+                                                        "Item will be visible to other users",
+                                                        [                    
+                                                            {
+                                                                text: "Yes",
+                                                                onPress: async () => { setError (await(UpdateExchanges(details,"Available",navigation))) }
+                                                            },
+                                                            {
+                                                                text: "No",
+                                                                onPress: () => { <></> }
+                                                            }
+                                                        ]
+                                                    )
+                                                    }}>
+                                                    <Option>Release item</Option>
+                                                </TouchableOpacity>
                                             ):
                                             (
                                                 <TouchableOpacity style={{flex:1}} onPress={()=>{

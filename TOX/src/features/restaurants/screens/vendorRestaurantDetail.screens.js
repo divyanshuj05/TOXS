@@ -34,8 +34,9 @@ const BottomBar = styled(View)`
     flex-direction:row
     padding-horizontal: ${(props) => props.theme.space[2]};
     padding-vertical: ${(props) => props.theme.space[3]};
-    border-radius: ${(props) => props.theme.space[2]};
+    border-radius: ${(props) => props.theme.space[4]};
     margin-horizontal: ${(props) => props.theme.space[2]};
+    margin-bottom:${(props) => props.theme.space[2]};
 `;
 
 const AddText=styled.Text`

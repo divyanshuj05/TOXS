@@ -1,15 +1,16 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { VendorHome } from "../../features/common/screens/vendorHome.screens";
 import { VendorRestaurantsNavigator } from "./vendorRestaurant.navigator";
-import { VendorOrderScreen } from "../../features/restaurants/screens/vendorOrders.screens";
+import { VendorHistoryNavigator } from "./vendorOrderHistory.navigator";
 
 const VendorHomeStack = createStackNavigator();
 
 export const VendorHomeNavigator = () => {
   return (
     <VendorHomeStack.Navigator initialRouteName="home" screenOptions={{
-      headerShown: false
+      headerShown: false,
+      ...TransitionPresets.SlideFromRightIOS
     }} >
       <VendorHomeStack.Screen
         name="home"
@@ -20,8 +21,8 @@ export const VendorHomeNavigator = () => {
         component={VendorRestaurantsNavigator}
       />
       <VendorHomeStack.Screen
-        name="VendorOrders"
-        component={VendorOrderScreen}
+        name="RestaurantsHome"
+        component={VendorHistoryNavigator}
         />
     </VendorHomeStack.Navigator>
   );

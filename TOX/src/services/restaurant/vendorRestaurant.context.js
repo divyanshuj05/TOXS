@@ -13,15 +13,13 @@ export const VendorRestaurantContextProvider = ({ children }) => {
 
     const Search = (name) =>{
         setIsLoading(true)
-        setTimeout(()=>{
-            VendorRestaurantsRequest(name).then((res)=>{
-                restaurant.current=res
-                setIsLoading(false)
-            }).catch(err=>{
-                setIsError(err)
-                setIsLoading(false)
-            })
-        },1000)
+        VendorRestaurantsRequest(name).then((res)=>{
+            restaurant.current=res
+            setIsLoading(false)
+        }).catch(err=>{
+            setIsError(err)
+            setIsLoading(false)
+        })
     }
 
     useEffect(()=>{
@@ -47,16 +45,14 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             setIsLoading(false)
             return "Negative numbers and spaces are not allowed"
         }
-        setTimeout(()=>{
-            AddFoodItem(title,cost,Restaurant).then(res=>{
-                Search(user.userName)
-                return null
-            }).catch(err=>{
-                console.log(err)
-                setIsLoading(false)
-                return "Operation failed!! Please try again"
-            })
-        },1000)
+        AddFoodItem(title,cost,Restaurant).then(res=>{
+            Search(user.userName)
+            return null
+        }).catch(err=>{
+            console.log(err)
+            setIsLoading(false)
+            return "Operation failed!! Please try again"
+        })
     }
 
     const editItem = (title,oldCost,newCost,Restaurant) => { 
@@ -79,7 +75,6 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         if(newCost==oldCost) {
             setIsLoading(false)
             return null}
-        setTimeout(()=>{
             EditFoodItem(title,oldCost,newCost,Restaurant).then(res=>{
                 Search(user.userName)
                 return null
@@ -88,22 +83,19 @@ export const VendorRestaurantContextProvider = ({ children }) => {
                 setIsLoading(false)
                 return err
             })
-        },1000)
         
     }
 
     const deleteItem = (title,cost,Restaurant) => {
         setIsLoading(true)
-        setTimeout(()=>{
-            DeleteFoodItem(title,cost,Restaurant).then(res=>{
-                Search(user.userName)
-                return null
-            }).catch(err=>{
-                console.log(err)
-                setIsLoading(false)
-                return "Operation failed!!"
-            })
-        },1000)
+        DeleteFoodItem(title,cost,Restaurant).then(res=>{
+            Search(user.userName)
+            return null
+        }).catch(err=>{
+            console.log(err)
+            setIsLoading(false)
+            return "Operation failed!!"
+        })
 
     }
 
