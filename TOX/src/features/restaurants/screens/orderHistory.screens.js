@@ -108,7 +108,7 @@ export const OrderHistory = ({ navigation }) => {
                     <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}} />
                 ):
                 (
-                    history? 
+                    history.length? 
                     (   
                         <FlatList 
                             data={history} 

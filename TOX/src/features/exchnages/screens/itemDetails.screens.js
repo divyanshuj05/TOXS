@@ -191,8 +191,10 @@ export const ItemDetails = ({ route,navigation }) => {
                                 (
                                     isSeller?
                                         (
-                                            <>
-                                                <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                details.status=="On Hold"?
+                                                (
+                                                    <>
+                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
                                                     Alert.alert(
                                                         "Has the item been bought?",
                                                         "Item will be removed from your holding list",
@@ -209,27 +211,51 @@ export const ItemDetails = ({ route,navigation }) => {
                                                     )
                                                     }}>
                                                     <Option>Already Sold?</Option>
-                                                </TouchableOpacity>       
-                                                <TouchableOpacity style={{flex:0.5}} onPress={()=>{
-                                                    Alert.alert(
-                                                        "Sure you want to remove item?",
-                                                        "Item will no be shown to other users for selling",
-                                                        [
+                                                    </TouchableOpacity>       
+                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                        Alert.alert(
+                                                            "Sure you want to remove item?",
+                                                            "Item will no be shown to other users for selling",
+                                                            [
+                                                    
+                                                                {
+                                                                    text: "Yes",
+                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                                },
+                                                                {
+                                                                    text: "No",
+                                                                    onPress: () => { <></> }
+                                                                } 
+                                                            ]
+                                                        )
+                                                        }}>
+                                                        <Option>Remove item?</Option>
+                                                        </TouchableOpacity>
+                                                        </>
+                                                ):
+                                                (
+                                                    <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                        Alert.alert(
+                                                            "Sure you want to remove item?",
+                                                            "Item will no be shown to other users for selling",
+                                                            [
+                                                    
+                                                                {
+                                                                    text: "Yes",
+                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                                },
+                                                                {
+                                                                    text: "No",
+                                                                    onPress: () => { <></> }
+                                                                } 
+                                                            ]
+                                                        )
+                                                        }}>
+                                                        <Option>Remove item?</Option>
+                                                        </TouchableOpacity>
+                                                )
                                                 
-                                                            {
-                                                                text: "Yes",
-                                                                onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
-                                                            },
-                                                            {
-                                                                text: "No",
-                                                                onPress: () => { <></> }
-                                                            } 
-                                                        ]
-                                                    )
-                                                    }}>
-                                                    <Option>Remove item?</Option>
-                                                </TouchableOpacity>
-                                            </>
+                                            
                                         ):
                                         (
                                             isBuyer?

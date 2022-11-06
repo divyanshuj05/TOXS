@@ -143,6 +143,21 @@ export const UpdateData = async (obj,status,mail) => {
         return new Promise(async(resolve,reject)=>{
             const newData={...obj,"status":status}
             setDoc(docRef,newData).then(res=>{
+                if(status=="Removed by seller")
+                {
+                    if(obj.buyer!="null")
+                    {
+                        GetMobileData(obj.buyer).then(res=>{
+                            if(res.token!="null")
+                            {
+                                SendNotification(res.token,`Exchnage of ${obj.name}`,"Seller does not want to sell the item")
+                            }
+                            resolve("Done")
+                        })
+                    }
+                    resolve("Done")
+                    return
+                }
                 resolve("Done")
             }).catch(err=>{
                 console.log(err)
