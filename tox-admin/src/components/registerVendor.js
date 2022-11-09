@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import '../css/vendor.css'
-import { CheckVendorData } from '../services/vendor.service'
+import { CheckVendorData, EnterVendorData } from '../services/vendor.service'
 
 export default function Vendor({ set }){
 
@@ -10,12 +10,23 @@ export default function Vendor({ set }){
     const [mobile,setMobile]=useState(null)
     const [password,setPassword]=useState(null)
     const [cafe,setCafe]=useState(null)
+    const [isLoading,setIsLoading]=useState(false)
 
-    const handleVendorSubmit = (event,set) => {
+    const handleVendorSubmit =async (event,set) => {
         event.preventDefault()
         const res=CheckVendorData(name,mail,mobile,password,cafe)
         if(res===false) return
-        set(false)
+        setIsLoading(true)
+        await EnterVendorData(name,mail,mobile,password,cafe).then(res=>{
+            alert("Vendor successfully registered")
+            setIsLoading(false)
+            set(false)
+            return
+        }).catch(e=>{
+            setIsLoading(false)
+            alert("Some error occured. Please try again")
+            return
+        })
     }
 
     return(
@@ -32,11 +43,18 @@ export default function Vendor({ set }){
                 <input className='form-input-primary' type={"password"} placeholder="Password" onChange={(text)=>setPassword(text.target.value)} />
                 <h3 className='form-input-text-primary'>Vendor of cafteria</h3>
                 <input className='form-input-primary' type={"text"} placeholder="Cafteria" onChange={(text)=>setCafe(text.target.value)} />
-                <div className='container-btns'>
-                    <button className='tertiary-btn' onClick={()=>set(false)} >Back</button>
-                    <input className='tertiary-btn' type={"reset"} />
-                    <button className='tertiary-btn' onClick={(event)=>handleVendorSubmit(event,set)}>Submit</button>
-                </div>
+                {isLoading?
+                (   
+                    <p style={{textAlign:"center",marginTop:20}}>Process in progress...</p>
+                ):
+                (
+                    <div className='container-btns'>
+                        <button className='tertiary-btn' onClick={()=>set(false)} >Back</button>
+                        <input className='tertiary-btn' type={"reset"} />
+                        <button className='tertiary-btn' onClick={(event)=>handleVendorSubmit(event,set)}>Submit</button>
+                    </div>
+                )
+                }
             </form>
         </div>
     )

@@ -1,3 +1,6 @@
+import { db } from "../database.config"
+import { addDoc,query,where,collection,getDocs,doc,updateDoc } from "firebase/firestore"
+
 export const CheckVendorData = (name,email,mobile,password,cafe) => {
     if(!name||!email||!mobile||!password||!cafe)
     {
@@ -53,4 +56,40 @@ export const CheckVendorData = (name,email,mobile,password,cafe) => {
         alert("Error: Password should contain atleast one uppercase letter!!");
         return false
       }
+}
+
+export const EnterVendorData = (name,email,mobile,password,cafe) => {
+  return new Promise(async(resolve,reject)=>{
+    var flag=0;
+    const cafeteriaQuery=query(collection(db,"cafeterias"),where("Name","==",cafe))
+    const querySnapshot = await getDocs(cafeteriaQuery);
+    querySnapshot.forEach(async(Doc) => {
+      flag=1
+      const ref=doc(db,"cafeterias",Doc.id)
+      await updateDoc(ref, {
+        "vendor": name
+      });
+    });
+    if(flag===0)
+    {
+      alert("Cafteria does not exist!!")
+      reject("Cafeteria does not exist")
+      return
+    }
+    let data={
+      userName:name,
+      email:email,
+      mobileNo:mobile,
+      password:password,
+      restaurant:cafe,
+      token:"null"
+    }
+    await addDoc(collection(db,"vendors"),data).then(res=>{
+      resolve("Vendor successfully registered")
+      return
+    }).catch(e=>{
+      reject("Problem registering vendor. Please try again")
+      return
+    })
+  })
 }
