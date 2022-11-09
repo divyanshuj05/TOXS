@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, TouchableOpacity, Alert } from "react-native"
+import { View, TouchableOpacity } from "react-native"
 import { AuthenticationContext } from '../../../services/authentication/authentication.context'
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
@@ -118,7 +118,7 @@ export const ProfileScreen = () => {
                                         keyboardType="default"
                                         autoCapitalize="words"
                                         onChangeText={(text) => { setNewUser(text) }} />
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
                                         setErrorUser(null)
                                         let result = UpdateDoc("userName", newUser,user.type)
                                         if (result === true) {
@@ -135,7 +135,7 @@ export const ProfileScreen = () => {
                                     <Details>{user.userName}</Details>
                                     {user.type=="users"?
                                     (
-                                        <TouchableOpacity onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
+                                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
                                             <UpdateButton name="spinner-refresh" size={22} />
                                         </TouchableOpacity>
                                     ):
@@ -172,7 +172,7 @@ export const ProfileScreen = () => {
                                         keyboardType="phone-pad"
                                         autoCapitalize="none"
                                         onChangeText={(text) => { setNewMobile(text) }} />
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
                                         setErrorMob(null)
                                         const result = UpdateDoc("mobileNo", newMobile,user.type)
                                         if (result === true) {
@@ -187,7 +187,7 @@ export const ProfileScreen = () => {
                             (
                                 <>
                                     <Details>{user.mobileNo}</Details>
-                                    <TouchableOpacity onPress={() => { setUpdateMobile(true), setErrorMob(null) }}>
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateMobile(true), setErrorMob(null) }}>
                                         <UpdateButton name="spinner-refresh" size={22} />
                                     </TouchableOpacity>
                                 </>
@@ -215,7 +215,7 @@ export const ProfileScreen = () => {
                                         secureTextEntry
                                         autoCapitalize="none"
                                         onChangeText={(text) => { setNewPass(text) }} />
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
                                         setErrorPass(null)
                                         const result = UpdateDoc("password", newPass,user.type)
                                         if (result === true) {
@@ -230,7 +230,7 @@ export const ProfileScreen = () => {
                             (
                                 <>
                                     <Details>******{user.password.substring(6)}</Details>
-                                    <TouchableOpacity onPress={() => { setUpdatePass(true), setErrorPass(null) }}>
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdatePass(true), setErrorPass(null) }}>
                                         <UpdateButton name="spinner-refresh" size={22} />
                                     </TouchableOpacity>
                                 </>

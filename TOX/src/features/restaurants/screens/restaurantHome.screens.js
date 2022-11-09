@@ -51,7 +51,7 @@ const Restaurant_Text=styled.Text`
 export const RestaurantHome = ({ navigation }) => {
 
     const { scheme } = useContext(AppThemeContext)
-    const { orientation,isOrientationLoading } = useContext(DeviceOrientationContext)
+    const { orientation } = useContext(DeviceOrientationContext)
 
     if(orientation==1||orientation==2)
     {
@@ -68,13 +68,13 @@ export const RestaurantHome = ({ navigation }) => {
                     </View>
                     <Facility_Name>Thapar Pre-Ordering Service</Facility_Name> 
                     <Restuarant_Facility>
-                        <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("Restaurants")}>
+                        <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("Restaurants")}>
                             <Restaurant_Text>Pre-Order Food</Restaurant_Text>
                             <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                         </TouchableOpacity>
                     </Restuarant_Facility>
                     <Restuarant_Facility>
-                        <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
+                        <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
                             <Restaurant_Text>My Order History</Restaurant_Text>
                             <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                         </TouchableOpacity>
@@ -99,13 +99,13 @@ export const RestaurantHome = ({ navigation }) => {
                     <View style={{flex:0.6}}>
                         <Facility_Name>Thapar Pre-Ordering Service</Facility_Name> 
                         <Restuarant_Facility>
-                            <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("Restaurants")}>
+                            <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("Restaurants")}>
                                 <Restaurant_Text>Pre-Order Food</Restaurant_Text>
                                 <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                             </TouchableOpacity>
                         </Restuarant_Facility>
                         <Restuarant_Facility>
-                            <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
+                            <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("OrderHistory")}>
                                 <Restaurant_Text>My Order History</Restaurant_Text>
                                 <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                             </TouchableOpacity>

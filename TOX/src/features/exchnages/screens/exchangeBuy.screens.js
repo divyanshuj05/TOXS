@@ -44,7 +44,7 @@ export const BuyScreen = ({ navigation }) => {
 
     const renderItem = (item) => {
         return(
-            <TouchableOpacity onPress={()=>{
+            <TouchableOpacity activeOpacity={0.65} onPress={()=>{
                 if(item.item.status=="Available") navigation.navigate("ItemDetails",{details:item.item,get:0})
                 else alert("Item is already on hold!")
             }}>

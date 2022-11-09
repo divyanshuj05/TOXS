@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TouchableOpacity, FlatList, View, Alert } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
@@ -38,9 +38,9 @@ const CardContainer = styled.View`
 `;
 
 const FavWrap = styled.View`
-    flex:0.23;
+    flex:0.22;
     background-color: ${(props) => props.theme.background};
-    padding: ${(props) => props.theme.space[2]};
+    padding: ${(props) => props.theme.space[3]};
 `;
 
 const FavWrapLand = styled.View`
@@ -51,9 +51,13 @@ const FavWrapLand = styled.View`
 
 export const RestaurantScreen = ({ navigation }) => {
 
-    const { restaurants, restaurantCopy, isCopyLoading, isLoading } = useContext(RestaurantContext);
+    const { restaurants, restaurantCopy, isCopyLoading, isLoading, Search } = useContext(RestaurantContext);
     const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext)
     const { orientation } = useContext(DeviceOrientationContext)
+
+    useEffect(()=>{
+        Search("Select All", 1);
+    },[])
 
     return (
         <Container>
@@ -86,7 +90,7 @@ export const RestaurantScreen = ({ navigation }) => {
                                 <FlatList
                                     data={restaurants}
                                     renderItem={({ item }) =>
-                                        <TouchableOpacity onPress={() => 
+                                        <TouchableOpacity activeOpacity={0.65} onPress={() => 
                                             {
                                                 if(item.isOpen=="false")
                                                 {
@@ -157,7 +161,7 @@ export const RestaurantScreen = ({ navigation }) => {
                                         horizontal
                                         data={restaurants}
                                         renderItem={({ item }) =>
-                                            <TouchableOpacity onPress={() => {
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => {
                                                 if(item.isOpen=="false")
                                                 {
                                                     Alert.alert(

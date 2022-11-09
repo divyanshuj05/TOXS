@@ -75,7 +75,7 @@ export const OrderHistory = ({ navigation }) => {
 
     const renderItem = (item) => {
         return(
-            <TouchableOpacity onPress={()=>navigation.navigate("OrderDetail",{item:item.item})}>
+            <TouchableOpacity activeOpacity={0.65} onPress={()=>navigation.navigate("OrderDetail",{item:item.item})}>
                 <Wrapper>
                     <View style={{flex:0.5}}>
                         <TextWrap>{item.item.restaurant} order</TextWrap>

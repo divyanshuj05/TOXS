@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView } from "react-native"
+import { ScrollView, Alert } from "react-native"
 import styled from 'styled-components';
 
 const Wrapper = styled.TouchableOpacity`
@@ -36,18 +36,40 @@ export const FavBar = ({ favourites, restaurants, navigation, oriTag }) => {
                 {favourites.map((restaurant) => {
                     const key = restaurant;
                     let icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlIOzzTmSEZjWIScs865U59oKTfIK0oz1K2A&usqp=CAU"
+                    let isOpen=null
                     if (restaurants) {
                         restaurants.some((ele) => {
                             if (ele.Name == restaurant) {
                                 if (ele.icon) {
                                     icon = ele.icon
                                 }
+                                isOpen=ele.isOpen
                             }
                         })
                     }
                     return (
-                        <Wrapper key={key} onPress={() => {
-                            navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
+                        <Wrapper activeOpacity={0.65} key={key} onPress={() => {
+                            if(isOpen=="false")
+                            {
+                                Alert.alert(
+                                    "Cafeteria is closed right now!",
+                                    "Still want to order?",
+                                    [
+                    
+                                        {
+                                            text: "Yes",
+                                            onPress: () => { navigation.navigate("RestaurantsDetail", { restaurent: restaurant,tag:0}) }
+                                        },
+                                        {
+                                            text: "No",
+                                            onPress: () => { <></> }
+                                        }
+                                    ]
+                                )
+                            }
+                            else{
+                                navigation.navigate("RestaurantsDetail", { restaurent: restaurant })
+                            }
                         }}>
                             <Img source={{ uri: icon }} />
                             <FavText>{restaurant}</FavText>

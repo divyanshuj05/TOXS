@@ -56,10 +56,6 @@ export const RestaurantContextProvider = ({ children }) => {
         })
     }
 
-    useEffect(() => {
-        retrieveRestaurants("Select All", 1);
-    }, [])
-
     return (
         <RestaurantContext.Provider value={{ 
             restaurants, 

@@ -100,7 +100,7 @@ export const MenuList = ({ data, navigation, restaurant }) => {
                         <></>
                     ) :
                     (
-                        <TouchableOpacity style={{ flex: 0.4, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.4, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
                             <Proceed>Proceed to pay</Proceed>
                             <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
                         </TouchableOpacity>

@@ -119,7 +119,7 @@ export const HomeScreen = ({ navigation }) => {
                             renderItem={({ item, index }) => {
                                 if (index === 0) {
                                     return (
-                                        <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                        <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantNavigator")}>
                                             <ListWrapper>
                                                 <Facility_Logo source={item.icon} />
                                                 <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -130,7 +130,7 @@ export const HomeScreen = ({ navigation }) => {
                                 }
                                 else {
                                     return (
-                                        <TouchableOpacity onPress={() => navigation.navigate("Exchnage")}>
+                                        <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("Exchnage")}>
                                             <ListWrapper>
                                                 <Facility_Logo source={item.icon} />
                                                 <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -170,7 +170,7 @@ export const HomeScreen = ({ navigation }) => {
                                 renderItem={({ item, index }) => {
                                     if (index === 0) {
                                         return (
-                                            <TouchableOpacity onPress={() => navigation.navigate("RestaurantNavigator")}>
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantNavigator")}>
                                                 <ListWrapper>
                                                     <Facility_Logo source={item.icon} />
                                                     <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -181,7 +181,7 @@ export const HomeScreen = ({ navigation }) => {
                                     }
                                     else {
                                         return (
-                                            <TouchableOpacity onPress={() => navigation.navigate("Exchnage")}>
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("Exchnage")}>
                                                 <ListWrapper>
                                                     <Facility_Logo source={item.icon} />
                                                     <Facility_Text color={item.color}>{item.text}</Facility_Text>

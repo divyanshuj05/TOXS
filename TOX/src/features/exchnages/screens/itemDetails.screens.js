@@ -194,7 +194,7 @@ export const ItemDetails = ({ route,navigation }) => {
                                                 details.status=="On Hold"?
                                                 (
                                                     <>
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                    <TouchableOpacity activeOpacity={0.65} style={{flex:0.5}} onPress={()=>{
                                                     Alert.alert(
                                                         "Has the item been bought?",
                                                         "Item will be removed from your holding list",
@@ -212,7 +212,7 @@ export const ItemDetails = ({ route,navigation }) => {
                                                     }}>
                                                     <Option>Already Sold?</Option>
                                                     </TouchableOpacity>       
-                                                    <TouchableOpacity style={{flex:0.5}} onPress={()=>{
+                                                    <TouchableOpacity activeOpacity={0.65} style={{flex:0.5}} onPress={()=>{
                                                         Alert.alert(
                                                             "Sure you want to remove item?",
                                                             "Item will no be shown to other users for selling",
@@ -234,7 +234,7 @@ export const ItemDetails = ({ route,navigation }) => {
                                                         </>
                                                 ):
                                                 (
-                                                    <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                    <TouchableOpacity activeOpacity={0.65} style={{flex:1}} onPress={()=>{
                                                         Alert.alert(
                                                             "Sure you want to remove item?",
                                                             "Item will no be shown to other users for selling",
@@ -260,7 +260,7 @@ export const ItemDetails = ({ route,navigation }) => {
                                         (
                                             isBuyer?
                                             (
-                                                <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                <TouchableOpacity activeOpacity={0.65} style={{flex:1}} onPress={()=>{
                                                     Alert.alert(
                                                         "Release the item?",
                                                         "Item will be visible to other users",
@@ -280,7 +280,7 @@ export const ItemDetails = ({ route,navigation }) => {
                                                 </TouchableOpacity>
                                             ):
                                             (
-                                                <TouchableOpacity style={{flex:1}} onPress={()=>{
+                                                <TouchableOpacity activeOpacity={0.65} style={{flex:1}} onPress={()=>{
                                                     Alert.alert(
                                                         "Put the item on hold?",
                                                         "Contact the seller to buy the product",

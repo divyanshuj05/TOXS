@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { View, FlatList, TouchableOpacity } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
@@ -7,6 +7,7 @@ import { ActivityIndicator, Colors } from "react-native-paper";
 import { RestaurantInfoCard } from '../components/restaurantInfoCard.components';
 import { FadeInView } from '../../common/components/animations/fade.animation';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
 const Container=styled.View`
     flex:1
@@ -46,8 +47,13 @@ const HeaderText=styled.Text`
 
 export const VendorRestaurantScreen = ({ navigation }) => {
 
-    const { restaurant,isLoading } =useContext(VendorRestaurantContext)
+    const { restaurant,isLoading, Search } = useContext(VendorRestaurantContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const { user } = useContext(AuthenticationContext)
+
+    useEffect(()=>{
+        Search(user.userName)
+    },[])
 
     if(orientation==1||orientation==2)
     {
@@ -68,7 +74,7 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                         <FlatList
                             data={restaurant}
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails")}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails")}>
                                     <FadeInView>
                                         <RestaurantInfoCard restaurant={item} oriTag={0} />
                                     </FadeInView>
@@ -100,7 +106,7 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                             horizontal
                             data={restaurant}
                             renderItem={({ item }) =>
-                                <TouchableOpacity onPress={() => navigation.navigate("RestaurantDetails")}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails")}>
                                     <FadeInView>
                                         <RestaurantInfoCard restaurant={item} oriTag={1} />
                                     </FadeInView>

@@ -143,7 +143,7 @@ export const OrderDetails = ({route,navigation}) => {
                         </View>
                     ):
                     (
-                        <Touch onPress={()=>handleOrderReady(user.type,"Ready")}>
+                        <Touch activeOpacity={0.65} onPress={()=>handleOrderReady(user.type,"Ready")}>
                             <TextTouch>Order ready?</TextTouch>
                         </Touch>
                     )
@@ -165,7 +165,7 @@ export const OrderDetails = ({route,navigation}) => {
                         </View>
                     ):
                     (
-                        <Touch onPress={()=>handleOrderReady(user.type,"Delivered")}>
+                        <Touch activeOpacity={0.65} onPress={()=>handleOrderReady(user.type,"Delivered")}>
                             <TextTouch>Order taken?</TextTouch>
                         </Touch>
                     )

@@ -91,7 +91,7 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                                 keyboardType="phone-pad"
                                 autoCapitalize="none"
                                 onChangeText={(text) => setCost(text)} /> 
-                            <Touch onPress={async()=>{
+                            <Touch activeOpacity={0.65} onPress={async()=>{
                                 setEdit(!edit)
                                 setError(await (editItem(foodItem.title,foodItem.price,cost,Restaurant)))
                             }}>
@@ -102,12 +102,12 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                     (
                         <>
                             <View style={{flex:0.1}}>
-                                <TouchableOpacity onPress={()=>setEdit(!edit)}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>setEdit(!edit)}>
                                     <MaterialIcons name="edit" size={22} color={scheme == "light" ? "black" : "white"} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex:0.35}}>
-                                <TouchableOpacity style={{marginLeft:64}} onPress={()=>deleteButton()}>
+                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:64}} onPress={()=>deleteButton()}>
                                     <MaterialIcons name="delete" size={22} color={scheme == "light" ? "black" : "white"} />
                                 </TouchableOpacity>
                             </View>

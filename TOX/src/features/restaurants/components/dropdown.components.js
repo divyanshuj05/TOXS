@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { AntDesign } from '@expo/vector-icons';
@@ -34,7 +34,11 @@ export const DropDownComponent = ({ restaurant = {} }) => {
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
+            containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:32 }}
             iconStyle={styles.iconStyle}
+            dropdownPosition="bottom"
+            activeColor="rgb(200,200,200)"
+            iconColor='white'
             search
             value={value}
             placeholder="Filter by Location"
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
         margin: 16,
         height: 50,
         borderBottomColor: 'gray',
-        borderBottomWidth: 0.5
+        borderBottomWidth: 0.5,
     },
     icon: {
         marginRight: 16,
@@ -76,5 +80,8 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
+        borderRadius:32,
+        borderColor:"black",
+        color:"black"
     },
 });

@@ -91,7 +91,7 @@ export const FeedbackScreen = ({ navigation }) => {
             </View>
             <Information>*We may email you for more information or updates*</Information>
             <View style={{alignItems:"center",justifyContent:"center",height:200}}>            
-            <SendButton onPress={()=>{StoreFeedback(setIsLoading,feedback.current,user.email,navigation)}}>
+            <SendButton activeOpacity={0.65} onPress={()=>{StoreFeedback(setIsLoading,feedback.current,user.email,navigation)}}>
                 <SendText>Send</SendText>
             </SendButton>
             </View>

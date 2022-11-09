@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View,ScrollView,StyleSheet,TouchableOpacity,Image, DeviceEventEmitter } from "react-native"
+import { View,ScrollView,StyleSheet,TouchableOpacity,Image } from "react-native"
 import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -178,6 +178,8 @@ export const SellScreen = ({ navigation }) => {
                                     iconStyle={styles.iconStyle}
                                     value={category}
                                     onChange={item=>setCategory(item)}
+                                    containerStyle={{ backgroundColor:"rgb(230,230,230)",borderRadius:16 }}
+                                    activeColor={{color:"rgb(190,190,190)"}}
                                     placeholder="Select Category"
                                     valueField="value"
                                     labelField="label"
@@ -190,7 +192,7 @@ export const SellScreen = ({ navigation }) => {
                         </Row>
                         <Row>
                             <Item>Select Image</Item>
-                            <TouchableOpacity onPress={()=>imageHandler()}>
+                            <TouchableOpacity activeOpacity={0.65} onPress={()=>imageHandler()}>
                                 <Photo>Add Photo</Photo>
                             </TouchableOpacity>
                         </Row>
@@ -208,10 +210,10 @@ export const SellScreen = ({ navigation }) => {
                         }
                     </ScrollView>
                     <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <Cancel>Cancel</Cancel>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 0.5, justifyContent: 'center' }} onPress={async() => { 
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={async() => { 
                             setError(await (addItem(item,desc,price,category.label,image,navigation))) 
                         }}>
                             <Submit>Submit</Submit>

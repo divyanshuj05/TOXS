@@ -16,7 +16,11 @@ export const HistoryFilterComponent = ({ status,options,SearchByStatus,type,name
                     status.current=text.value
                     SearchByStatus(text.value,type,name)    
                 }}
+                dropdownPosition="bottom"
+                activeColor="rgb(200,200,200)"
+                iconColor='white'
                 value={status.current}
+                containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:32 }}
                 placeholder="Sort by status"
                 valueField="value"
                 labelField="label"

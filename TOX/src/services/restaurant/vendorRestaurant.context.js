@@ -22,10 +22,6 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         })
     }
 
-    useEffect(()=>{
-        Search(user.userName)
-    },[])
-
     const addItem = (title,cost,Restaurant) => {
         setIsLoading(true)
         if(title==""||cost=="")
@@ -106,7 +102,8 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             isError,
             addItem,
             editItem,
-            deleteItem
+            deleteItem,
+            Search
         }}>
             {children}
         </VendorRestaurantContext.Provider>

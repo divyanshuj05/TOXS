@@ -40,7 +40,7 @@ export const ExchangeHistory = ({ navigation }) => {
 
     const renderItem = (item) => {
         return(
-            <TouchableOpacity onPress={()=>navigation.navigate("ItemDetails",{details:item.item,get:1})}>
+            <TouchableOpacity activeOpacity={0.65} onPress={()=>navigation.navigate("ItemDetails",{details:item.item,get:1})}>
                 <FadeInView>
                     <ItemInfoCard item={item} />
                 </FadeInView>

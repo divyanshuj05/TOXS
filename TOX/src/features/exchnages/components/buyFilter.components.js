@@ -29,6 +29,10 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Search,Sort 
                 iconStyle={styles.iconStyle}
                 value={category}
                 onChange={(item)=>{setCategory(item), Search(item.value)}}
+                containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:16 }}
+                dropdownPosition="bottom"
+                activeColor="rgb(200,200,200)"
+                iconColor='white'
                 placeholder="Select category"
                 valueField="value"
                 labelField="label"
@@ -44,6 +48,10 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Search,Sort 
                     onChange={(item)=>{setSort(item),Sort(item.value)}}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
+                    containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:16 }}
+                    dropdownPosition="bottom"
+                    activeColor="rgb(200,200,200)"
+                    iconColor='white'
                     iconStyle={styles.iconStyle}
                     placeholder="Sort"
                     valueField="value"

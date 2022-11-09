@@ -125,7 +125,7 @@ export const VendorRestaurantDetail = () => {
                                             onChangeText={(text) => setCost(text)} /> 
                                     </View>       
                                     <View style={{flex:0.2,alignItems:"flex-start"}}>
-                                        <Touch onPress={async ()=>{
+                                        <Touch activeOpacity={0.65} onPress={async ()=>{
                                             setError(await (addItem(item,cost,restaurant[0].Name)))
                                             setAdd(!add)}}>
                                             <Ionicons name="checkmark-circle-outline" size={28} style={{marginTop:16}} color="white" />
@@ -134,7 +134,7 @@ export const VendorRestaurantDetail = () => {
                                 </View>
                             ):
                             (
-                                <TouchableOpacity onPress={()=>setAdd(!add)} style={{flex:1,alignItems:"center"}}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>setAdd(!add)} style={{flex:1,alignItems:"center"}}>
                                     <AddText>Add food item</AddText>
                                 </TouchableOpacity>
                             )

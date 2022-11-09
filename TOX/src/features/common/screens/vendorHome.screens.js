@@ -94,7 +94,7 @@ export const VendorHome = ({ navigation }) => {
                         renderItem={({ item, index }) => {
                             if (index === 0) {
                                 return (
-                                    <TouchableOpacity onPress={() => navigation.navigate("VendorRestaurantNavigator")}>
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("VendorRestaurantNavigator")}>
                                         <ListWrapper>
                                             <Facility_Logo source={item.icon} />
                                             <Facility_Text color={item.color}>{item.text}</Facility_Text>
@@ -105,7 +105,7 @@ export const VendorHome = ({ navigation }) => {
                             }
                             else {
                                 return (
-                                    <TouchableOpacity onPress={() => navigation.navigate("RestaurantsHome")}>
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantsHome")}>
                                         <ListWrapper>
                                             <Facility_Logo source={item.icon} />
                                             <Facility_Text color={item.color}>{item.text}</Facility_Text>

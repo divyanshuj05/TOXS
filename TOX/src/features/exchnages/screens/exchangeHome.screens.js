@@ -83,19 +83,19 @@ export const ExchangeHome = ({ navigation }) => {
             <>
                 <Facility_Name>Thapar Exchange Service</Facility_Name> 
                 <Exchange_Facility>
-                    <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("SellHome")} >
+                    <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("SellHome")} >
                         <Exchange_Text>Sell an item</Exchange_Text>
                         <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                     </TouchableOpacity>
                 </Exchange_Facility>
                 <Exchange_Facility>
-                    <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("BuyHome")}>
+                    <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("BuyHome")}>
                         <Exchange_Text>Buy an item</Exchange_Text>
                         <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                     </TouchableOpacity>
                 </Exchange_Facility>
                 <Exchange_Facility>
-                    <TouchableOpacity style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("History")}>
+                    <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("History")}>
                         <Exchange_Text>My Orders and History</Exchange_Text>
                         <AntDesign style={{paddingLeft:8}} name="right" size={20} color="white" />
                     </TouchableOpacity>

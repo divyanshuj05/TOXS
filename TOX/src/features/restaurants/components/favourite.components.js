@@ -25,7 +25,7 @@ export const Favourite = ({ restaurant, favourites, add, remove }) => {
     }
 
     return (
-        <FavouriteButton
+        <FavouriteButton activeOpacity={0.65}
             onPress={() =>
                 !isFavourite
                     ? (add(restaurant), setCount(!count))

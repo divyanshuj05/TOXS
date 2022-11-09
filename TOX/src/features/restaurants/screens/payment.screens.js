@@ -97,7 +97,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                         />
                       </View>
                       <TextWrap style={{fontSize:12}}>*This may incur some extra cost</TextWrap>
-                      <Pay onPress={async()=>{
+                      <Pay activeOpacity={0.65} onPress={async()=>{
                         const res=await handleStripe()
                         if(res)
                         {
@@ -125,7 +125,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                   <View style={{flex:0.7}}>
                     <TextWrap style={{marginTop:50}}>Pay via Card</TextWrap>
                   </View>
-                  <TouchableOpacity style={{flex:0.15,marginTop:50,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setStripe(true),setAmount(Math.floor(tempCost))}}>
+                  <TouchableOpacity activeOpacity={0.65} style={{flex:0.15,marginTop:50,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setStripe(true),setAmount(Math.floor(tempCost))}}>
                     <Text style={{color:"white",textAlign:"center"}}>Choose</Text>
                   </TouchableOpacity> 
                 </View>
