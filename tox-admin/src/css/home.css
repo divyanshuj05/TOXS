@@ -1,0 +1,91 @@
+.flexbox-container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.admin-home{
+  width: 100%;
+  flex:1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container{
+  background-color: rgba(230, 230, 230, 0.7);
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 50vh;
+}
+
+#container-title{
+  font-family: 'Oswald', sans-serif;
+  font-weight: bold;
+  font-size:xx-large;
+  text-align: center;
+}
+
+#choose-text{
+  font-size: large;
+  font-weight: normal;
+  text-align: center;
+  font-family: 'M PLUS 1 Code', sans-serif;
+}
+
+.primary-btn{
+  margin-inline-start: 25%;
+  margin-inline-end: 25%;
+  margin-bottom: 10%;
+  font-size:small;
+  font-weight: normal;
+  background-color: rgb(101, 12, 184);
+  color: white;
+  border-radius: 32px;
+  height: 10%;
+  cursor: pointer;
+  font-family: 'M PLUS 1 Code', sans-serif;
+  border-color:white;
+}
+
+.primary-btn:hover{
+  transition-duration: 400ms;
+  background-color:rgb(162, 84, 235);
+}
+
+.secondary-btn{
+  margin-inline-start: 35%;
+  margin-inline-end: 35%;
+  margin-bottom: 10%;
+  font-size:small;
+  font-weight: normal;
+  background-color: rgb(101, 12, 184);
+  color: white;
+  border-radius: 32px;
+  padding: 1.5%;
+  border: 2px solid rgb(200, 200, 200);
+  font-family: 'M PLUS 1 Code', sans-serif;
+  text-align: center;
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+}
+
+.secondary-btn:hover{
+  transition-duration: 500ms;
+  background-color:rgb(162, 84, 235);
+}
+
+.container-main{
+  display: flex;
+  flex-direction: column;
+  flex:0.8;
+  
+}
+
+.container-footer{
+  display: flex;
+  flex-direction: column;
+  flex:0.2;
+}
