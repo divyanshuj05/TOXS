@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useRef, useState } from 'react'
 import { AuthenticationContext } from '../authentication/authentication.context'
-import { RetrieveHistory, GetMobileData } from './exchange.service'
+import { RetrieveHistory, GetMobileData, RetrieveHistoryByStatus } from './exchange.service'
 
 export const ExchangeHistoryContext = createContext()
 
@@ -36,13 +36,33 @@ export const ExchangeHistoryContextProvider = ({children}) => {
         })
     }
 
+    const SearchByStatus = (status,type,mail) => {
+        if(status=="Select All")
+        {
+            UserData()
+            return
+        }
+        else{
+            setDetailsLoading(true)
+            history.current=[]
+            RetrieveHistoryByStatus(mail,status).then(res=>{
+                history.current=res
+                setDetailsLoading(false)
+            }).catch(err=>{
+                console.log(err)
+                setDetailsLoading(false)
+        })
+        }
+    }
+
     return(
         <ExchangeHistoryContext.Provider value={{
             history:history.current,
             detailsLoading,
             UserData,
             RetrieveMobile,
-            mobile
+            mobile,
+            SearchByStatus
         }}>
             {children}
         </ExchangeHistoryContext.Provider>

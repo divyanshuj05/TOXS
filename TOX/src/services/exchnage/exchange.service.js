@@ -192,6 +192,29 @@ export const RetrieveHistory = (email) => {
     });
 }
 
+export const RetrieveHistoryByStatus = (email,status) => {
+    var array=[]
+
+    return new Promise(async (resolve, reject) => {
+        let Query = query(collection(db, "exchanges"), where("seller", "==" , email), where("status","==",status))
+        let snapShot = await getDocs(Query)
+        snapShot.forEach(doc => {
+            let temp=Object.assign(doc.data(),{"id":doc.id})
+            array.push(temp)
+        });
+        Query = query(collection(db, "exchanges"), where("buyer", "==" , email), where("status","==",status))
+        snapShot = await getDocs(Query)
+        snapShot.forEach(doc => {
+            let temp=Object.assign(doc.data(),{"id":doc.id})
+            array.push(temp)
+        });
+        if (array == "[]") {
+            reject("Problem getting data!!")
+        }
+        resolve(array);
+    });
+}
+
 export const GetMobileData = (email) => {
     return new Promise(async(resolve,reject)=>{
     const Query = query(collection(db, "users"), where("email", "==", email))

@@ -71,7 +71,7 @@ export const OrderHistory = ({ navigation }) => {
         { label: 'Ready', value: 'Ready' },
         { label: 'Delivered', value: 'Delivered' },
         { label: 'Select All', value: 'Select All' }
-        ]
+    ]
 
     const renderItem = (item) => {
         return(
