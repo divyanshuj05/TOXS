@@ -1,0 +1,55 @@
+.form-contaniner{
+  overflow-y: auto;
+}
+
+#container-title{
+    font-family: 'Oswald', sans-serif;
+    font-weight: bolder;
+    font-size:x-large;
+    text-align: center;
+}
+
+.form-input-primary{
+  margin-left: 10%;
+  width:75%;
+  font-size: medium;
+  border-radius: 16px;
+  background-color: rgb(230,230,230);
+  font-family: 'M PLUS 1 Code', sans-serif;
+  font-weight:100;
+}
+
+.form-input-primary:focus {
+  transition-duration: 400ms;
+  background-color: rgb(210,210,210);
+}
+
+.form-input-text-primary{
+  font-weight: 100;
+  font-family: 'M PLUS 1 Code', sans-serif;
+  margin: 6% 0 0 10%
+}
+
+.container-btns{
+  display: flex;
+  margin-top: 10%;
+}
+
+.tertiary-btn{
+  margin-inline-start: 15%;
+  font-size:small;
+  font-weight: normal;
+  background-color: rgb(101, 12, 184);
+  color: white;
+  border-radius: 32px;
+  padding: 2%;
+  height: 10%;
+  cursor: pointer;
+  font-family: 'M PLUS 1 Code', sans-serif;
+  border-color:white;
+}
+
+.tertiary-btn:hover{
+  transition-duration: 400ms;
+  background-color:rgb(162, 84, 235);
+}
