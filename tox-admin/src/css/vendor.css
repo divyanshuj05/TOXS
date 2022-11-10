@@ -1,5 +1,6 @@
 .form-contaniner{
   overflow-y: auto;
+  overflow-x: auto;
 }
 
 #container-title{

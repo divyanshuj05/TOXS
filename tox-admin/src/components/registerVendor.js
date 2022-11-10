@@ -41,11 +41,11 @@ export default function Vendor({ set }){
                 <input className='form-input-primary' type={"text"} placeholder="Mobile Number" onChange={(text)=>setMobile(text.target.value)} />
                 <h3 className='form-input-text-primary'>Password</h3>
                 <input className='form-input-primary' type={"password"} placeholder="Password" onChange={(text)=>setPassword(text.target.value)} />
-                <h3 className='form-input-text-primary'>Vendor of cafteria</h3>
+                <h3 className='form-input-text-primary'>Cafteria of vendor</h3>
                 <input className='form-input-primary' type={"text"} placeholder="Cafteria" onChange={(text)=>setCafe(text.target.value)} />
                 {isLoading?
                 (   
-                    <p style={{textAlign:"center",marginTop:20}}>Process in progress...</p>
+                    <p style={{textAlign:"center",marginTop:"5%"}}>Request processing...</p>
                 ):
                 (
                     <div className='container-btns'>

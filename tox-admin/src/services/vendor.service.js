@@ -56,6 +56,7 @@ export const CheckVendorData = (name,email,mobile,password,cafe) => {
         alert("Error: Password should contain atleast one uppercase letter!!");
         return false
       }
+      return true
 }
 
 export const EnterVendorData = (name,email,mobile,password,cafe) => {
