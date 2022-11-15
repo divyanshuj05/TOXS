@@ -60,18 +60,18 @@ export const RetrieveData = (name) => {
 
     if (name === "Select All") {
         return new Promise(async (resolve, reject) => {
-            let Query = query(collection(db, "exchanges"),where("status","==","Available"))
+            let Query = query(collection(db, "exchanges"),where("status","in",["Available","On Hold"]))
             let snapShot = await getDocs(Query)
             snapShot.forEach(doc => {
                 let temp=Object.assign(doc.data(),{"id":doc.id})
                 array.push(temp)
             });
-            Query = query(collection(db, "exchanges"),where("status","==","On Hold"))
+            /*Query = query(collection(db, "exchanges"),where("status","==","On Hold"))
             snapShot = await getDocs(Query)
             snapShot.forEach(doc => {
                 let temp=Object.assign(doc.data(),{"id":doc.id})
                 array.push(temp)
-            });
+            });*/
             if (array == "[]") {
                 reject("Problem getting data!!")
             }
