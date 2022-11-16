@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import styled from "styled-components/native";
 import { List, Avatar } from "react-native-paper";
 import { Text } from "../../common/components/typography/text.component";
@@ -9,7 +9,7 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 import { AppThemeContext } from "../../../services/common/theme.context";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
-const Container = styled.ScrollView`
+const Container = styled(ScrollView)`
   flex:1;
   background-color:${props => props.theme.background};
 `;
@@ -17,7 +17,7 @@ const Container = styled.ScrollView`
 const SettingsItem = styled(List.Item)`
   padding: ${(props) => props.theme.space[3]};
 `;
-const AvatarContainer = styled.View`
+const AvatarContainer = styled(View)`
   align-items: center;
   margin-vertical:${props => props.theme.space[4]};
   

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
 
-const Count = styled.Text`
+const Count = styled(Text)`
     padding-right:80px;
     color:${(props) => props.theme.text};
     font-family:${(props) => props.theme.fonts.heading};
@@ -11,13 +11,13 @@ const Count = styled.Text`
     font-size: ${(props) => props.theme.fontSizes.body};
 `;
 
-const Wrapper = styled.View`
+const Wrapper = styled(View)`
     flex-direction:row;
     margin-left:100px;
     margin-bottom:${(props) => props.theme.space[1]};
 `;
 
-const Add = styled.Text`
+const Add = styled(Text)`
     text-align:center
     padding-horizontal:${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
@@ -28,7 +28,7 @@ const Add = styled.Text`
     border-radius:${(props) => props.theme.space[4]};
 `;
 
-const Subtract = styled.Text`
+const Subtract = styled(Text)`
     text-align:center
     color:${(props) => props.theme.text};
     border:2px solid ${(props) => props.theme.text};

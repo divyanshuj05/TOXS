@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { View, TouchableOpacity, ScrollView } from "react-native"
+import { View, TouchableOpacity, Text, FlatList } from "react-native"
 import { CartContext } from '../../../services/restaurant/cart.context';
 import styled from 'styled-components';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1;
     background-color:${(props) => props.theme.background};
 `;
 
-const MainText = styled.Text`
+const MainText = styled(Text)`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
     color:${(props) => props.theme.text};
@@ -19,36 +19,36 @@ const MainText = styled.Text`
     padding-bottom:${(props) => props.theme.space[3]};
 `;
 
-const FlatListStyle = styled.FlatList`
+const FlatListStyle = styled(FlatList)`
     flex:0.87
 `;
 
-const ListText = styled.Text`
+const ListText = styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.body};
     padding-bottom:${(props) => props.theme.space[4]};
     font-family:${(props) => props.theme.fonts.heading};
     color:${(props) => props.theme.text};
 `;
 
-const ViewFlex = styled.View`
+const ViewFlex = styled(View)`
     flex-direction:row;
     padding-left:${(props) => props.theme.space[4]};
 `;
 
-const TotalText = styled.Text`
+const TotalText = styled(Text)`
     color:${(props) => props.theme.text};
     font-size: 18px;
     font-family:${(props) => props.theme.fonts.heading};
     font-weight:${(props) => props.theme.fontWeights.bold};
 `;
 
-const Total = styled.View`
+const Total = styled(View)`
     flex-direction:row;
     flex:0.15
     padding-left:${(props) => props.theme.space[4]};
 `;
 
-const CancelLand = styled.Text`
+const CancelLand = styled(Text)`
     text-align:center;
     font-size: 18px;
     padding:8px;
@@ -61,7 +61,7 @@ const CancelLand = styled.Text`
     margin-bottom:${(props) => props.theme.space[1]};
 `;
 
-const PayLand = styled.Text`
+const PayLand = styled(Text)`
     text-align:center;
     font-size: 18px;
     padding:8px;

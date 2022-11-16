@@ -1,5 +1,5 @@
 import React,{ useContext, useEffect, useRef } from 'react'
-import { FlatList, TouchableOpacity, View, } from 'react-native';
+import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context'
 import styled from 'styled-components'
@@ -8,12 +8,12 @@ import { SafeArea } from '../../../utils/components/safe-area.components';
 import { HistoryFilterComponent } from '../components/historyDropdown.components';
 var randomstring=require("randomstring")
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1;
     background-color:${(props) => props.theme.background};
 `;
 
-const Head = styled.Text`
+const Head = styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     margin-vertical:${props=>props.theme.space[3]}
@@ -21,7 +21,7 @@ const Head = styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const Wrapper=styled.View`
+const Wrapper=styled(View)`
     background-color:${props => props.theme.colors.brand.basic};
     padding:${props=>props.theme.space[4]}
     margin:${props=>props.theme.space[2]}
@@ -29,13 +29,13 @@ const Wrapper=styled.View`
     border-radius:${props=>props.theme.space[4]}
 `;
 
-const TextWrap = styled.Text`
+const TextWrap = styled(Text)`
     color:black
     font-family:${props=>props.theme.fonts.heading}
     font-size:${props=>props.theme.fontSizes.body}
 `;
 
-const Empty=styled.Text`
+const Empty=styled(Text)`
     color: ${props=>props.theme.text}
     text-align:center
     font-size:${props=>props.theme.fontSizes.title}
@@ -43,7 +43,7 @@ const Empty=styled.Text`
     font-family:${props=>props.theme.fonts.body}
 `;
 
-const DropdownWrapper = styled.View`
+const DropdownWrapper = styled(View)`
     background-color:${props=>props.theme.colors.ui.basic}
     padding:2px
     flex:0.45

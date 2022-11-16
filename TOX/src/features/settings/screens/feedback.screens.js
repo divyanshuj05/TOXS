@@ -1,17 +1,17 @@
 import React,{ useState,useContext,useRef } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { ActivityIndicator,Colors } from 'react-native-paper';
 import { StoreFeedback } from '../../../services/common/userFeedback.services';
 
-const Container=styled.ScrollView`
+const Container=styled(ScrollView)`
     flex:1
     background-color:${props=>props.theme.background}
     flex-direction:column
 `;
 
-const Title=styled.Text`
+const Title=styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     margin-vertical:${props=>props.theme.space[4]}
@@ -19,7 +19,7 @@ const Title=styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const Description=styled.Text`
+const Description=styled(Text)`
     color:${props=>props.theme.text}
     font-family:${props=>props.theme.fonts.heading}
     font-size:${props=>props.theme.fontSizes.body}
@@ -27,7 +27,7 @@ const Description=styled.Text`
     margin-horizontal:${props=>props.theme.space[3]}
 `;
 
-const Input=styled.TextInput`
+const Input=styled(TextInput)`
     color:black
     width:100%
     margin-vertical:${props=>props.theme.space[3]}
@@ -37,7 +37,7 @@ const Input=styled.TextInput`
     font-family:${props=>props.theme.fonts.heading}
 `;
 
-const Information=styled.Text`
+const Information=styled(Text)`
     margin-top:${props=>props.theme.space[5]}
     margin-horizontal:${props=>props.theme.space[3]}
     font-size:${props=>props.theme.fontSizes.body}
@@ -45,7 +45,7 @@ const Information=styled.Text`
     color:${props=>props.theme.text}
 `;
 
-const SendButton=styled.TouchableOpacity`
+const SendButton=styled(TouchableOpacity)`
     background-color:${props=>props.theme.colors.ui.basic}
     margin-horizontal:120px;
     padding-vertical:12px
@@ -54,7 +54,7 @@ const SendButton=styled.TouchableOpacity`
     align-items:center
 `;
 
-const SendText=styled.Text`
+const SendText=styled(Text)`
     color:white
     font-size:${props=>props.theme.fontSizes.title}
     font-family:${props=>props.theme.fonts.heading}

@@ -1,40 +1,40 @@
 import React, { useContext } from 'react'
-import { View } from "react-native"
+import { View, Text } from "react-native"
 import styled from 'styled-components'
 import { Card } from 'react-native-paper';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
-const CardContainer = styled.View`
+const CardContainer = styled(View)`
     margin:${(props) => props.theme.space[3]};
 `;
 
-const ItemInfo = styled.View`
+const ItemInfo = styled(View)`
     padding: ${(props) => props.theme.space[2]}
     background-color:${props => props.theme.colors.brand.basic};
     broder-radius:32px;
 `;
 
-const Title = styled.Text`
+const Title = styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.h5};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
     flex:0.8
 `;
 
-const Category=styled.Text`
+const Category=styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.body};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};
     flex:0.2
 `;
 
-const Desc=styled.Text`
+const Desc=styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.body};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};
 `;
 
-const Cost=styled.Text`
+const Cost=styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.body};
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.body};

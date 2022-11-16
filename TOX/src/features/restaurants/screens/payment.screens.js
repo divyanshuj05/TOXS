@@ -8,12 +8,12 @@ import { ActivityIndicator, Colors } from 'react-native-paper';
 import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 import { MenuListContext } from '../../../services/restaurant/menu-list.context';
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1;
     background-color:${(props) => props.theme.background};
 `;
 
-const PayText = styled.Text`
+const PayText = styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     margin-vertical:${props=>props.theme.space[4]}
@@ -21,7 +21,7 @@ const PayText = styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const TextWrap=styled.Text`
+const TextWrap=styled(Text)`
     color:${props=>props.theme.text}
     margin-horizontal:${props=>props.theme.space[4]}
     margin-vertical:${props=>props.theme.space[1]}
@@ -29,7 +29,7 @@ const TextWrap=styled.Text`
     font-size:${props=>props.theme.fontSizes.body}
 `;
 
-const Pay=styled.TouchableOpacity`
+const Pay=styled(TouchableOpacity)`
   margin-top:50px;
   background-color:${props=>props.theme.colors.ui.basic}
   padding-vertical:14px

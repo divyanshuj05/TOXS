@@ -21,7 +21,7 @@ const Title = styled(Text)`
   margin-top:92px
 `;
 
-const AccountContainer = styled.View`
+const AccountContainer = styled(View)`
   background-color: rgba(255, 255, 255, 0.7);
   padding: ${(props) => props.theme.space[4]};
   margin-top:${(props) => props.theme.space[4]};

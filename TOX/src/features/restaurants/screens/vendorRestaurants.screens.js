@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { View, FlatList, TouchableOpacity } from "react-native"
+import { View, FlatList, TouchableOpacity, Text } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 import styled from 'styled-components'
@@ -9,12 +9,12 @@ import { FadeInView } from '../../common/components/animations/fade.animation';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
-const Container=styled.View`
+const Container=styled(View)`
     flex:1
     background-color: ${props=>props.theme.background}
 `;
 
-const HeaderContainer = styled.View`
+const HeaderContainer = styled(View)`
     padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
     border-radius:${(props) => props.theme.space[4]};
@@ -22,7 +22,7 @@ const HeaderContainer = styled.View`
     margin-top:${(props) => props.theme.space[3]};
 `;
 
-const HeaderContainerLand = styled.View`
+const HeaderContainerLand = styled(View)`
     padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
     border-radius:${(props) => props.theme.space[4]};
@@ -30,13 +30,13 @@ const HeaderContainerLand = styled.View`
     margin-top:${(props) => props.theme.space[3]};
 `;
 
-const CardContainer = styled.View`
+const CardContainer = styled(View)`
     flex:1;
     padding: ${(props) => props.theme.space[3]};
     background-color: ${(props) => props.theme.background};
 `;
 
-const HeaderText=styled.Text`
+const HeaderText=styled(Text)`
     color:${props=>props.theme.colors.bg.primary};
     padding: ${(props) => props.theme.space[2]};
     font-size: ${(props) => props.theme.fontSizes.title};

@@ -1,5 +1,5 @@
 import React, {useState ,useContext} from "react";
-import { FlatList,View, TouchableOpacity } from "react-native";
+import { FlatList,View, TouchableOpacity, Text } from "react-native";
 import styled from 'styled-components';
 import { TextInput } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import { VendorRestaurantContext } from "../../../services/restaurant/vendorRest
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
-const RestaurantText = styled.Text`
+const RestaurantText = styled(Text)`
   margin-top: ${(props) => props.theme.space[2]};
   text-align: center;
   color: ${(props) => props.theme.text};
@@ -24,7 +24,7 @@ const FlatListStyle = styled(FlatList)`
     flex:1
 `;
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1
     background-color:${(props) => props.theme.background};
 `;
@@ -39,14 +39,14 @@ const BottomBar = styled(View)`
     margin-bottom:${(props) => props.theme.space[2]};
 `;
 
-const AddText=styled.Text`
+const AddText=styled(Text)`
     color:${(props) => props.theme.colors.bg.primary};
     font-size:18px;
     text-align:center
     font-family:${(props) => props.theme.fonts.heading};
 `;
 
-const Add=styled.Text`
+const Add=styled(Text)`
     color:${(props) => props.theme.colors.bg.primary};
     font-size:14px;
     font-family:${(props) => props.theme.fonts.heading};
@@ -57,7 +57,7 @@ const Input=styled(TextInput)`
     width:128px;
 `;
 
-const Touch=styled.TouchableOpacity`
+const Touch=styled(TouchableOpacity)`
     margin-left:${(props) => props.theme.space[4]};
     margin-top:${(props) => props.theme.space[2]};
 `;

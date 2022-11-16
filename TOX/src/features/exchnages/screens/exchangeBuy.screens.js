@@ -1,5 +1,5 @@
 import React, { useState,useContext,useEffect } from 'react';
-import { View,FlatList,TouchableOpacity, ScrollView } from "react-native"
+import { View,FlatList,TouchableOpacity, ScrollView, Text } from "react-native"
 import styled from 'styled-components';
 import { FilterComponent } from '../components/buyFilter.components';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
@@ -13,7 +13,7 @@ const Wrapper = styled(View)`
     background-color:${(props) => props.theme.background};
 `;
 
-const Head=styled.View`
+const Head=styled(View)`
     flex-direction:row
     background-color:${props=>props.theme.colors.ui.basic}
     padding:${props=>props.theme.space[1]}
@@ -22,7 +22,7 @@ const Head=styled.View`
     margin-top:${(props) => props.theme.space[3]};
 `;
 
-const Empty=styled.Text`
+const Empty=styled(Text)`
     color: ${props=>props.theme.text}
     text-align:center
     font-size:${props=>props.theme.fontSizes.h5}

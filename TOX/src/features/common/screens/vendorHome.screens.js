@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
 import { logo_light,logo_dark, TPO_logo, Vendor_Image } from "../../../../assets/images";
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import styled from 'styled-components';
@@ -8,23 +8,23 @@ import { colors } from '../../../infrastructure/theme/colors';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { ActivityIndicator, Colors } from "react-native-paper";
 
-const Container=styled.View`
+const Container=styled(View)`
     flex:1;
     background-color:${props=>props.theme.background}
 `;
-const Main_Logo = styled.Image`
+const Main_Logo = styled(Image)`
     margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
 `;
 
-const Main_Logo_Land = styled.Image`
+const Main_Logo_Land = styled(Image)`
     margin-top:${(props) => props.theme.space[4]};
     margin-left:${(props) => props.theme.space[4]};
     height: ${(props) => props.theme.sizes[5]};
 `;
 
-const App_Name = styled.Text`
+const App_Name = styled(Text)`
     margin-top:${(props) => props.theme.space[2]};
     text-align:center;
     color:${(props) => props.theme.text};
@@ -32,14 +32,14 @@ const App_Name = styled.Text`
     font-weight: ${(props) => props.theme.fontWeights.medium};
     font-family: ${props => props.theme.fonts.heading};
 `;
-const ListWrapper = styled.View`
+const ListWrapper = styled(View)`
     background-color: ${(props) => props.theme.colors.ui.basic};
     margin-left:${(props) => props.theme.space[2]};
     margin-right:${(props) => props.theme.space[1]};
     margin-top: ${(props) => props.theme.space[4]};
     border-radius:${(props) => props.theme.space[3]};
 `;
-const Facility_SubText = styled.Text`
+const Facility_SubText = styled(Text)`
     font-weight:${(props) => props.theme.fontWeights.medium};
     font-size:${(props) => props.theme.fontSizes.button};
     font-family: ${props => props.theme.fonts.body};
@@ -47,14 +47,14 @@ const Facility_SubText = styled.Text`
     text-align:center;
     margin-bottom:${(props) => props.theme.space[3]};
 `;
-const Facility_Text = styled.Text`
+const Facility_Text = styled(Text)`
     font-weight:${(props) => props.theme.fontWeights.medium};
     font-size:${(props) => props.theme.fontSizes.body};
     font-family: ${props => props.theme.fonts.body};
     color:${props => props.color}
     text-align:center;
 `;
-const Facility_Logo = styled.Image`
+const Facility_Logo = styled(Image)`
     height: ${(props) => props.theme.sizes[4]};
     width:${(props) => props.theme.sizes[4]};
     margin-left:25px;

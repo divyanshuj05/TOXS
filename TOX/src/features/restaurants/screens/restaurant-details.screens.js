@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Alert } from "react-native";
+import { Alert, Text, View } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
@@ -8,7 +8,7 @@ import { ActivityIndicator, Colors } from "react-native-paper";
 import { SafeArea } from "../../../utils/components/safe-area.components"
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 
-const RestaurantText = styled.Text`
+const RestaurantText = styled(Text)`
   margin-top: ${(props) => props.theme.space[2]};
   text-align: center;
   color: ${(props) => props.theme.text};
@@ -17,16 +17,16 @@ const RestaurantText = styled.Text`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-const IndicatorView=styled.View`
+const IndicatorView=styled(View)`
     margin-top: ${(props) => props.theme.space[5]};
 `; 
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1
     background-color:${(props) => props.theme.background};
 `;
 
-const EmptyList=styled.Text`
+const EmptyList=styled(Text)`
     margin-top: ${(props) => props.theme.space[5]};
     text-align: center;
     color: ${(props) => props.theme.text};

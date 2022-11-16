@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, ScrollView, Image, Text } from 'react-native';
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
 import { logo_light,logo_dark, } from "../../../../assets/images";
@@ -7,24 +7,24 @@ import { AppThemeContext } from '../../../services/common/theme.context';
 import { AntDesign } from '@expo/vector-icons';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
-const Container=styled.ScrollView`
+const Container=styled(ScrollView)`
     flex:1;
     background-color: ${props=>props.theme.background}
 `;
 
-const Main_Logo = styled.Image`
+const Main_Logo = styled(Image)`
     margin-top:${(props) => props.theme.space[5]};
     margin-left:${(props) => props.theme.space[5]};
     height: ${(props) => props.theme.sizes[5]};
 `;
 
-const Main_Logo_Land = styled.Image`
+const Main_Logo_Land = styled(Image)`
     margin-top:${(props) => props.theme.space[4]};
     margin-left:${(props) => props.theme.space[4]};
     height: ${(props) => props.theme.sizes[5]};
 `;
 
-const Facility_Name = styled.Text`
+const Facility_Name = styled(Text)`
     margin-vertical:${(props) => props.theme.space[4]};
     text-align:center;
     color:${(props) => props.theme.text};
@@ -33,7 +33,7 @@ const Facility_Name = styled.Text`
     font-family: ${props => props.theme.fonts.heading};
 `;
 
-const Restuarant_Facility=styled.View`
+const Restuarant_Facility=styled(View)`
     padding: ${(props) => props.theme.space[3]};
     background-color:${(props) => props.theme.colors.ui.basic};
     margin-vertical:${(props) => props.theme.space[3]};
@@ -41,7 +41,7 @@ const Restuarant_Facility=styled.View`
     border-radius:${(props) => props.theme.space[4]};
 `;
 
-const Restaurant_Text=styled.Text`
+const Restaurant_Text=styled(Text)`
     color:white
     font-size: ${(props) => props.theme.fontSizes.title};
     font-weight: ${(props) => props.theme.fontWeights.medium};

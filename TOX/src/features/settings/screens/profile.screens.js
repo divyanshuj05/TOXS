@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, TouchableOpacity } from "react-native"
+import { View, TouchableOpacity, Text, ScrollView } from "react-native"
 import { AuthenticationContext } from '../../../services/authentication/authentication.context'
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
@@ -9,12 +9,12 @@ import { TextInput } from 'react-native-paper';
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context'
 
-const Scroll = styled.ScrollView`
+const Scroll = styled(ScrollView)`
     flex:1
     background-color:${(props) => props.theme.background}
 `;
 
-const Title = styled.Text`
+const Title = styled(Text)`
     margin-top:${(props) => props.theme.space[4]};
     margin-bottom:${(props) => props.theme.space[4]};
     text-align:center;
@@ -40,7 +40,7 @@ const DetailsIconCopy = styled(Fontisto)`
     flex:0.1;
 `;
 
-const Details = styled.Text`
+const Details = styled(Text)`
     margin-left: 40px;
     margin-bottom: ${(props) => props.theme.space[4]};
     margin-top: ${(props) => props.theme.space[4]};
@@ -62,7 +62,7 @@ const UpdateButtonCopy = styled(Ionicons)`
     color:${props => props.theme.text};
 `;
 
-const BorderView = styled.View`
+const BorderView = styled(View)`
     border-bottom-width: 0.5px;
     border-bottom-color:${props => props.theme.colors.brand.basic};
     margin-horizontal:18px
@@ -73,7 +73,7 @@ const Input = styled(TextInput)`
     margin:16px;
 `;
 
-const Error = styled.Text`
+const Error = styled(Text)`
     margin-left:${(props) => props.theme.space[4]}; 
     color:${props => props.theme.colors.ui.error}
 `;

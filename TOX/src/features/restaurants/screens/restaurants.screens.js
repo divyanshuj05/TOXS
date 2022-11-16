@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { TouchableOpacity, FlatList, View, Alert } from "react-native";
+import { TouchableOpacity, FlatList, View, Alert, SafeAreaView } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
 import { FadeInView } from "../../common/components/animations/fade.animation"
@@ -10,12 +10,12 @@ import { FavouritesContext } from "../../../services/restaurant/favourites.conte
 import { FavBar } from "../components/favouritesBar.components.js";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context.js";
 
-const Container = styled.SafeAreaView`
+const Container = styled(SafeAreaView)`
     flex:1;
     background-color:${props=>props.theme.background}
 `;
 
-const DropDownContainer = styled.View`
+const DropDownContainer = styled(View)`
     padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
     border-radius:${(props) => props.theme.space[4]};
@@ -23,7 +23,7 @@ const DropDownContainer = styled.View`
     margin-top:${(props) => props.theme.space[3]};
 `;
 
-const DropDownContainerLand =  styled.View`
+const DropDownContainerLand =  styled(View)`
     padding: ${(props) => props.theme.space[2]};
     background-color:${(props) => props.theme.colors.ui.basic};
     border-radius:${(props) => props.theme.space[4]};
@@ -31,19 +31,19 @@ const DropDownContainerLand =  styled.View`
     margin-top:${(props) => props.theme.space[1]};
 `;
 
-const CardContainer = styled.View`
+const CardContainer = styled(View)`
     flex:1;
     padding: ${(props) => props.theme.space[2]};
     background-color: ${(props) => props.theme.background};
 `;
 
-const FavWrap = styled.View`
+const FavWrap = styled(View)`
     flex:0.22;
     background-color: ${(props) => props.theme.background};
     padding: ${(props) => props.theme.space[3]};
 `;
 
-const FavWrapLand = styled.View`
+const FavWrapLand = styled(View)`
     flex:1;
     background-color: ${(props) => props.theme.background};
     padding: ${(props) => props.theme.space[1]};

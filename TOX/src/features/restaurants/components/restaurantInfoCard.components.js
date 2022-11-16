@@ -9,7 +9,7 @@ import { AuthenticationContext } from '../../../services/authentication/authenti
 
 export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites, add, remove, oriTag }) => {
 
-    const RestaurantInfo = styled.View`
+    const RestaurantInfo = styled(View)`
     padding: ${(props) => props.theme.space[2]}
     background-color:${props => props.theme.colors.brand.basic};
     `;
@@ -20,13 +20,13 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     font-family: ${props => props.theme.fonts.heading};
     `;
 
-    const Address = styled.Text`
+    const Address = styled(Text)`
     font-size: ${(props) => props.theme.fontSizes.body};
     font-weight: ${(props) => props.theme.fontWeights.regular};
     font-family: ${props => props.theme.fonts.body};
     `;
 
-    const RatingStyle = styled.View`
+    const RatingStyle = styled(View)`
     flex-direction:row;
     `;
 
@@ -41,18 +41,18 @@ export const RestaurantInfoCard = ({ restaurant = {}, restaurantName, favourites
     align-items:center
     `;
 
-    let CardContainer=styled.View``
+    let CardContainer=styled(View)``
 
     if(oriTag==0)
     {
-        CardContainer = styled.View`
+        CardContainer = styled(View)`
             margin-vertical:${(props) => props.theme.space[2]};
             margin-horizontal:${(props) => props.theme.space[3]};
         `;
     }
     else
     {
-        CardContainer = styled.View`
+        CardContainer = styled(View)`
             margin-vertical:${(props) => props.theme.space[1]};
             margin-horizontal:${(props) => props.theme.space[1]};
         `;

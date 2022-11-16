@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { TouchableOpacity, View,Alert } from 'react-native';
+import { TouchableOpacity, View,Alert, ScrollView,Text, Image } from 'react-native';
 import styled from 'styled-components'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
@@ -7,16 +7,16 @@ import { ActivityIndicator, Colors } from "react-native-paper";
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 
-const Container=styled.View`
+const Container=styled(View)`
     flex:1
     background-color:${props=>props.theme.background}
 `;
 
-const Scroll=styled.ScrollView`
+const Scroll=styled(ScrollView)`
     flex:0.99
 `;
 
-const Head=styled.Text`
+const Head=styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     font-size: ${(props) => props.theme.fontSizes.h5};
@@ -25,7 +25,7 @@ const Head=styled.Text`
     margin-vertical:${(props) => props.theme.space[3]};
 `;
 
-const ImageStylePot=styled.Image`
+const ImageStylePot=styled(Image)`
     width:160px
     height:160px
     resize-mode:cover
@@ -34,7 +34,7 @@ const ImageStylePot=styled.Image`
     border-radius:${(props) => props.theme.space[3]};
 `;
 
-const ImageStyle=styled.Image`
+const ImageStyle=styled(Image)`
     width:225px
     height:225px
     margin-left:${(props) => props.theme.space[4]};
@@ -42,7 +42,7 @@ const ImageStyle=styled.Image`
     border-radius:${(props) => props.theme.space[3]};
 `;
 
-const Title=styled.Text`
+const Title=styled(Text)`
     flex:0.35
     color:${props=>props.theme.text}
     margin-left:${(props) => props.theme.space[4]};
@@ -52,7 +52,7 @@ const Title=styled.Text`
     marginTop:${(props) => props.theme.space[5]};
 `;
 
-const Desc=styled.Text`
+const Desc=styled(Text)`
     color:${props=>props.theme.text}
     font-size: ${(props) => props.theme.fontSizes.title};
     font-weight: ${(props) => props.theme.fontWeights.medium};
@@ -60,28 +60,28 @@ const Desc=styled.Text`
     margin-left:${(props) => props.theme.space[3]};
 `;
 
-const F1=styled.View`flex:0.4`;
-const F2=styled.View`flex:0.6`;
+const F1=styled(View)`flex:0.4`;
+const F2=styled(View)`flex:0.6`;
 
-const Row=styled.View`
+const Row=styled(View)`
     flex-direction:row
 `;
 
-const BottomBar = styled.View`
+const BottomBar = styled(View)`
     background-color:${(props) => props.theme.colors.ui.basic};
     padding: 10px
     border-radius: ${(props) => props.theme.space[4]};
     margin-horizontal: ${(props) => props.theme.space[2]};
 `;
 
-const Option=styled.Text`
+const Option=styled(Text)`
     color:white
     text-align:center
     font-size: ${(props) => props.theme.fontSizes.title};
     font-family: ${props => props.theme.fonts.heading};
 `;
 
-const Error = styled.Text`
+const Error = styled(Text)`
     margin-top:8px
     text-align:center 
     color:${props => props.theme.colors.ui.error}

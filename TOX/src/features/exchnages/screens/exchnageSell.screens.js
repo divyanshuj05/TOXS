@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View,ScrollView,StyleSheet,TouchableOpacity,Image } from "react-native"
+import { View,ScrollView,StyleSheet,TouchableOpacity,Image, Text } from "react-native"
 import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -14,7 +14,7 @@ const Wrapper = styled(View)`
     background-color:${(props) => props.theme.background};
 `;
 
-const Head=styled.Text`
+const Head=styled(Text)`
     text-align:center
     color:${props=>props.theme.text}
     margin-vertical:${props=>props.theme.space[4]}
@@ -22,7 +22,7 @@ const Head=styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const HeadLand=styled.Text`
+const HeadLand=styled(Text)`
     text-align:center
     color:${props=>props.theme.text}
     margin-vertical:${props=>props.theme.space[3]}
@@ -30,14 +30,14 @@ const HeadLand=styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const Item=styled.Text`
+const Item=styled(Text)`
     padding-horizontal:28px;
     color:${props=>props.theme.text}
     font-size:${props=>props.theme.fontSizes.title}
     flex:0.7
 `;
 
-const Row=styled.View`
+const Row=styled(View)`
     flex-direction:row
     margin-bottom: 50px;
 `;
@@ -47,11 +47,11 @@ const Input=styled(TextInput)`
     width: 150px;
 `;
 
-const DropDownView=styled.View`
+const DropDownView=styled(View)`
     background-color:rgb(230,230,230)
 `;
 
-const Photo=styled.Text`
+const Photo=styled(Text)`
     color:rgb(230,230,230)
     border-radius:${props=>props.theme.space[4]}
     background-color:${props=>props.theme.colors.ui.basic}
@@ -61,12 +61,12 @@ const Photo=styled.Text`
     font-size:${props=>props.theme.fontSizes.body}
 `;
 
-const Error = styled.Text`
+const Error = styled(Text)`
     margin-left:${(props) => props.theme.space[4]}; 
     color:${props => props.theme.colors.ui.error}
 `;
 
-const Cancel = styled.Text`
+const Cancel = styled(Text)`
     text-align:center;
     font-size: 16px;
     padding:10px;
@@ -78,7 +78,7 @@ const Cancel = styled.Text`
     border-bottom-left-radius:32px
 `;
 
-const Submit = styled.Text`
+const Submit = styled(Text)`
     text-align:center;
     font-size: 16px;
     padding:10px;

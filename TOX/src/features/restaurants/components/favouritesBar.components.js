@@ -1,25 +1,25 @@
 import React from 'react'
-import { ScrollView, Alert } from "react-native"
+import { ScrollView, Alert, Image, Text, TouchableOpacity } from "react-native"
 import styled from 'styled-components';
 
-const Wrapper = styled.TouchableOpacity`
+const Wrapper = styled(TouchableOpacity)`
     margin:${props => props.theme.space[2]}
     align-items:center
 `;
 
-const Img = styled.Image`
+const Img = styled(Image)`
     width:70px;
     height:70px;
     border-radius:${(props) => props.theme.space[3]};
 `;
 
-const FavText = styled.Text`
+const FavText = styled(Text)`
     font-family: ${props => props.theme.fonts.heading};
     text-align:center;
     color:${props => props.theme.text}
 `;
 
-const FavTitle = styled.Text`
+const FavTitle = styled(Text)`
     font-size:${props => props.theme.fontSizes.body};
     font-family: ${props => props.theme.fonts.body};
     color:${props => props.theme.text}

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import styled from 'styled-components';
 
-const Title = styled.Text`
+const Title = styled(Text)`
   text-align:center
   font-size: 30px;
 `;
@@ -16,7 +16,7 @@ const AccountBackground = styled.ImageBackground.attrs({
     align-items:center
   `;
 
-const AccountContainer = styled.View`
+const AccountContainer = styled(View)`
   background-color: rgba(255, 255, 255, 0.7);
   padding: 16px
   align-items:center

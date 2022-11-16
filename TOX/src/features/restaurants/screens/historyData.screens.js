@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
-import { ScrollView, Alert, View } from 'react-native'
+import { ScrollView, Alert, View, Text, TouchableOpacity } from 'react-native'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 import styled from 'styled-components'
 import { ActivityIndicator,Colors } from 'react-native-paper';
 
-const Container = styled.View`
+const Container = styled(View)`
     flex:1;
     background-color:${(props) => props.theme.background};
 `;
 
-const Head = styled.Text`
+const Head = styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     margin-vertical:${props=>props.theme.space[3]}
@@ -18,7 +18,7 @@ const Head = styled.Text`
     font-size:${props=>props.theme.fontSizes.h5}
 `;
 
-const SubHead = styled.Text`
+const SubHead = styled(Text)`
     color:${props=>props.theme.text}
     text-align:left
     margin-top:${props=>props.theme.space[2]}
@@ -28,7 +28,7 @@ const SubHead = styled.Text`
     font-size:${props=>props.theme.fontSizes.title}
 `;
 
-const TextWrap = styled.Text`
+const TextWrap = styled(Text)`
     color:${props=>props.theme.text}
     margin-left:${props=>props.theme.space[4]}
     margin-vertical:${props=>props.theme.space[2]}
@@ -36,11 +36,11 @@ const TextWrap = styled.Text`
     font-size:${props=>props.theme.fontSizes.body}
 `;
 
-const Row=styled.View`
+const Row=styled(View)`
     flex-direction:row
 `;
 
-const BottomBar = styled.View`
+const BottomBar = styled(View)`
     background-color:${(props) => props.theme.colors.ui.basic};
     padding: ${(props) => props.theme.space[3]};
     border-radius: ${(props) => props.theme.space[4]};
@@ -49,11 +49,11 @@ const BottomBar = styled.View`
     margin-bottom:${(props) => props.theme.space[2]};
 `;
 
-const Touch=styled.TouchableOpacity`
+const Touch=styled(TouchableOpacity)`
     align-items:center
 `;
 
-const TextTouch=styled.Text`
+const TextTouch=styled(Text)`
     color:white
     font-family:${props=>props.theme.fonts.heading}
     font-size:${props=>props.theme.fontSizes.body}

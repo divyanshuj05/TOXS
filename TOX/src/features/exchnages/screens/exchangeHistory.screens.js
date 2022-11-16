@@ -1,5 +1,5 @@
 import React,{ useContext, useEffect, useRef } from 'react'
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList, TouchableOpacity, Text } from 'react-native';
 import { FadeInView } from "../../common/components/animations/fade.animation"
 import { ItemInfoCard } from "../components/itemInfoCard.components"
 import styled from 'styled-components'
@@ -9,12 +9,12 @@ import { DeviceOrientationContext } from '../../../services/common/deviceOrienta
 import { HistoryFilterComponent } from '../../restaurants/components/historyDropdown.components';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
-const Container=styled.View`
+const Container=styled(View)`
     flex:1
     background-color:${props=>props.theme.background}
 `;
 
-const Head=styled.Text`
+const Head=styled(Text)`
     color:${props=>props.theme.text}
     text-align:center
     font-size: ${(props) => props.theme.fontSizes.h5};
@@ -23,7 +23,7 @@ const Head=styled.Text`
     margin-vertical:${(props) => props.theme.space[2]};
 `;
 
-const Empty=styled.Text`
+const Empty=styled(Text)`
     color: ${props=>props.theme.text}
     text-align:center
     font-size:${props=>props.theme.fontSizes.h5}
@@ -31,7 +31,7 @@ const Empty=styled.Text`
     font-family:${props=>props.theme.fonts.body}
 `;
 
-const DropdownWrapper = styled.View`
+const DropdownWrapper = styled(View)`
     background-color:${props=>props.theme.colors.ui.basic}
     padding:2px
     flex:0.45

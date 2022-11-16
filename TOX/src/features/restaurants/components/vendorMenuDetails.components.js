@@ -28,7 +28,7 @@ const ListPrice = styled(Text)`
     color:${(props) => props.theme.text};
 `;
 
-const Touch=styled.TouchableOpacity`
+const Touch=styled(TouchableOpacity)`
     margin-left:${(props) => props.theme.space[2]};
     margin-top:${(props) => props.theme.space[2]};
 `;
