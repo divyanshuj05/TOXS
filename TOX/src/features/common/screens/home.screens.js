@@ -15,6 +15,7 @@ const Container = styled(ScrollView)`
 
 const Main_Logo = styled(Image)`
     margin-top:${(props) => props.theme.space[5]};
+    margin-left:${(props) => props.theme.space[3]};
     height: ${(props) => props.theme.sizes[5]};
 `;
 

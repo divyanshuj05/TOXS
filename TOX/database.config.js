@@ -16,10 +16,14 @@ const firebaseConfig = {
     measurementId: MEASUREMENT_ID
 };
 
+let app=null
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+    app=firebase.initializeApp(firebaseConfig);
 }
-const app = firebase.initializeApp(firebaseConfig);
+else{
+    app = firebase.initializeApp(firebaseConfig);
+}
+
 
 firebase.firestore().settings({ experimentalAutoDetectLongPolling: true, merge: true })
 
