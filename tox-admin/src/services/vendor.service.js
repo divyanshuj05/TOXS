@@ -15,10 +15,8 @@ export const CheckVendorData = (name,email,mobile,password,cafe) => {
             }
         }
     }
-    console.log(mobile)
     for(let i=0;i<mobile.length;i++)
     {
-        console.log(mobile[i])
         if(isNaN(mobile[i]))
         {
             console.log(isNaN(mobile[i]))
