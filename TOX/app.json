@@ -24,6 +24,7 @@
         "foregroundImage": "./assets/TOX_LOGO.png",
         "backgroundColor": "#FFFFFF"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.aryanb.TOX"
     }
   }

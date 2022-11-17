@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "880326269749",
+    "project_id": "toxs-110d5",
+    "storage_bucket": "toxs-110d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880326269749:android:60d9b63c8ebd85489e0a7c",
+        "android_client_info": {
+          "package_name": "com.aryanb.TOX"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880326269749-jo3bun6hsekgp5i59ajh054k8mnnn2dk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPNKmSoNsMXsmbyCMBZRHJq4rBosZmt6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880326269749-jo3bun6hsekgp5i59ajh054k8mnnn2dk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
