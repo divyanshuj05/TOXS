@@ -102,8 +102,8 @@ export const ProfileScreen = () => {
     }
 
     return (
-        <Scroll>
-            <SafeArea>
+        <SafeArea>
+            <Scroll>
                 <Title>User Details</Title>
                 <BorderView >
                     <View style={{ flexDirection: "row" }}>
@@ -254,7 +254,7 @@ export const ProfileScreen = () => {
                             </View>
                         </BorderView>
                     ):(<></>)}
-            </SafeArea>
-        </Scroll>
+            </Scroll>    
+        </SafeArea>
     )
 }

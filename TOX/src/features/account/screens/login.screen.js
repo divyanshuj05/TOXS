@@ -91,13 +91,23 @@ export const LoginScreen = ({ route,navigation }) => {
         )}
         <Spacer size="xl">
           {!isLoading ? (
-            <AuthButton
+            <>
+              <AuthButton
               icon="food"
               mode="contained"
               onPress={() => { setError(null), onLogin(userName, password,collection) }}
             >
               Login
             </AuthButton>
+            <View style={{marginVertical:16}}></View>
+              <AuthButton
+                icon="account-reactivate"
+                mode="contained"
+                onPress={() => { navigation.navigate("ForgotPassword", {collection:collection}) }}
+              >
+                Forgot Password
+              </AuthButton>
+            </>
           ) : (
             <ActivityIndicator animating={true} color={Colors.blue300} />
           )}
@@ -137,13 +147,13 @@ export const LoginScreen = ({ route,navigation }) => {
       <SafeArea>
         <AccountBackground>
           <View style={{flexDirection:"row"}}>
-            <View style={{flex:0.4}}>
+            <View style={{flex:0.65}}>
               <Title>TOXs</Title>
               {BackButtonView()}
             </View>
-            <View style={{flex:0.6}}>
+            <ScrollView style={{flex:0.35}} contentContainerStyle={{flexGrow:1}}>
               {ContentView()}
-            </View>
+            </ScrollView>
           </View>
         </AccountBackground>
       </SafeArea>
