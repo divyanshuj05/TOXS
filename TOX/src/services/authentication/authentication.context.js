@@ -1,12 +1,13 @@
 import React, { useState, createContext, useEffect } from "react";
-import { registerForPushNotificationsAsync } from "../common/notisFunctions.services";
+import { registerForPushNotificationsAsync, SendNotification } from "../common/notisFunctions.services";
 import { loginCheck, RegisterCheck } from "./authentication.services";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../database.config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
+const randomstring=require("randomstring")
 
 export const AuthenticationContext = createContext();
 
@@ -61,6 +62,43 @@ export const AuthenticationContextProvider = ({ children }) => {
       setIsLoading(false)
     }
   };
+
+  const ForgotPassword = async(name,Coll) =>{
+    if(name==""||name==null||name==undefined)
+    {
+      return "Error: Fill User name first"
+    }
+    setIsLoading(true)
+    var flag=false
+    const userQuery = query(collection(db, Coll), where("userName", "==", name))
+    const docs=await getDocs(userQuery)
+    docs.forEach(async(Doc)=>{
+      flag=true
+      const token=await registerForPushNotificationsAsync()
+      if(token==undefined||token==null)
+      {
+        setIsLoading(false)
+        return "Error"
+      }
+      const forgotRef=doc(db,Coll,Doc.id)
+      const tempPassword=randomstring.generate(5)
+      await updateDoc(forgotRef,{
+        password:tempPassword
+      }).then(res=>{
+        SendNotification(token,"Password change request",`Your password is: ${tempPassword}`)
+        setIsLoading(false)
+        return null
+      }).catch(e=>{
+        setIsLoading(false)
+        return "Error: Cannot set password. Please try again"
+      })
+    })
+    if(flag===false)
+    {
+      setIsLoading(false)
+      return `Error: User ${name} does not exist!!`
+    }
+  }
 
   const onLogout = () => {
     Alert.alert(
@@ -340,7 +378,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogout,
         setError,
         isLogging,
-        UpdateDoc
+        UpdateDoc,
+        ForgotPassword
       }}
     >
       {children}

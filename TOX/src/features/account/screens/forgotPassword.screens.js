@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react';
 import { View, ScrollView } from "react-native";
 import styled from "styled-components";
 import { SafeArea } from '../../../utils/components/safe-area.components';
-import { AccountBackground, AuthInput, AuthInputLand, AuthButton } from '../components/account.styles';
+import { AccountBackground, AuthInput, AuthInputLand, AuthButton, ErrorContainer } from '../components/account.styles';
 import { Text } from '../../common/components/typography/text.component';
 import { Spacer } from '../../common/components/spacer/spacer.component';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { AuthenticationContext } from '../../../services/authentication/authentication.context';
+import { ActivityIndicator,Colors } from 'react-native-paper';
 
 const Title = styled(Text)`
   text-align:center
@@ -23,6 +25,8 @@ const AccountContainer = styled(View)`
 export const ForgotPassword = ({ route,navigation }) => {
 
     const { collection } = route.params
+    const { ForgotPassword, isLoading } = useContext(AuthenticationContext)
+    const [error,setError]=useState(null)
     const { orientation } = useContext(DeviceOrientationContext)
     const [userName,setUserName]=useState(null)
 
@@ -64,11 +68,22 @@ export const ForgotPassword = ({ route,navigation }) => {
                         />
                     )
                     }
-                    
+                    {error && (
+                      <ErrorContainer size="large">
+                        <Text variant="error">{error}</Text>
+                      </ErrorContainer>
+                    )}
                     <View style={{marginVertical:16}}></View>
-                    <AuthButton mode="contained" onPress={() => { null }}>
+                    {isLoading?
+                    (
+                      <ActivityIndicator animating={true} color={Colors.blue300} />
+                    ):
+                    (
+                      <AuthButton mode="contained" onPress={async() => { setError(await(ForgotPassword(userName,collection))) }}>
                         Generate Password
-                    </AuthButton>
+                      </AuthButton>
+                    )
+                    }
                 </AccountContainer>
             </>
         )
