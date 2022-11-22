@@ -14,7 +14,7 @@ export const loginCheck = (userName, password) => {
   return true
 }
 
-export const RegisterCheck = (userName, email, MobileNo, password, repeatedPassword) => {
+export const RegisterCheck = (userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
 
   if (userName === "") {
     return "Error: User field empty!!";
@@ -75,10 +75,60 @@ export const RegisterCheck = (userName, email, MobileNo, password, repeatedPassw
     return "Error: Password should contain atleast one uppercase letter!!";
   }
 
-  if (password !== repeatedPassword) {
-    return "Error: Passwords do not match";
+  if(securityQuestionOne==""||securityQuestionOne==null||securityQuestionOne==undefined)
+  {
+    return "Error: Security Question 1 not filled!!"
+  }
+
+  if(securityQuestionTwo==""||securityQuestionTwo==null||securityQuestionTwo==undefined)
+  {
+    return "Error: Security Question 2 not filled!!"
+  }
+
+  if(securityQuestionOne==securityQuestionTwo)
+  {
+    return "Error: Security Questions need to be different!!"
+  }
+
+  if(securityOne==""||securityOne==null||securityOne==undefined)
+  {
+    return "Error: Answer of security question 1 not filled!!"
+  }
+
+  if(securityTwo==""||securityTwo==null||securityTwo==undefined)
+  {
+    return "Error: Answer of security question 2 not filled!!"
   }
 
   return true;
 
+}
+
+export const ForgotPasswordCheck = (userName,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
+
+  if (userName == ""||userName==undefined||userName==null) {
+    return "Error: User field empty!!";
+  }
+
+  if(securityQuestionOne==""||securityQuestionOne==null||securityQuestionOne==undefined)
+  {
+    return "Error: Security Question 1 not filled!!"
+  }
+
+  if(securityQuestionTwo==""||securityQuestionTwo==null||securityQuestionTwo==undefined)
+  {
+    return "Error: Security Question 2 not filled!!"
+  }
+
+  if(securityOne==""||securityOne==null||securityOne==undefined)
+  {
+    return "Error: Answer of security question 1 not filled!!"
+  }
+
+  if(securityTwo==""||securityTwo==null||securityTwo==undefined)
+  {
+    return "Error: Answer of security question 2 not filled!!"
+  }
+
+  return true
 }

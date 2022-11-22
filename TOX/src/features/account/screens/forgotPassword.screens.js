@@ -8,6 +8,7 @@ import { Spacer } from '../../common/components/spacer/spacer.component';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { ActivityIndicator,Colors } from 'react-native-paper';
+import { SecurityDropdown } from '../components/securityDropdown.components';
 
 const Title = styled(Text)`
   text-align:center
@@ -18,7 +19,7 @@ const Title = styled(Text)`
 const AccountContainer = styled(View)`
   background-color: rgba(255, 255, 255, 0.7);
   padding: ${(props) => props.theme.space[4]};
-  margin-top:${(props) => props.theme.space[4]};
+  margin-vertical:${(props) => props.theme.space[2]};
   margin-horizontal: ${(props) => props.theme.space[3]};
 `;
 
@@ -29,6 +30,10 @@ export const ForgotPassword = ({ route,navigation }) => {
     const [error,setError]=useState(null)
     const { orientation } = useContext(DeviceOrientationContext)
     const [userName,setUserName]=useState(null)
+    const [securityQuestionOne,setSecurityQuestionOne]=useState(null)
+    const [securityOne,setSecurityOne] = useState("")
+    const [securityQuestionTwo,setSecurityQuestionTwo]=useState(null)
+    const [securityTwo,setSecurityTwo] = useState("")
 
     const BackButtonView = () => {
         return(
@@ -49,25 +54,29 @@ export const ForgotPassword = ({ route,navigation }) => {
                     {orientation==1||orientation==2?
                     (
                         <AuthInput
-                            label="User Name"
-                            value={userName}
-                            textContentType="username"
-                            keyboardType="default"
-                            autoCapitalize="words"
-                            onChangeText={(u) => setUserName(u)}
+                          style={{height:50}}
+                          label="User Name"
+                          value={userName}
+                          textContentType="username"
+                          keyboardType="default"
+                          autoCapitalize="words"
+                          onChangeText={(u) => setUserName(u)}
                         />
                     ):
                     (
                         <AuthInputLand
-                            label="User Name"
-                            value={userName}
-                            textContentType="username"
-                            keyboardType="default"
-                            autoCapitalize="words"
-                            onChangeText={(u) => setUserName(u)}
+                          style={{height:50}}
+                          label="User Name"
+                          value={userName}
+                          textContentType="username"
+                          keyboardType="default"
+                          autoCapitalize="words"
+                          onChangeText={(u) => setUserName(u)}
                         />
                     )
                     }
+                    <SecurityDropdown setSecurityQuestion={setSecurityQuestionOne} securityQuestion={securityQuestionOne} security={securityOne} setSecurity={setSecurityOne} />
+                    <SecurityDropdown setSecurityQuestion={setSecurityQuestionTwo} securityQuestion={securityQuestionTwo} security={securityTwo} setSecurity={setSecurityTwo} />
                     {error && (
                       <ErrorContainer size="large">
                         <Text variant="error">{error}</Text>
@@ -79,7 +88,7 @@ export const ForgotPassword = ({ route,navigation }) => {
                       <ActivityIndicator animating={true} color={Colors.blue300} />
                     ):
                     (
-                      <AuthButton mode="contained" onPress={async() => { setError(await(ForgotPassword(userName,collection))) }}>
+                      <AuthButton mode="contained" onPress={async() => { setError(await(ForgotPassword(userName,collection,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo))) }}>
                         Generate Password
                       </AuthButton>
                     )
@@ -94,9 +103,11 @@ export const ForgotPassword = ({ route,navigation }) => {
         return(
             <SafeArea>
                 <AccountBackground>
-                    <Title>TOXs</Title>
-                    {ContentView()}
-                    {BackButtonView()}
+                    <Title style={{marginTop:50}}>TOXs</Title>
+                    <View style={{marginVertical:16}}>
+                      {ContentView()}
+                      {BackButtonView()}
+                    </View>
                 </AccountBackground>
             </SafeArea>
         )

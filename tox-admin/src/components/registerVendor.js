@@ -11,20 +11,23 @@ export default function Vendor({ set }){
     const [password,setPassword]=useState(null)
     const [cafe,setCafe]=useState(null)
     const [isLoading,setIsLoading]=useState(false)
+    const [securityQuestionOne,setSecurityQuestionOne]=useState(null)
+    const [securityOne,setSecurityOne] = useState("")
+    const [securityQuestionTwo,setSecurityQuestionTwo]=useState(null)
+    const [securityTwo,setSecurityTwo] = useState("")
 
     const handleVendorSubmit =async (event,set) => {
         event.preventDefault()
-        const res=CheckVendorData(name,mail,mobile,password,cafe)
+        const res=CheckVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo)
         if(res===false) return
         setIsLoading(true)
-        await EnterVendorData(name,mail,mobile,password,cafe).then(res=>{
+        await EnterVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo).then(res=>{
             alert("Vendor successfully registered")
             setIsLoading(false)
             set(false)
             return
         }).catch(e=>{
             setIsLoading(false)
-            alert("Some error occured. Please try again")
             return
         })
     }
@@ -43,6 +46,26 @@ export default function Vendor({ set }){
                 <input className='form-input-primary' type={"password"} placeholder="Password" onChange={(text)=>setPassword(text.target.value)} />
                 <h3 className='form-input-text-primary'>Cafteria of vendor</h3>
                 <input className='form-input-primary' type={"text"} placeholder="Cafteria" onChange={(text)=>setCafe(text.target.value)} />
+                <h3 for="security1" className='form-input-text-primary'>Security Question 1</h3>
+                <select name="security1" className="form-input-dropdown" onChange={(text)=>setSecurityQuestionOne(text.target.value)}>
+                    <option value="" disabled selected hidden>Select question 1</option>
+                    <option value="Your favourite movie">Your favourite movie</option>
+                    <option value="First pet name">First pet name</option>
+                    <option value="First school name">First school name</option>
+                    <option value="Your favourite food">Your favourite food</option>
+                    <option value="Your elder/younder sibling's pet name">Your elder/younder sibling's pet name</option>
+                </select>
+                <input className='form-input-primary' type={"text"} placeholder="Answer security question 1" onChange={(text)=>setSecurityOne(text.target.value)} />
+                <h3 for="security2" className='form-input-text-primary'>Security Question 2</h3>
+                <select name="security2" className="form-input-dropdown" onChange={(text)=>setSecurityQuestionTwo(text.target.value)}>
+                    <option value="" disabled selected hidden>Select question 2</option>
+                    <option value="Your favourite movie">Your favourite movie</option>
+                    <option value="First pet name">First pet name</option>
+                    <option value="First school name">First school name</option>
+                    <option value="Your favourite food">Your favourite food</option>
+                    <option value="Your elder/younder sibling's pet name">Your elder/younder sibling's pet name</option>
+                </select>
+                <input className='form-input-primary' type={"text"} placeholder="Answer security question 2" onChange={(text)=>setSecurityTwo(text.target.value)} />
                 {isLoading?
                 (   
                     <p style={{textAlign:"center",marginTop:"5%"}}>Request processing...</p>

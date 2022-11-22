@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import { registerForPushNotificationsAsync, SendNotification } from "../common/notisFunctions.services";
-import { loginCheck, RegisterCheck } from "./authentication.services";
+import { loginCheck, RegisterCheck, ForgotPasswordCheck } from "./authentication.services";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, updateDoc } from "firebase/firestore";
@@ -63,14 +63,18 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
 
-  const ForgotPassword = async(name,Coll) =>{
-    if(name==""||name==null||name==undefined)
-    {
-      return "Error: Fill User name first"
-    }
+  const ForgotPassword = async(name,Coll,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) =>{
     setIsLoading(true)
+    const res=ForgotPasswordCheck(name,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo)
+    if(res!=true)
+    {
+      setIsLoading(false)
+      return res
+    }
     var flag=false
-    const userQuery = query(collection(db, Coll), where("userName", "==", name))
+    const S1=securityQuestionOne+" "+securityOne
+    const S2=securityQuestionTwo+" "+securityTwo
+    const userQuery = query(collection(db, Coll), where("userName", "==", name), where("securityOne","==",S1), where("securityTwo","==",S2))
     const docs=await getDocs(userQuery)
     docs.forEach(async(Doc)=>{
       flag=true
@@ -96,7 +100,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     if(flag===false)
     {
       setIsLoading(false)
-      return `Error: User ${name} does not exist!!`
+      return `Error: User with these credentials does not exist!!`
     }
   }
 
@@ -123,11 +127,11 @@ export const AuthenticationContextProvider = ({ children }) => {
       )
   };
 
-  const onRegister = async (userName, email, MobileNo, password, repeatedPassword) => {
+  const onRegister = async (userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
 
     setIsLoading(true);
 
-    let result = RegisterCheck(userName, email, MobileNo, password, repeatedPassword)
+    let result = RegisterCheck(userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo)
 
     /*firebase
       .auth()
@@ -148,7 +152,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       const q = query(collection(db, "users"), where("userName", "==", userName))
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(doc => {
-        result = "Error: User Name already taken!!"
+        result = "Error: User Name already exists!!"
       })
     }
 
@@ -157,7 +161,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       const q = query(collection(db, "users"), where("email", "==", email))
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach(doc => {
-        result = "Error: Email already taken!!"
+        result = "Error: E-Mail already exists!!"
       })
     }
 
@@ -168,7 +172,9 @@ export const AuthenticationContextProvider = ({ children }) => {
         email: email,
         mobileNo: MobileNo,
         password: password,
-        token:token
+        token:token,
+        securityOne:securityQuestionOne+" "+securityOne,
+        securityTwo:securityQuestionTwo+" "+securityTwo,
       })
         .then(async (res) => {
           const docRef = doc(db, "users", res.id);

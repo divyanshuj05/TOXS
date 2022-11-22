@@ -35,7 +35,7 @@ const Subtract = styled(Text)`
     padding-horizontal: ${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
     font-size: ${(props) => props.theme.fontSizes.h5};
-    border-radius:${(props) => props.theme.space[3]};
+    border-radius:${(props) => props.theme.space[4]};
 `;
 
 const AddButton = styled(Text)`

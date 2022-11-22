@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, StyleSheet } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { AccountBackground, AuthButton, AuthInput, ErrorContainer } from "../components/account.styles";
 import { Text } from "../../common/components/typography/text.component";
@@ -8,17 +8,24 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import styled from "styled-components";
+import { SecurityDropdown } from "../components/securityDropdown.components";
 
 const Title = styled(Text)`
   text-align:center
   font-size: 30px;
-  margin-top:92px
+  margin-top:35px
+`;
+
+const TitleLand=styled(Text)`
+  text-align:center
+  font-size: 30px;
+  margin-top:97px;
 `;
 
 const AccountContainer = styled(View)`
   background-color: rgba(255, 255, 255, 0.7);
   padding: ${(props) => props.theme.space[4]};
-  margin-top:${(props) => props.theme.space[2]};
+  margin-vertical:${(props) => props.theme.space[2]};
   margin-horizontal: ${(props) => props.theme.space[3]};
 `;
 
@@ -28,7 +35,10 @@ export const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [MobileNo, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
-  const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [securityQuestionOne,setSecurityQuestionOne]=useState(null)
+  const [securityOne,setSecurityOne] = useState("")
+  const [securityQuestionTwo,setSecurityQuestionTwo]=useState(null)
+  const [securityTwo,setSecurityTwo] = useState("")
   const { onRegister, isLoading, error, setError } = useContext(AuthenticationContext);
   const { orientation } = useContext(DeviceOrientationContext)
 
@@ -38,7 +48,7 @@ export const RegisterScreen = ({ navigation }) => {
           <View style={{ height: orientation==1||orientation==2?400:undefined }}>
             <ScrollView>
               <AuthInput
-                style={{width:orientation==1||orientation==2?287:400}}
+                style={{width:orientation==1||orientation==2?287:400,height:50}}
                 label="User Name"
                 value={userName}
                 textContentType="username"
@@ -48,7 +58,7 @@ export const RegisterScreen = ({ navigation }) => {
               />
               <Spacer size="large">
                 <AuthInput
-                  style={{width:orientation==1||orientation==2?287:400}}
+                  style={{width:orientation==1||orientation==2?287:400,height:50}}
                   label="E-mail"
                   value={email}
                   textContentType="emailAddress"
@@ -59,7 +69,7 @@ export const RegisterScreen = ({ navigation }) => {
               </Spacer>
               <Spacer size="large">
                 <AuthInput
-                  style={{width:orientation==1||orientation==2?287:400}}
+                  style={{width:orientation==1||orientation==2?287:400,height:50}}
                   label="Mobile No"
                   value={MobileNo}
                   textContentType="telephoneNumber"
@@ -70,7 +80,7 @@ export const RegisterScreen = ({ navigation }) => {
               </Spacer>
               <Spacer size="large">
                 <AuthInput
-                  style={{width:orientation==1||orientation==2?287:400}}
+                  style={{width:orientation==1||orientation==2?287:400,height:50}}
                   label="Password"
                   value={password}
                   textContentType="password"
@@ -79,17 +89,8 @@ export const RegisterScreen = ({ navigation }) => {
                   onChangeText={(p) => setPassword(p)}
                 />
               </Spacer>
-              <Spacer size="large">
-                <AuthInput
-                  style={{width:orientation==1||orientation==2?287:400}}
-                  label="Repeat Password"
-                  value={repeatedPassword}
-                  textContentType="password"
-                  secureTextEntry
-                  autoCapitalize="none"
-                  onChangeText={(p) => setRepeatedPassword(p)}
-                />
-              </Spacer>
+              <SecurityDropdown setSecurityQuestion={setSecurityQuestionOne} securityQuestion={securityQuestionOne} security={securityOne} setSecurity={setSecurityOne} />
+              <SecurityDropdown setSecurityQuestion={setSecurityQuestionTwo} securityQuestion={securityQuestionTwo} security={securityTwo} setSecurity={setSecurityTwo} />
             </ScrollView>
           </View>
           {error && (
@@ -102,7 +103,7 @@ export const RegisterScreen = ({ navigation }) => {
               <AuthButton
                 icon="food"
                 mode="contained"
-                onPress={() => { setError(null), onRegister(userName, email, MobileNo, password, repeatedPassword) }}
+                onPress={() => { setError(null), onRegister(userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) }}
               >
                 Register
               </AuthButton>
@@ -133,8 +134,10 @@ export const RegisterScreen = ({ navigation }) => {
       <SafeArea>
         <AccountBackground>
           <Title>TOXs</Title>
-          {RegisterView()}
-          {BackButtonView()}
+          <View style={{marginVertical:16}}>
+            {RegisterView()}
+            {BackButtonView()}
+          </View>
         </AccountBackground>
       </SafeArea>
       </ScrollView>
@@ -146,7 +149,7 @@ export const RegisterScreen = ({ navigation }) => {
         <AccountBackground>
           <View style={{flexDirection:"row"}}>
             <View style={{flex:0.4}}>
-              <Title>TOXs</Title>
+              <TitleLand>TOXs</TitleLand>
               {BackButtonView()}
             </View>
             <View style={{flex:0.6}}>
@@ -159,12 +162,4 @@ export const RegisterScreen = ({ navigation }) => {
       </SafeArea>
     )
   }
-
-  return (
-    <AccountBackground>
-      <Title>TOXs</Title>
-      
-      
-    </AccountBackground >
-  );
 };
