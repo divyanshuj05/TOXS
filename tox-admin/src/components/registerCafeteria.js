@@ -56,6 +56,12 @@ export default function Cafeteria({ set, setMenuList, menuList }){
         setPrice("")
     }
 
+    const handleBackButton = (event) => {
+        event.preventDefault()
+        setMenuList([])
+        set(false)
+    }
+
     return(
         <div className='form-container'>
             <form>
@@ -92,7 +98,7 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                     ):
                     (
                         <div className='container-btns'>
-                            <button className='tertiary-btn' onClick={()=>set(false)} >Back</button>
+                            <button className='tertiary-btn' onClick={(event)=>handleBackButton(event)}>Back</button>
                             <input className='tertiary-btn' type={"reset"} onClick={()=>setMenuList([])} />
                             <button className='tertiary-btn' onClick={(event)=>handleCafeteriaSubmit(event,set)}>Submit</button>
                         </div>

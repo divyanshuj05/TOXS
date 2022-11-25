@@ -1,6 +1,6 @@
 import { db } from "../database.config"
 import { storage } from "../database.config"
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore"
+import { collection, query, where, getDocs, addDoc, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 export const CheckCafeteriaData = (name,location,img,openTime,closeTime,menuList) => {
@@ -76,3 +76,33 @@ export const RegisterCafeteria = (name,location,img,openTime,closeTime,menuList)
         })
     })
 }   
+
+export const AddFoodItems = (name,list) => {
+    return new Promise (async(resolve,reject)=>{
+        let flag=0
+        const cafeteriaQuery=query(collection(db,"cafeterias"),where("Name","==",name))
+        const querySnapshot = await getDocs(cafeteriaQuery);
+        querySnapshot.forEach(async(Doc) => {
+            flag=1
+            const docRef=doc(db, "cafeterias", Doc.id);
+            await updateDoc(docRef, {
+                menuList:arrayUnion(...list)
+            }).then((res)=>{
+              alert("Food items list added")  
+              resolve("Done")
+              return
+            }).catch(err=>{
+                console.log(err)
+                alert("Some error occured! Please try again")
+                reject(err)
+                return
+            });
+        });
+        if(flag===0)
+        {
+            alert(`Cafeteria name ${name} does not exists!!`)
+            reject("Cafeteria does not exist")
+            return
+        }
+    })
+}

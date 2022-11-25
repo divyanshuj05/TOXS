@@ -21,6 +21,7 @@
   width: 50vh;
   overflow-y: auto;
   overflow-x: auto;
+  border-radius: 8px;
 }
 
 #container-title{
@@ -40,7 +41,7 @@
 .primary-btn{
   margin-inline-start: 25%;
   margin-inline-end: 25%;
-  margin-bottom: 10%;
+  margin-bottom: 7.5%;
   font-size:small;
   font-weight: normal;
   background-color: rgb(101, 12, 184);

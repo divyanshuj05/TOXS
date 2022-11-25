@@ -1,0 +1,121 @@
+.form-container{
+    overflow: hidden;
+}
+
+#container-title{
+    font-family: 'Oswald', sans-serif;
+    font-weight: bolder;
+    font-size:x-large;
+    text-align: center;
+}
+
+.form-input-primary{
+    margin: 0 0 0 10%;
+    width:75%;
+    font-size: medium;
+    border-radius: 16px;
+    background-color: rgb(230,230,230);
+    font-family: 'M PLUS 1 Code', sans-serif;
+    font-weight:100;
+}
+
+.form-input-primary:focus {
+    transition-duration: 400ms;
+    background-color: rgb(210,210,210);
+}
+
+.form-input-text-primary-title{
+    font-weight: normal;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 3.5% 0 0 10%;
+}  
+
+.form-input-text-secondary{
+    font-weight: 100;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 0 0 0 0;
+    width:100%;
+}
+
+.form-input-quaternary{
+    width:90%;
+    font-size: medium;
+    height: 100%;
+    border-radius: 16px;
+    background-color: rgb(230,230,230);
+    font-family: 'M PLUS 1 Code', sans-serif;
+    font-weight:100;
+}
+
+.form-input-quaternary:focus {
+    transition-duration: 400ms;
+    background-color: rgb(210,210,210);
+}
+
+.quaternary-btn{
+    margin-inline-start: 15%;
+    font-size:small;
+    font-weight: normal;
+    background-color: rgb(101, 12, 184);
+    color: white;
+    border-radius: 32px;
+    padding: 2%;
+    height: 60%;
+    cursor: pointer;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    border-color:white;
+}
+
+.quaternary-btn:hover{
+    transition-duration: 400ms;
+    background-color:rgb(162, 84, 235);
+}
+
+.tertiary-btn{
+    margin-inline-start: 15%;
+    font-size:small;
+    font-weight: normal;
+    background-color: rgb(101, 12, 184);
+    color: white;
+    border-radius: 32px;
+    padding: 2%;
+    height: 10%;
+    cursor: pointer;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    border-color:white;
+}
+  
+.tertiary-btn:hover{
+    transition-duration: 400ms;
+    background-color:rgb(162, 84, 235);
+}
+
+.container-btns{
+    display: flex;
+}
+
+.container-food-items-content{
+    display: flex;
+    flex-direction: column;
+    height: 27rem;
+}
+
+.text-primary{
+    font-weight: normal;
+    font-size: large;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 4% 0 0 0;
+}  
+
+.text-secondary{
+    font-weight: normal;
+    font-size: medium;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 4% 0 0 0;
+}  
+
+.food-items-scroll-container{
+    overflow-y: scroll;
+    height: 20rem;
+    margin: 0 0 0 10%;
+}

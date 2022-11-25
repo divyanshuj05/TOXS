@@ -63,6 +63,7 @@
   cursor: pointer;
   font-family: 'M PLUS 1 Code', sans-serif;
   border-color:white;
+  margin-bottom: 4%;
 }
 
 .tertiary-btn:hover{
