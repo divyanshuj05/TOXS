@@ -70,3 +70,15 @@
   transition-duration: 400ms;
   background-color:rgb(162, 84, 235);
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(230,230,230); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(150,150,150); 
+}

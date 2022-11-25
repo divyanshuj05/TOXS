@@ -14,3 +14,16 @@
     font-family: 'M PLUS 1 Code', sans-serif;
     margin: 6% 0 0 10%
 }  
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgb(230,230,230); 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(150,150,150); 
+  }
+  
