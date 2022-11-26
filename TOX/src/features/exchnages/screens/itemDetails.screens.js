@@ -138,6 +138,23 @@ export const ItemDetails = ({ route,navigation }) => {
                     <F2><Desc>{details.status}</Desc></F2>
                 </Row>
                 {isSeller?
+                (
+                    <>
+                    <Row>
+                        <F1><Desc>Posted on: </Desc></F1>
+                        <F2><Desc>{details.postDate}</Desc></F2>
+                    </Row>
+                    <Row>
+                        <F1><Desc>Post time: </Desc></F1>
+                        <F2><Desc>{details.postTime}</Desc></F2>
+                    </Row>
+                    </>
+                ):
+                (
+                    <></>
+                )
+                }
+                {isSeller?
                     (
                         details.buyer=="null"?
                         (<></>):

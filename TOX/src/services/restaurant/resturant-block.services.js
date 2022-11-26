@@ -67,6 +67,14 @@ export const restaurantsRequest = (Name) => {
 }
 
 export const Orders = (email,amount,vendor,data,restaurant) => {
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    const time=today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+    today = yyyy + '-' + mm + '-' + dd;
+
     var data={
         orderBy:email,
         vendor:vendor,
@@ -74,7 +82,9 @@ export const Orders = (email,amount,vendor,data,restaurant) => {
         order:data,
         status:"Not Ready",
         paymentType:"Card",
-        restaurant:restaurant
+        restaurant:restaurant,
+        orderDate:today,
+        orderTime:time
     }
     
     return new Promise(async(resolve,reject)=>{

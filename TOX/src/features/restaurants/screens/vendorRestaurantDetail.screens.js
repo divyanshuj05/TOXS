@@ -1,4 +1,4 @@
-import React, {useState ,useContext} from "react";
+import React, {useState ,useContext,useEffect} from "react";
 import { FlatList,View, TouchableOpacity, Text } from "react-native";
 import styled from 'styled-components';
 import { TextInput } from "react-native-paper";
@@ -62,10 +62,12 @@ const Touch=styled(TouchableOpacity)`
     margin-top:${(props) => props.theme.space[2]};
 `;
 
-export const VendorRestaurantDetail = () => {
+export const VendorRestaurantDetail = ({ route }) => {
 
-    const { addItem,isLoading,restaurant } = useContext(VendorRestaurantContext)
-    
+    const {name}=route.params
+    const { addItem,isLoading,restaurant, sortMenuList } = useContext(VendorRestaurantContext)
+    const [restaurantItems,setRestaurantItems]=useState(null)
+    const [localLoading,setLocalLoading]=useState(false)
     const [add,setAdd]=useState(false)
     const [item,setItem]=useState("")
     const [cost,setCost]=useState("")
@@ -77,16 +79,37 @@ export const VendorRestaurantDetail = () => {
         setTimeout(()=>{setError(null)},5000)
     }
 
+    useEffect(()=>{
+        setLocalLoading(true)
+        restaurant.forEach(element => {
+            if(element.Name==name)
+            {
+                sortMenuList(element)
+                setRestaurantItems(element)
+            }
+        });
+        setLocalLoading(false)
+    },[restaurant])
+
+    if(!restaurantItems)
+    {
+        return(
+            <View style={{marginTop:50}}>
+                <ActivityIndicator color={Colors.red400} size={50} />
+            </View>
+        )
+    }
+
     const renderItem = ({ item }) => {
         return (
-            <VendorMenuDetail foodItem={item} Restaurant={restaurant[0].Name} oriTag={orientation==1||orientation==2?0:1} />
+            <VendorMenuDetail foodItem={item} Restaurant={restaurantItems.Name} oriTag={orientation==1||orientation==2?0:1} />
         );
     };
 
     return (
         <Container>
-            <RestaurantText>{restaurant[0].Name}</RestaurantText>   
-            {isLoading?
+            <RestaurantText>{restaurantItems.Name}</RestaurantText>   
+            {isLoading||localLoading?
             (
                 <View style={{marginTop:50}}>
                     <ActivityIndicator color={Colors.red400} size={50} />
@@ -94,7 +117,7 @@ export const VendorRestaurantDetail = () => {
             ):(
                 <>
                     <FlatListStyle
-                    data={restaurant[0].menuList}
+                    data={restaurantItems.menuList}
                     renderItem={renderItem}
                     keyExtractor={(item)=>item.title}
                     />
@@ -126,7 +149,7 @@ export const VendorRestaurantDetail = () => {
                                     </View>       
                                     <View style={{flex:0.2,alignItems:"flex-start"}}>
                                         <Touch activeOpacity={0.65} onPress={async ()=>{
-                                            setError(await (addItem(item,cost,restaurant[0].Name)))
+                                            setError(await (addItem(item,cost,restaurantItems.Name)))
                                             setAdd(!add)}}>
                                             <Ionicons name="checkmark-circle-outline" size={28} style={{marginTop:16}} color="white" />
                                         </Touch>

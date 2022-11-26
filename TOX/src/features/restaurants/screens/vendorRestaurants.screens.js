@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { View, FlatList, TouchableOpacity, Text } from "react-native"
+import { View, FlatList, TouchableOpacity, Text, ScrollView } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 import styled from 'styled-components'
@@ -74,7 +74,7 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                         <FlatList
                             data={restaurant}
                             renderItem={({ item }) =>
-                                <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails")}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails",{name:item.Name})}>
                                     <FadeInView>
                                         <RestaurantInfoCard restaurant={item} oriTag={0} />
                                     </FadeInView>
@@ -102,17 +102,19 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                         </View>
                     ) :
                     (
-                        <FlatList
-                            horizontal
-                            data={restaurant}
-                            renderItem={({ item }) =>
-                                <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails")}>
-                                    <FadeInView>
-                                        <RestaurantInfoCard restaurant={item} oriTag={1} />
-                                    </FadeInView>
-                                </TouchableOpacity>}
-                            keyExtractor={(item) => item.Name}
-                        />
+                        <ScrollView>
+                            <FlatList
+                                horizontal
+                                data={restaurant}
+                                renderItem={({ item }) =>
+                                    <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails")}>
+                                        <FadeInView>
+                                            <RestaurantInfoCard restaurant={item} oriTag={1} />
+                                        </FadeInView>
+                                    </TouchableOpacity>}
+                                keyExtractor={(item) => item.Name}
+                            />
+                        </ScrollView>
                     )
                 }
             </CardContainer>

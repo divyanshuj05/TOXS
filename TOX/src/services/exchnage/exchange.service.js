@@ -30,6 +30,13 @@ export const StoreImage = async (image) => {
 }
 
 export const AddItem = (item,desc,price,category,url,name,email) => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    const time=today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+    today = yyyy + '-' + mm + '-' + dd;
+
     let data={
         name:item,
         description:desc,
@@ -39,7 +46,9 @@ export const AddItem = (item,desc,price,category,url,name,email) => {
         seller:email,
         buyer:"null",
         status:"Available",
-        imgName:name
+        imgName:name,
+        postDate:today,
+        postTime:time
     }
 
     const exchnageRef= collection(db, "exchanges")

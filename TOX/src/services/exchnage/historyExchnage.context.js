@@ -12,11 +12,30 @@ export const ExchangeHistoryContextProvider = ({children}) => {
     const [detailsLoading,setDetailsLoading]=useState(false)
     const [mobile,setMobile]=useState(null)
 
+    const sort = (res) => {
+        function compare(a,b){
+            if(a.postDate&&b.postDate)
+            {
+                const x=new Date(a.postDate)
+                const y=new Date(b.postDate)
+                if(x>y) return -1
+                else if(x<y) return 1
+                else if(+x===+y){
+                    if(a.postTime>b.postTime) return -1
+                    else if(a.postTime<b.postTime) return 1
+                    else return 0
+                }
+            }
+        }
+        res.sort(compare)
+        history.current=res
+    }
+
     const UserData = () => {
         setDetailsLoading(true)
         history.current=[]
         RetrieveHistory(user.email).then(res=>{
-            history.current=res
+            sort(res)
             setDetailsLoading(false)
         }).catch(err=>{
             console.log(err)
@@ -46,7 +65,7 @@ export const ExchangeHistoryContextProvider = ({children}) => {
             setDetailsLoading(true)
             history.current=[]
             RetrieveHistoryByStatus(mail,status).then(res=>{
-                history.current=res
+                sort(res)
                 setDetailsLoading(false)
             }).catch(err=>{
                 console.log(err)

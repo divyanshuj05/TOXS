@@ -10,11 +10,30 @@ export const RestaurantHistoryContextProvider = ({children}) => {
     const [history,setHistory]=useState([])
     const [isLoading,setIsLoading]=useState(false)
 
+    const sort = async(res) => {
+        function compare(a,b){
+            if(a.orderDate&&b.orderDate)
+            {
+                const x=new Date(a.orderDate)
+                const y=new Date(b.orderDate)
+                if(x>y) return -1
+                else if(x<y) return 1
+                else if(+x===+y){
+                    if(a.orderTime>b.orderTime) return -1
+                    else if(a.orderTime<b.orderTime) return 1
+                    else return 0
+                }
+            }
+        }
+        await res.sort(compare)
+        setHistory(res)
+    }
+
     const Search = (name,coll) => {
         setIsLoading(true)
         setHistory([])
         GetOrders(name,coll).then(res=>{
-            setHistory(res)
+            sort(res)
             setIsLoading(false)
         }).catch(e=>{
             console.log(e)
@@ -74,7 +93,7 @@ export const RestaurantHistoryContextProvider = ({children}) => {
         if(status=="Select All")
         {
             GetOrders(name,type).then(res=>{
-                setHistory(res)
+                sort(res)
                 setIsLoading(false)
             }).catch(e=>{
                 alert("Some error occured")
@@ -84,7 +103,7 @@ export const RestaurantHistoryContextProvider = ({children}) => {
             return
         }
         SearchStatus(name,type,status).then(res=>{
-            setHistory(res)
+            sort(res)
             setIsLoading(false)
         }).catch(e=>{
             alert("Some error occured")

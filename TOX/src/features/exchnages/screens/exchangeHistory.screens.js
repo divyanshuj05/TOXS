@@ -1,5 +1,5 @@
 import React,{ useContext, useEffect, useRef } from 'react'
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
+import { View, FlatList, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { FadeInView } from "../../common/components/animations/fade.animation"
 import { ItemInfoCard } from "../components/itemInfoCard.components"
 import styled from 'styled-components'
@@ -88,12 +88,25 @@ export const ExchangeHistory = ({ navigation }) => {
             (   
                 history.length?
                     (
-                        <FlatList 
-                            horizontal={orientation==1||orientation==2?false:true}
-                            data={history}
-                            renderItem={renderItem}
-                            keyExtractor={(item)=>item.imgName}
-                        />
+                        orientation==1||orientation==2?
+                        (
+                            <FlatList 
+                                horizontal={false}
+                                data={history}
+                                renderItem={renderItem}
+                                keyExtractor={(item)=>item.imgName}
+                            />
+                        ):
+                        (
+                            <ScrollView>
+                                <FlatList 
+                                    horizontal={true}
+                                    data={history}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item)=>item.imgName}
+                                />  
+                            </ScrollView>        
+                        )
                     ):(
                         <Empty>No items found!!</Empty>
                     )

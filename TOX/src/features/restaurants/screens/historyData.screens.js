@@ -112,6 +112,22 @@ export const OrderDetails = ({route,navigation}) => {
                         <TextWrap>{item.orderBy}</TextWrap>
                     </View>
                 </Row>
+                <Row>
+                    <View style={{flex:0.3}}>
+                        <TextWrap>Order Date</TextWrap>
+                    </View>
+                    <View style={{flex:0.6}}>
+                        <TextWrap>{item.orderDate}</TextWrap>
+                    </View>
+                </Row>
+                <Row>
+                    <View style={{flex:0.3}}>
+                        <TextWrap>Order Time</TextWrap>
+                    </View>
+                    <View style={{flex:0.6}}>
+                        <TextWrap>{item.orderTime}</TextWrap>
+                    </View>
+                </Row>
                 <View style={{marginVertical:8}}></View>
                 <TextWrap>Order:</TextWrap>
                 {item.order.map(item=>{

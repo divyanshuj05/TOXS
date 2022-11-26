@@ -11,6 +11,15 @@ export const VendorRestaurantContextProvider = ({ children }) => {
 
     const { user } =useContext(AuthenticationContext)
 
+    const sortMenuList = (res) => {
+        function compare(a,b){
+            if(a.title>b.title) return 1;
+            else if(a.title<b.title) return -1
+            else return 0
+        }
+        res.menuList.sort(compare)
+    }
+
     const Search = (name) =>{
         setIsLoading(true)
         VendorRestaurantsRequest(name).then((res)=>{
@@ -103,7 +112,8 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             addItem,
             editItem,
             deleteItem,
-            Search
+            Search,
+            sortMenuList
         }}>
             {children}
         </VendorRestaurantContext.Provider>
