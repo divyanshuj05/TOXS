@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Alert, Text, View } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
-import { MenuListContext } from "../../../services/restaurant/menu-list.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { SafeArea } from "../../../utils/components/safe-area.components"
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
+import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context";
 
 const RestaurantText = styled(Text)`
   margin-top: ${(props) => props.theme.space[2]};
@@ -38,10 +38,10 @@ const EmptyList=styled(Text)`
 export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
     const { tag } = route.params
-
+    const { restaurants }=useContext(RestaurantContext)
     const { destroy } = useContext(CartContext);
     const { LockOrientation, UnlockOrientation } = useContext(DeviceOrientationContext)
-    const { restaurantMenuList, isLoading, isError, Search,vendor } = useContext(MenuListContext)
+    const [restaurantMenuList, setRestaurantMenuList] = useState([]) 
 
     useEffect(() => {
         navigation.addListener('beforeRemove', (block) => {
@@ -63,10 +63,25 @@ export const RestaurantDetails = ({ route, navigation }) => {
             )
         })
     }, [navigation])
-    
+
+    function compare(a,b){
+        if(a.title>b.title) return 1;
+        else if(a.title<b.title) return -1
+        else return 0
+    }
+
     useEffect(()=>{
         LockOrientation()
-        Search(restaurent)
+        restaurants.forEach(element => {
+            if(element.Name==restaurent)
+            {
+                if(element.menuList!=undefined)
+                {
+                    element.menuList.sort(compare)
+                }
+                setRestaurantMenuList(element)
+            }
+        });
         destroy()
     },[])
 
@@ -76,7 +91,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
 
     return (
         <Container>
-            {isLoading?
+            {restaurantMenuList==[]?
             (
                 <IndicatorView>
                     <ActivityIndicator color={Colors.red400} size={50} />
@@ -87,12 +102,12 @@ export const RestaurantDetails = ({ route, navigation }) => {
                 (
                     <SafeArea>
                         <RestaurantText>{restaurent}</RestaurantText>
-                        {!restaurantMenuList?
+                        {!restaurantMenuList.menuList||restaurantMenuList.menuList==[]?
                         (
                             <EmptyList>No Menu List!!</EmptyList>
                         ):
                         (
-                            <MenuList data={restaurantMenuList} navigation={navigation} restaurant={restaurent}/>
+                            <MenuList data={restaurantMenuList.menuList} navigation={navigation} restaurant={restaurent} vendor={restaurantMenuList.vendor}/>
                         )
                         }
                     </SafeArea>
@@ -100,17 +115,16 @@ export const RestaurantDetails = ({ route, navigation }) => {
                 (
                     <>
                         <RestaurantText>{restaurent}</RestaurantText>
-                        {!restaurantMenuList?
+                        {!restaurantMenuList.menuList||restaurantMenuList.menuList==[]?
                         (
                             <EmptyList>No Menu List!!</EmptyList>
                         ):
                         (
-                            <MenuList data={restaurantMenuList} navigation={navigation} restaurant={restaurent}/>
+                            <MenuList data={restaurantMenuList.menuList} navigation={navigation} restaurant={restaurent} vendor={restaurantMenuList.vendor}/>
                         )
                         }   
                     </>
                 )
-                
             )}
         </Container>
     )

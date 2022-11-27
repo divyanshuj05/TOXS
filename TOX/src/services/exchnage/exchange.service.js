@@ -64,49 +64,20 @@ export const AddItem = (item,desc,price,category,url,name,email) => {
     })
 }
 
-export const RetrieveData = (name) => {
+export const RetrieveData = () => {
     var array = []
-
-    if (name === "Select All") {
-        return new Promise(async (resolve, reject) => {
-            let Query = query(collection(db, "exchanges"),where("status","in",["Available","On Hold"]))
-            let snapShot = await getDocs(Query)
-            snapShot.forEach(doc => {
-                let temp=Object.assign(doc.data(),{"id":doc.id})
-                array.push(temp)
-            });
-            /*Query = query(collection(db, "exchanges"),where("status","==","On Hold"))
-            snapShot = await getDocs(Query)
-            snapShot.forEach(doc => {
-                let temp=Object.assign(doc.data(),{"id":doc.id})
-                array.push(temp)
-            });*/
-            if (array == "[]") {
-                reject("Problem getting data!!")
-            }
-            resolve(array);
-        })
-    }
-    else {
-        return new Promise(async (resolve, reject) => {
-            let Query = query(collection(db, "exchanges"), where("category", "==", name), where("status","==","Available"))
-            let snapShot = await getDocs(Query)
-            snapShot.forEach(doc => {
-                let temp=Object.assign(doc.data(),{"id":doc.id})
-                array.push(temp)
-            });
-            Query = query(collection(db, "exchanges"), where("category", "==", name), where("status","==","On Hold"))
-            snapShot = await getDocs(Query)
-            snapShot.forEach(doc => {
-                let temp=Object.assign(doc.data(),{"id":doc.id})
-                array.push(temp)
-            });
-            if (array == "[]") {
-                reject("Problem getting data!!")
-            }
-            resolve(array);
+    return new Promise(async (resolve, reject) => {
+        let Query = query(collection(db, "exchanges"),where("status","in",["Available","On Hold"]))
+        let snapShot = await getDocs(Query)
+        snapShot.forEach(doc => {
+            let temp=Object.assign(doc.data(),{"id":doc.id})
+            array.push(temp)
         });
-    }
+        if (array == "[]") {
+            reject("Problem getting data!!")
+        }
+        resolve(array);
+    })
 }
 
 export const UpdateData = async (obj,status,mail) => {
@@ -126,7 +97,7 @@ export const UpdateData = async (obj,status,mail) => {
                 })
             }).catch(err=>{
                 console.log(err)
-                reject("Operatoin failed!! Please try again")
+                reject("Operation failed!! Please try again")
             })
         })
     }
@@ -189,29 +160,6 @@ export const RetrieveHistory = (email) => {
             array.push(temp)
         });
         Query = query(collection(db, "exchanges"), where("buyer", "==" , email))
-        snapShot = await getDocs(Query)
-        snapShot.forEach(doc => {
-            let temp=Object.assign(doc.data(),{"id":doc.id})
-            array.push(temp)
-        });
-        if (array == "[]") {
-            reject("Problem getting data!!")
-        }
-        resolve(array);
-    });
-}
-
-export const RetrieveHistoryByStatus = (email,status) => {
-    var array=[]
-
-    return new Promise(async (resolve, reject) => {
-        let Query = query(collection(db, "exchanges"), where("seller", "==" , email), where("status","==",status))
-        let snapShot = await getDocs(Query)
-        snapShot.forEach(doc => {
-            let temp=Object.assign(doc.data(),{"id":doc.id})
-            array.push(temp)
-        });
-        Query = query(collection(db, "exchanges"), where("buyer", "==" , email), where("status","==",status))
         snapShot = await getDocs(Query)
         snapShot.forEach(doc => {
             let temp=Object.assign(doc.data(),{"id":doc.id})

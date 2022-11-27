@@ -18,7 +18,7 @@ export async function registerForPushNotificationsAsync() {
         finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+        alert('Permission for notification not granted! You will not receive any notifications');
         return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;

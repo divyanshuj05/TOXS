@@ -1,5 +1,5 @@
-import React,{ createContext,useState } from 'react'
-import { GetOrders, OrderReadyStatus, GetNotiToken, SearchStatus } from './orderHistory.services'
+import React,{ createContext,useState,useRef } from 'react'
+import { GetOrders, OrderReadyStatus, GetNotiToken } from './orderHistory.services'
 import { SendNotification } from '../common/notisFunctions.services'
 import { Alert } from 'react-native'
 
@@ -7,10 +7,12 @@ export const RestaurantHistoryContext = createContext()
 
 export const RestaurantHistoryContextProvider = ({children}) => {
 
-    const [history,setHistory]=useState([])
+    const history=useRef([])
+    const [refresh,setRefresh]=useState(false)
+    const [historyCopy,setHistoryCopy]=useState([])
     const [isLoading,setIsLoading]=useState(false)
 
-    const sort = async(res) => {
+    const sort = (res) => {
         function compare(a,b){
             if(a.orderDate&&b.orderDate)
             {
@@ -25,15 +27,17 @@ export const RestaurantHistoryContextProvider = ({children}) => {
                 }
             }
         }
-        await res.sort(compare)
-        setHistory(res)
+        res.sort(compare)
+        history.current=res
     }
 
-    const Search = (name,coll) => {
+    const Search = (name,coll,flag=0) => {
         setIsLoading(true)
-        setHistory([])
+        history.current=[]
         GetOrders(name,coll).then(res=>{
             sort(res)
+            setHistoryCopy(history.current)
+            setRefresh(!refresh)
             setIsLoading(false)
         }).catch(e=>{
             console.log(e)
@@ -41,19 +45,20 @@ export const RestaurantHistoryContextProvider = ({children}) => {
         })
     }
 
-    const OrderReady = (id,mail,navigation,type,status) => {
+    const OrderReady = (id,mail,navigation,type,status,name) => {
         setIsLoading(true)
         OrderReadyStatus(id,status).then(res=>{
             if(type=="users")
             { 
                 setIsLoading(false)
+                Search(mail,type)
                 Alert.alert(
                     "Done",
                     "Changes were successfully made",
                     [
                         {
                             text:"Ok",
-                            onPress:()=>{navigation.navigate("RestaurantsHome")}
+                            onPress:()=>{navigation.goBack()}
                         }
                     ]
                 )
@@ -64,6 +69,7 @@ export const RestaurantHistoryContextProvider = ({children}) => {
                 {
                     SendNotification(res,"Food Order","Your food order is ready to take")
                 }
+                Search(name,type)
                 setIsLoading(false)
                 Alert.alert(
                     "Done",
@@ -87,38 +93,34 @@ export const RestaurantHistoryContextProvider = ({children}) => {
         })
     }
 
-    const SearchByStatus = (status,type,name) => {
+    const SearchByStatus = (status) => {
         setIsLoading(true)
-        setHistory([])
-        if(status=="Select All")
+        history.current=[]
+        if(status==="Select All")
         {
-            GetOrders(name,type).then(res=>{
-                sort(res)
-                setIsLoading(false)
-            }).catch(e=>{
-                alert("Some error occured")
-                console.log(e)
-                setIsLoading(false)
-            })
-            return
+            history.current=historyCopy
         }
-        SearchStatus(name,type,status).then(res=>{
-            sort(res)
-            setIsLoading(false)
-        }).catch(e=>{
-            alert("Some error occured")
-            console.log(e)
-            setIsLoading(false)
-        })
+        else{
+            historyCopy.forEach((ele)=>{
+                if(ele.status==status)
+                {
+                    history.current=[...history.current,ele]
+                }
+            })
+        }
+        sort(history.current)
+        setRefresh(!refresh)
+        setIsLoading(false)
     }
 
     return(
         <RestaurantHistoryContext.Provider value={{
-            history,
+            history:history.current,
             isLoading,
-            Search,
+            SearchHistory:Search,
             OrderReady,
-            SearchByStatus
+            SearchByStatus,
+            refresh
         }}>
             {children}
         </RestaurantHistoryContext.Provider>

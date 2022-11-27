@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TouchableOpacity, View, ScrollView, Image, Text } from 'react-native';
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
@@ -6,6 +6,9 @@ import { logo_light,logo_dark, } from "../../../../assets/images";
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { AntDesign } from '@expo/vector-icons';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
+import { AuthenticationContext } from '../../../services/authentication/authentication.context';
+import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 
 const Container=styled(ScrollView)`
     flex:1;
@@ -52,6 +55,17 @@ export const RestaurantHome = ({ navigation }) => {
 
     const { scheme } = useContext(AppThemeContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const { Search } = useContext(RestaurantContext)
+    const { user } = useContext(AuthenticationContext)
+    const { SearchHistory } = useContext(RestaurantHistoryContext)
+
+    useEffect(()=>{
+        Search(1);
+    },[])
+
+    useEffect(()=>{
+        SearchHistory(user.email,user.type,1)
+    },[])
 
     if(orientation==1||orientation==2)
     {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { View, FlatList, TouchableOpacity, Text, ScrollView } from "react-native"
+import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 import styled from 'styled-components'
@@ -51,9 +51,9 @@ export const VendorRestaurantScreen = ({ navigation }) => {
     const { orientation } = useContext(DeviceOrientationContext)
     const { user } = useContext(AuthenticationContext)
 
-    useEffect(()=>{
+    const onRefresh = () => {
         Search(user.userName)
-    },[])
+    }
 
     if(orientation==1||orientation==2)
     {
@@ -72,6 +72,11 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                     ) :
                     (
                         <FlatList
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            }
                             data={restaurant}
                             renderItem={({ item }) =>
                                 <TouchableOpacity activeOpacity={0.65} onPress={() => navigation.navigate("RestaurantDetails",{name:item.Name})}>
@@ -102,7 +107,13 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                         </View>
                     ) :
                     (
-                        <ScrollView>
+                        <ScrollView
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                        >
                             <FlatList
                                 horizontal
                                 data={restaurant}

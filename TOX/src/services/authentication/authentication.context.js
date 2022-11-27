@@ -214,6 +214,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         }
       }
       if (newFieldVal.length !== 10) {
+        setIsLoading(false)
         return "Error: Mobile Number length should be 10!!";
       }
 

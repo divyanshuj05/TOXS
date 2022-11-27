@@ -1,5 +1,5 @@
-import React,{ useContext, useEffect, useRef } from 'react'
-import { View, FlatList, TouchableOpacity, Text, ScrollView } from 'react-native';
+import React,{ useContext, useRef } from 'react'
+import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl } from 'react-native';
 import { FadeInView } from "../../common/components/animations/fade.animation"
 import { ItemInfoCard } from "../components/itemInfoCard.components"
 import styled from 'styled-components'
@@ -7,7 +7,6 @@ import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchna
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { HistoryFilterComponent } from '../../restaurants/components/historyDropdown.components';
-import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 
 const Container=styled(View)`
     flex:1
@@ -44,11 +43,6 @@ export const ExchangeHistory = ({ navigation }) => {
     const { detailsLoading, history, UserData, SearchByStatus } = useContext(ExchangeHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
     const status=useRef()
-    const { user } = useContext(AuthenticationContext)
-
-    useEffect(()=>{
-        UserData()
-    },[])
 
     const options=[
         { label: 'Available', value: 'Available' },
@@ -68,6 +62,11 @@ export const ExchangeHistory = ({ navigation }) => {
         )
     }
 
+    const onRefresh = () => {
+        UserData()
+        status.current="Select All"
+    }
+
     return(
         <Container>
             <View style={{flexDirection:"row"}}>
@@ -76,7 +75,7 @@ export const ExchangeHistory = ({ navigation }) => {
                 </View>
                 <DropdownWrapper>
                     <HistoryFilterComponent 
-                    status={status} options={options} SearchByStatus={SearchByStatus} type={user.type} name={user.email}/>
+                    status={status} options={options} SearchByStatus={SearchByStatus}/>
                 </DropdownWrapper>
             </View>
             {detailsLoading?
@@ -91,6 +90,11 @@ export const ExchangeHistory = ({ navigation }) => {
                         orientation==1||orientation==2?
                         (
                             <FlatList 
+                                refreshControl={
+                                    <RefreshControl 
+                                        onRefresh={onRefresh}   
+                                    />
+                                }
                                 horizontal={false}
                                 data={history}
                                 renderItem={renderItem}
@@ -98,7 +102,13 @@ export const ExchangeHistory = ({ navigation }) => {
                             />
                         ):
                         (
-                            <ScrollView>
+                            <ScrollView
+                                refreshControl={
+                                    <RefreshControl 
+                                        onRefresh={onRefresh}   
+                                    />
+                                }
+                            >
                                 <FlatList 
                                     horizontal={true}
                                     data={history}

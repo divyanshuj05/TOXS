@@ -78,7 +78,7 @@ export const OrderListScreen = ({ navigation,route }) => {
 
     const { cost, items, order, unique, costItem } = useContext(CartContext)
     const { orientation } = useContext(DeviceOrientationContext)
-    const { restaurant } = route.params
+    const { restaurant, vendor } = route.params
 
     var data = []
 
@@ -154,7 +154,7 @@ export const OrderListScreen = ({ navigation,route }) => {
                         <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant}) }}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant,vendor:vendor}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>
@@ -164,7 +164,7 @@ export const OrderListScreen = ({ navigation,route }) => {
                         <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant}) }}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant,vendor:vendor}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>

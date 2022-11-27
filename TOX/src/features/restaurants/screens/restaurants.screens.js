@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { TouchableOpacity, FlatList, View, Alert, SafeAreaView } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { TouchableOpacity, FlatList, View, Alert, SafeAreaView, RefreshControl } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
 import { FadeInView } from "../../common/components/animations/fade.animation"
@@ -51,13 +51,40 @@ const FavWrapLand = styled(View)`
 
 export const RestaurantScreen = ({ navigation }) => {
 
-    const { restaurants, restaurantCopy, isCopyLoading, isLoading, Search } = useContext(RestaurantContext);
+    const { restaurants, restaurantCopy, isCopyLoading, isLoading, sortByAddress, refresh, Search } = useContext(RestaurantContext);
+    const [restaurantsLocal,setRestaurantsLocal]=useState(null)
     const { favourites, addFavoutites, removeFavorites } = useContext(FavouritesContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const [value,setValue]=useState(null)
+    const isMounted=useRef(false)
 
     useEffect(()=>{
-        Search("Select All", 1);
-    },[])
+        if(isMounted.current===true)
+        {
+            sortByAddress(value)
+        }
+        isMounted.current=true
+    },[value])
+
+    useEffect(()=>{
+        setRestaurantsLocal(restaurants)
+    },[refresh])
+
+    const onRefresh = () => {
+        Search()
+        setValue("Select All")
+    }
+
+    if(!restaurantsLocal)
+    {
+        return(
+            <Container>
+                <View style={{ marginTop: 50 }}>
+                    <ActivityIndicator color={Colors.red400} size={50} />
+                </View>
+            </Container>
+        )
+    }
 
     return (
         <Container>
@@ -65,7 +92,7 @@ export const RestaurantScreen = ({ navigation }) => {
                 (   
                     <>
                         <DropDownContainer>
-                            <DropDownComponent restaurant={restaurantCopy} />
+                            <DropDownComponent restaurant={restaurantCopy} value={value} setValue={setValue} />
                         </DropDownContainer>
 
                         {favourites.length === 0 || favourites === null ?
@@ -88,7 +115,12 @@ export const RestaurantScreen = ({ navigation }) => {
                             ) :
                             (
                                 <FlatList
-                                    data={restaurants}
+                                    refreshControl={
+                                        <RefreshControl 
+                                            onRefresh={onRefresh}
+                                        />
+                                    }
+                                    data={restaurantsLocal}
                                     renderItem={({ item }) =>
                                         <TouchableOpacity activeOpacity={0.65} onPress={() => 
                                             {
@@ -158,8 +190,13 @@ export const RestaurantScreen = ({ navigation }) => {
                                 ) :
                                 (
                                     <FlatList
+                                        refreshControl={
+                                            <RefreshControl 
+                                                onRefresh={onRefresh}
+                                            />
+                                        }
                                         horizontal
-                                        data={restaurants}
+                                        data={restaurantsLocal}
                                         renderItem={({ item }) =>
                                             <TouchableOpacity activeOpacity={0.65} onPress={() => {
                                                 if(item.isOpen=="false")

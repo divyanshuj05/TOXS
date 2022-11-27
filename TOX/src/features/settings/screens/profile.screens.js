@@ -80,7 +80,7 @@ const Error = styled(Text)`
 
 export const ProfileScreen = () => {
 
-    const { user, UpdateDoc } = useContext(AuthenticationContext)
+    const { user, UpdateDoc, isLoading } = useContext(AuthenticationContext)
     const { isOrientationLoading } = useContext(DeviceOrientationContext)
     const [updateUser, setUpdateUser] = useState(false)
     const [updateMobile, setUpdateMobile] = useState(false)
@@ -105,155 +105,166 @@ export const ProfileScreen = () => {
         <SafeArea>
             <Scroll>
                 <Title>User Details</Title>
-                <BorderView >
-                    <View style={{ flexDirection: "row" }}>
-                        <DetailsIcon name="person-outline" size={22} />
-                        {updateUser ?
-                            (
-                                <>
-                                    <Input
-                                        label="Input new username"
-                                        value={newUser}
-                                        textContentType="username"
-                                        keyboardType="default"
-                                        autoCapitalize="words"
-                                        onChangeText={(text) => { setNewUser(text) }} />
-                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
-                                        setErrorUser(null)
-                                        let result = UpdateDoc("userName", newUser,user.type)
-                                        if (result === true) {
-                                            setUpdateUser(false)
-                                        }
-                                        else { setErrorUser(result) }
-                                    }}>
-                                        <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
-                                    </TouchableOpacity>
-                                </>
-                            ) :
-                            (
-                                <>
-                                    <Details>{user.userName}</Details>
-                                    {user.type=="users"?
-                                    (
-                                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
-                                            <UpdateButton name="spinner-refresh" size={22} />
-                                        </TouchableOpacity>
-                                    ):
-                                    (<></>)}
-                                </>
-                            )
-
-                        }
-                    </View>
-                    {errorUser ?
-                        (
-                            <Error>{errorUser}</Error>
-                        ) : (<></>)
-                    }
-                </BorderView>
-
-                <BorderView>
-                    <View style={{ flexDirection: "row" }}>
-                        <DetailsIconCopy name="email" size={22} />
-                        <Details>{user.email}</Details>
-                    </View>
-                </BorderView>
-
-                <BorderView>
-                    <View style={{ flexDirection: "row" }}>
-                        <DetailsIconCopy name="mobile-alt" size={22} />
-                        {updateMobile ?
-                            (
-                                <>
-                                    <Input
-                                        label="Input new mobile number"
-                                        value={newMobile}
-                                        textContentType="telephoneNumber"
-                                        keyboardType="phone-pad"
-                                        autoCapitalize="none"
-                                        onChangeText={(text) => { setNewMobile(text) }} />
-                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
-                                        setErrorMob(null)
-                                        const result = UpdateDoc("mobileNo", newMobile,user.type)
-                                        if (result === true) {
-                                            setUpdateMobile(false)
-                                        }
-                                        else { setErrorMob(result) }
-                                    }}>
-                                        <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
-                                    </TouchableOpacity>
-                                </>
-                            ) :
-                            (
-                                <>
-                                    <Details>{user.mobileNo}</Details>
-                                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateMobile(true), setErrorMob(null) }}>
-                                        <UpdateButton name="spinner-refresh" size={22} />
-                                    </TouchableOpacity>
-                                </>
-                            )
-
-                        }
-                    </View>
-                    {errorMob ?
-                        (
-                            <Error>{errorMob}</Error>
-                        ) : (<></>)
-                    }
-                </BorderView>
-
-                <BorderView>
-                    <View style={{ flexDirection: "row" }}>
-                        <DetailsIcon name="eye-outline" size={22} />
-                        {updatePass ?
-                            (
-                                <>
-                                    <Input
-                                        label="Input new password"
-                                        value={newPass}
-                                        textContentType="password"
-                                        secureTextEntry
-                                        autoCapitalize="none"
-                                        onChangeText={(text) => { setNewPass(text) }} />
-                                    <TouchableOpacity activeOpacity={0.65} onPress={() => {
-                                        setErrorPass(null)
-                                        const result = UpdateDoc("password", newPass,user.type)
-                                        if (result === true) {
-                                            setUpdatePass(false)
-                                        }
-                                        else { setErrorPass(result) }
-                                    }}>
-                                        <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
-                                    </TouchableOpacity>
-                                </>
-                            ) :
-                            (
-                                <>
-                                    <Details>******{user.password.substring(6)}</Details>
-                                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdatePass(true), setErrorPass(null) }}>
-                                        <UpdateButton name="spinner-refresh" size={22} />
-                                    </TouchableOpacity>
-                                </>
-                            )
-
-                        }
-                    </View>
-                    {errorPass ?
-                        (
-                            <Error>{errorPass}</Error>
-                        ) : (<></>)
-                    }
-                </BorderView>
-                
-                {user.type=="vendors"?
-                    (
+                {isLoading?
+                (
+                    <Scroll>
+                        <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                    </Scroll>
+                )
+                :
+                (
+                    <>
                         <BorderView>
                             <View style={{ flexDirection: "row" }}>
-                                <DetailsIcon name="md-restaurant-outline" size={22} />
-                                <Details>{user.restaurant}</Details>
+                                <DetailsIcon name="person-outline" size={22} />
+                                {updateUser ?
+                                    (
+                                        <>
+                                            <Input
+                                                label="Input new username"
+                                                value={newUser}
+                                                textContentType="username"
+                                                keyboardType="default"
+                                                autoCapitalize="words"
+                                                onChangeText={(text) => { setNewUser(text) }} />
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => {
+                                                setErrorUser(null)
+                                                let result = UpdateDoc("userName", newUser,user.type)
+                                                if (result === true) {
+                                                    setUpdateUser(false)
+                                                }
+                                                else { setErrorUser(result) }
+                                            }}>
+                                                <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
+                                            </TouchableOpacity>
+                                        </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Details>{user.userName}</Details>
+                                            {user.type=="users"?
+                                            (
+                                                <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateUser(true), setErrorUser(null) }}>
+                                                    <UpdateButton name="spinner-refresh" size={22} />
+                                                </TouchableOpacity>
+                                            ):
+                                            (<></>)}
+                                        </>
+                                    )
+
+                                }
+                            </View>
+                            {errorUser ?
+                                (
+                                    <Error>{errorUser}</Error>
+                                ) : (<></>)
+                            }
+                        </BorderView>
+
+                        <BorderView>
+                            <View style={{ flexDirection: "row" }}>
+                                <DetailsIconCopy name="email" size={22} />
+                                <Details>{user.email}</Details>
                             </View>
                         </BorderView>
-                    ):(<></>)}
+
+                        <BorderView>
+                            <View style={{ flexDirection: "row" }}>
+                                <DetailsIconCopy name="mobile-alt" size={22} />
+                                {updateMobile ?
+                                    (
+                                        <>
+                                            <Input
+                                                label="Input new mobile number"
+                                                value={newMobile}
+                                                textContentType="telephoneNumber"
+                                                keyboardType="phone-pad"
+                                                autoCapitalize="none"
+                                                onChangeText={(text) => { setNewMobile(text) }} />
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => {
+                                                setErrorMob(null)
+                                                const result = UpdateDoc("mobileNo", newMobile,user.type)
+                                                if (result === true) {
+                                                    setUpdateMobile(false)
+                                                }
+                                                else { setErrorMob(result) }
+                                            }}>
+                                                <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
+                                            </TouchableOpacity>
+                                        </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Details>{user.mobileNo}</Details>
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateMobile(true), setErrorMob(null) }}>
+                                                <UpdateButton name="spinner-refresh" size={22} />
+                                            </TouchableOpacity>
+                                        </>
+                                    )
+
+                                }
+                            </View>
+                            {errorMob ?
+                                (
+                                    <Error>{errorMob}</Error>
+                                ) : (<></>)
+                            }
+                        </BorderView>
+
+                        <BorderView>
+                            <View style={{ flexDirection: "row" }}>
+                                <DetailsIcon name="eye-outline" size={22} />
+                                {updatePass ?
+                                    (
+                                        <>
+                                            <Input
+                                                label="Input new password"
+                                                value={newPass}
+                                                textContentType="password"
+                                                secureTextEntry
+                                                autoCapitalize="none"
+                                                onChangeText={(text) => { setNewPass(text) }} />
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => {
+                                                setErrorPass(null)
+                                                const result = UpdateDoc("password", newPass,user.type)
+                                                if (result === true) {
+                                                    setUpdatePass(false)
+                                                }
+                                                else { setErrorPass(result) }
+                                            }}>
+                                                <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
+                                            </TouchableOpacity>
+                                        </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Details>******{user.password.substring(6)}</Details>
+                                            <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdatePass(true), setErrorPass(null) }}>
+                                                <UpdateButton name="spinner-refresh" size={22} />
+                                            </TouchableOpacity>
+                                        </>
+                                    )
+
+                                }
+                            </View>
+                            {errorPass ?
+                                (
+                                    <Error>{errorPass}</Error>
+                                ) : (<></>)
+                            }
+                        </BorderView>
+                
+                        {user.type=="vendors"?
+                            (
+                                <BorderView>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <DetailsIcon name="md-restaurant-outline" size={22} />
+                                        <Details>{user.restaurant}</Details>
+                                    </View>
+                                </BorderView>
+                            ):(<></>)}
+                    </>
+                )}
             </Scroll>    
         </SafeArea>
     )

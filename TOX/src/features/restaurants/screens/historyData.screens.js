@@ -73,7 +73,7 @@ export const OrderDetails = ({route,navigation}) => {
 
                 {
                     text: "Yes",
-                    onPress: () => { OrderReady(item.id,item.orderBy,navigation,type,status) }
+                    onPress: () => { OrderReady(item.id,item.orderBy,navigation,type,status,user.userName) }
                 },
                 {
                     text: "No",

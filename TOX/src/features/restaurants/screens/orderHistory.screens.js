@@ -1,5 +1,5 @@
-import React,{ useContext, useEffect, useRef } from 'react'
-import { FlatList, TouchableOpacity, View, Text } from 'react-native';
+import React,{ useContext, useRef, useEffect, useState } from 'react'
+import { FlatList, TouchableOpacity, View, Text, RefreshControl } from 'react-native';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context'
 import styled from 'styled-components'
@@ -53,18 +53,10 @@ const DropdownWrapper = styled(View)`
 
 export const OrderHistory = ({ navigation }) => {
 
-    const { history, isLoading, Search, SearchByStatus } = useContext(RestaurantHistoryContext)
+    const { history, isLoading, SearchHistory, SearchByStatus, refresh } = useContext(RestaurantHistoryContext)
+    const [historyLocal,setHistoryLocal]=useState([])
     const { user } = useContext(AuthenticationContext) 
     const status=useRef()
-
-    useEffect(()=>{
-        if(user.type=="users")
-        {
-            Search(user.email,user.type)
-        }else{
-            Search(user.userName,user.type)
-        }
-    },[])
 
     const options=[
         { label: 'Not Ready', value: 'Not Ready' },
@@ -72,6 +64,29 @@ export const OrderHistory = ({ navigation }) => {
         { label: 'Delivered', value: 'Delivered' },
         { label: 'Select All', value: 'Select All' }
     ]
+
+    useEffect(()=>{
+        setHistoryLocal(history)
+    },[refresh])
+
+    const onRefresh = () => {
+        if(user.type=="users")
+        {
+            SearchHistory(user.email,user.type)
+        }else{
+            SearchHistory(user.userName,user.type)
+        }
+        status.current="Select All"
+    }
+
+    if(historyLocal==[])
+    {
+        return(
+            <Container>
+                <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}} />
+            </Container>
+        )
+    }
 
     const renderItem = (item) => {
         return(
@@ -100,7 +115,7 @@ export const OrderHistory = ({ navigation }) => {
                     </View>
                     <DropdownWrapper>
                         <HistoryFilterComponent 
-                        status={status} options={options} SearchByStatus={SearchByStatus} type={user.type} name={user.type=="users"?user.email:user.userName}/>
+                        status={status} options={options} SearchByStatus={SearchByStatus} />
                     </DropdownWrapper>
                 </View>
                 {isLoading?
@@ -111,7 +126,12 @@ export const OrderHistory = ({ navigation }) => {
                     history.length? 
                     (   
                         <FlatList 
-                            data={history} 
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                            data={historyLocal} 
                             renderItem={renderItem}
                             keyExtractor={(item)=>randomstring.generate()}
                         />

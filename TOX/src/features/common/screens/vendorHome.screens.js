@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect} from 'react'
 import { FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
 import { logo_light,logo_dark, TPO_logo, Vendor_Image } from "../../../../assets/images";
 import { SafeArea } from '../../../utils/components/safe-area.components';
@@ -7,6 +7,9 @@ import { AppThemeContext } from '../../../services/common/theme.context';
 import { colors } from '../../../infrastructure/theme/colors';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { ActivityIndicator, Colors } from "react-native-paper";
+import { AuthenticationContext } from '../../../services/authentication/authentication.context';
+import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
+import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 
 const Container=styled(View)`
     flex:1;
@@ -81,7 +84,18 @@ const flatlist_data = [
 export const VendorHome = ({ navigation }) => {
 
     const { scheme }=useContext(AppThemeContext)
+    const { user } = useContext(AuthenticationContext)
+    const { Search } = useContext(VendorRestaurantContext)
     const { orientation,isOrientationLoading }=useContext(DeviceOrientationContext)
+    const { SearchHistory } = useContext(RestaurantHistoryContext)
+
+    useEffect(()=>{
+        Search(user.userName)
+    },[])
+
+    useEffect(()=>{
+        SearchHistory(user.userName,user.type)
+    },[])
 
     const ContentView = () => {
         return(

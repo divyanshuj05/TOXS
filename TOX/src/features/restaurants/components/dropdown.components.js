@@ -1,13 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { AntDesign } from '@expo/vector-icons';
-import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 
-export const DropDownComponent = ({ restaurant = {} }) => {
-
-    const [value, setValue] = useState(null);
-    const { Search } = useContext(RestaurantContext);
+export const DropDownComponent = ({ restaurant = {}, value, setValue }) => {
 
     var data = [];
     if (restaurant) {
@@ -29,7 +25,6 @@ export const DropDownComponent = ({ restaurant = {} }) => {
             data={data}
             onChange={item => {
                 setValue(item.value);
-                Search(item.label)
             }}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}

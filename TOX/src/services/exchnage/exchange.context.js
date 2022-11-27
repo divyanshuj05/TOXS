@@ -8,15 +8,18 @@ export const ExchangeContext = createContext()
 export const ExchangeContextProvider = ({ children }) => {
 
     const { user } =useContext(AuthenticationContext)
-
     const exchange =useRef([])
+    const [refresh,setRefresh]=useState(false)
+    const [exchangeCopy,setExchangeCopy]=useState([])
     const [isLoading,setIsLoading]=useState(false)
 
-    const Search = (category) => {
+    const Search = () => {
         setIsLoading(true)
         exchange.current=[]
-        RetrieveData(category).then(res=>{
+        RetrieveData().then(res=>{
             exchange.current=res
+            setExchangeCopy(res)
+            setRefresh(!refresh)
             setIsLoading(false)
         }).catch(err=>{
             console.log(err)
@@ -24,112 +27,162 @@ export const ExchangeContextProvider = ({ children }) => {
         })
     }
 
+    const SortByStatus = (value) => {
+        exchange.current=[]
+        setIsLoading(true)
+        if(value==="Select All")
+        {
+            exchange.current=exchangeCopy
+        }
+        else{
+            exchangeCopy.forEach((ele)=>{
+                if(ele.category==value)
+                {
+                    exchange.current=[...exchange.current,ele]
+                }
+            })
+        }
+        setRefresh(!refresh)
+        setIsLoading(false)
+    }   
+
     const Sort = (index) => {
         setIsLoading(true)
-        let tempArr=exchange.current
-        function compare(a,b){
-            if(a.cost<b.cost){
-              return -1;
-            }
-            if(a.cost>b.cost){
-              return 1;
-            }
-            return 0;
-          }  
-        tempArr.sort(compare);
-        if(index=="Descending") tempArr.reverse()
-        exchange.current=tempArr
+        if(index==="None")
+        {
+            let tempArr=exchange.current
+            function compare(a,b){
+                return Math.floor(Math.random()*3)-1
+              }
+            tempArr.sort(compare);
+            exchange.current=tempArr
+        }
+        else{
+            let tempArr=exchange.current
+            function compare(a,b){
+                if(Number(a.cost)<Number(b.cost)){
+                  return -1;
+                }
+                if(a.cost>b.cost){
+                  return 1;
+                }
+                return 0;
+              }
+            tempArr.sort(compare);
+            if(index=="Descending") tempArr.reverse()
+            exchange.current=tempArr
+        }
+        setRefresh(!refresh)
         setIsLoading(false)
-
     }
 
-    const addItem = (item,desc,price,category,image,navigation) => {
-        setIsLoading(true)
-        if(item=="")
-        {
-            setIsLoading(false)
-            return "Fill name of item"
-        }
-        if(desc=="")
-        {
-            setIsLoading(false)
-            return "Fill description of item"
-        }
-        if(desc.length>200)
-        {
-            desc=desc.substring(0,199)
-        }
-        if(category==""||category==undefined||category==null)
-        {
-            setIsLoading(false)
-            return "Fill category of item"
-        }
-        if(price==""||price==undefined)
-        {
-            setIsLoading(false)
-            return "Fill price of item"
-        }
-        if(price<=0)
-        {
-            setIsLoading(false)
-            return "Neagtive number is not allowed"
-        }
-        for(let i=0;i<price.length;i++) 
-        {
-            if(isNaN(price[i]))
+    const addItem = (item,desc,price,category,image,setError) => {
+        return new Promise((resolve,reject)=>{
+            setIsLoading(true)
+            if(item=="")
             {
                 setIsLoading(false)
-                return "Price contains a non number"
+                setError("Fill name of item")
+                reject("Fail")
+                return
             }
-        }
-        if(image==null)
-        {
-            setIsLoading(false)
-            return "Image not added"
-        }
-        StoreImage(image).then(res=>{
-                AddItem(item,desc,price,category,res.url,res.imgName,user.email).then(res=>{
+            if(desc=="")
+            {
+                setIsLoading(false)
+                setError("Fill description of item")
+                reject("Fail")
+                return
+            }
+            if(desc.length>200)
+            {
+                desc=desc.substring(0,199)
+            }
+            if(category==""||category==undefined||category==null)
+            {
+                setIsLoading(false)
+                setError("Fill category of item")
+                reject("Fail")
+                return
+            }
+            if(price==""||price==undefined)
+            {
+                setIsLoading(false)
+                setError("Fill price of item")
+                reject("Fail")
+                return
+            }
+            if(price<=0)
+            {
+                setIsLoading(false)
+                setError("Neagtive number is not allowed")
+                reject("Fail")
+                return
+            }
+            for(let i=0;i<price.length;i++) 
+            {
+                if(isNaN(price[i]))
+                {
                     setIsLoading(false)
-                    Alert.alert(
-                    "Item added Successfully",
-                    "Item will be displayed to other users",
+                    setError("Price contains a non number")
+                    reject("Fail")
+                    return
+                }
+            }
+            if(image==null)
+            {
+                setIsLoading(false)
+                setError("Image not added")
+                reject("Fail")
+                return
+            }
+            StoreImage(image).then(res=>{
+                    AddItem(item,desc,price,category,res.url,res.imgName,user.email).then(res=>{
+                        setIsLoading(false)
+                        Alert.alert(
+                        "Item added Successfully",
+                        "Item will be displayed to other users",
+                        [
+                            {
+                                text: "Ok",
+                                onPress: () => { resolve("Done") }
+                            }
+                        ]
+                        )
+                    }).catch(err=>{
+                        setError(err)
+                        setIsLoading(false)
+                        reject("Fail")
+                        return
+                    })
+                })
+                .catch(err=>{
+                    setError(err)
+                    setIsLoading(false)
+                    reject("Fail")
+                    return
+                })
+        })
+    }
+
+    const UpdateExchanges = (obj,status,setError) => {
+        return new Promise(async(resolve,reject)=>{
+            setIsLoading(true)
+            UpdateData(obj,status,user.email).then(res=>{
+                Alert.alert(
+                    "Done",
+                    "Changes were successfully made",
                     [
                         {
                             text: "Ok",
-                            onPress: () => { navigation.goBack() }
+                            onPress: () => {resolve("Done"),setIsLoading(false) }
                         }
                     ]
-                    )
-                    return null
-                }).catch(err=>{
-                    setIsLoading(false)
-                    return err
-                })
-            })
-            .catch(err=>{
+                )
+            }).catch(err=>{ 
+                setError(err)
                 setIsLoading(false)
-                return err
+                reject(err)
             })
-    }
-
-    const UpdateExchanges = (obj,status,navigation) => {
-        setIsLoading(true)
-        UpdateData(obj,status,user.email).then(res=>{
-            Alert.alert(
-                "Done",
-                "Changes were successfully made",
-                [
-                    {
-                        text: "Ok",
-                        onPress: () => { navigation.navigate("ExchangeHome") }
-                    }
-                ]
-            )
-            setIsLoading(false)
-            return null
-        }).catch(err=>{ 
-            setIsLoading(false)
-            return err
         })
     }
 
@@ -140,7 +193,9 @@ export const ExchangeContextProvider = ({ children }) => {
             exchange:exchange.current,
             Search, 
             Sort,
-            UpdateExchanges
+            UpdateExchanges,
+            SortByStatus,
+            refresh
         }}>
             {children}
         </ExchangeContext.Provider>

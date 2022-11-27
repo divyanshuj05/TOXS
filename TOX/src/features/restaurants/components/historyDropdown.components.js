@@ -3,7 +3,7 @@ import { StyleSheet,View } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import { AntDesign } from '@expo/vector-icons';
 
-export const HistoryFilterComponent = ({ status,options,SearchByStatus,type,name }) => {
+export const HistoryFilterComponent = ({ status,options,SearchByStatus }) => {
 
     return(
         <>
@@ -14,7 +14,7 @@ export const HistoryFilterComponent = ({ status,options,SearchByStatus,type,name
                 iconStyle={styles.iconStyle}
                 onChange={(text)=>{
                     status.current=text.value
-                    SearchByStatus(text.value,type,name)    
+                    SearchByStatus(text.value)    
                 }}
                 dropdownPosition="bottom"
                 activeColor="rgb(200,200,200)"

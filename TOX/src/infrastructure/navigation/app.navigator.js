@@ -9,7 +9,6 @@ import { SettingsNavigator } from "./settings.navigator";
 import { FavouritesContextProvider } from "../../services/restaurant/favourites.context.js";
 import { CartContextProvider } from "../../services/restaurant/cart.context.js";
 import { RestaurantContextProvider } from "../../services/restaurant/restaurant-block.context.js";
-import { MenuListContextProvider } from "../../services/restaurant/menu-list.context.js";
 import { ProfileScreen } from "../../features/settings/screens/profile.screens.js";
 import { ExchangeContextProvider } from "../../services/exchnage/exchange.context.js";
 import { ExchangeHistoryContextProvider } from "../../services/exchnage/historyExchnage.context.js";
@@ -27,7 +26,6 @@ export const AppNavigator = () => {
         <ExchangeContextProvider>
           <ExchangeHistoryContextProvider>
             <RestaurantHistoryContextProvider>
-              <MenuListContextProvider>
                 <CartContextProvider>
                   <Tab.Navigator
                     screenOptions={({ route }) => ({
@@ -55,7 +53,6 @@ export const AppNavigator = () => {
                     <Tab.Screen name="Settings" component={SettingsNavigator} />
                   </Tab.Navigator>
                 </CartContextProvider>
-                </MenuListContextProvider>
               </RestaurantHistoryContextProvider>
             </ExchangeHistoryContextProvider>
           </ExchangeContextProvider>

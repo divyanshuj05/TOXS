@@ -8,6 +8,7 @@ import * as ImagePicker from "expo-image-picker"
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { Alert } from 'react-native'
+import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
 
 const Wrapper = styled(View)`
     flex:1;
@@ -98,8 +99,8 @@ export const SellScreen = ({ navigation }) => {
     const [category,setCategory]=useState("")
     const [image,setImage]=useState(null)
     const [error,setError]=useState(null)
-
-    const { addItem,isLoading } = useContext(ExchangeContext)
+    const { addItem,isLoading, Search } = useContext(ExchangeContext)
+    const { UserData } = useContext(ExchangeHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
 
     const imageHandler =async () => {
@@ -214,7 +215,12 @@ export const SellScreen = ({ navigation }) => {
                             <Cancel>Cancel</Cancel>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={async() => { 
-                            setError(await (addItem(item,desc,price,category.label,image,navigation))) 
+                            await addItem(item,desc,price,category.label,image,setError).then(res=>{
+                                Search()
+                                UserData()
+                                navigation.goBack()
+                            }).catch(e=>{
+                            })
                         }}>
                             <Submit>Submit</Submit>
                         </TouchableOpacity>

@@ -6,7 +6,7 @@ import { StripeProvider, CardField, useConfirmPayment } from '@stripe/stripe-rea
 import { handleStripePay } from '../../../services/restaurant/stripePay.services';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
-import { MenuListContext } from '../../../services/restaurant/menu-list.context';
+import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 
 const Container = styled(View)`
     flex:1;
@@ -43,14 +43,14 @@ export const PaymentScreen = ({ route,navigation }) => {
   const { cost } = route.params
   const { data } = route.params
   const { restaurant } = route.params
-  
+  const { vendor } = route.params
+  const { SearchHistory } = useContext(RestaurantHistoryContext) 
   var tempCost=cost+((cost*3.5)/100)
   const { user } = useContext(AuthenticationContext)
   const [ cardDetails,setCardDetails ] = useState()
   const [ stripe,setStripe ] = useState(false)
   const [ amount,setAmount ] = useState(cost)
   const { SendOrder,isLoading } = useContext(RestaurantContext)
-  const { vendor } = useContext(MenuListContext)
   const { confirmPayment,loading } = useConfirmPayment()
 
   const handleStripe = () => {
@@ -107,7 +107,14 @@ export const PaymentScreen = ({ route,navigation }) => {
                             [
                                 {
                                     text: "Send",
-                                    onPress: () => { SendOrder(user.email,amount,vendor,data,restaurant,navigation) }
+                                    onPress: async() => { 
+                                      await SendOrder(user.email,amount,vendor,data,restaurant).then(res=>{
+                                        SearchHistory(user.email,user.type)
+                                        navigation.navigate("RestaurantsHome")
+                                      }).catch(e=>{
+                                        console.log(e)
+                                      })
+                                    }
                                 }
                             ]
                           )

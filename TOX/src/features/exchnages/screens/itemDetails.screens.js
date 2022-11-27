@@ -92,8 +92,8 @@ export const ItemDetails = ({ route,navigation }) => {
     const { details } = route.params
     const { get } = route.params
     const { user } = useContext(AuthenticationContext)
-    const { isLoading, UpdateExchanges } = useContext(ExchangeContext)
-    const { RetrieveMobile, detailsLoading, mobile } = useContext(ExchangeHistoryContext)
+    const { isLoading, UpdateExchanges, Search } = useContext(ExchangeContext)
+    const { RetrieveMobile, detailsLoading, mobile, UserData } = useContext(ExchangeHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
 
     const [error,setError]=useState(null)
@@ -218,7 +218,15 @@ export const ItemDetails = ({ route,navigation }) => {
                                                         [                    
                                                             {
                                                                 text: "Yes",
-                                                                onPress: async() => { setError (await(UpdateExchanges(details,"Sold",navigation))) }
+                                                                onPress: async() => { 
+                                                                    await UpdateExchanges(details,"Sold",setError).then(res=>{
+                                                                        Search()
+                                                                        UserData()
+                                                                        navigation.goBack()
+                                                                    }).catch(e=>{
+                                                                        console.log(e)
+                                                                    })
+                                                                }
                                                             },
                                                             {
                                                                 text: "No",
@@ -237,7 +245,15 @@ export const ItemDetails = ({ route,navigation }) => {
                                                     
                                                                 {
                                                                     text: "Yes",
-                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                                    onPress: async () => {  
+                                                                        await UpdateExchanges(details,"Removed by seller",setError).then(res=>{
+                                                                            Search()
+                                                                            UserData()
+                                                                            navigation.goBack()
+                                                                        }).catch(e=>{
+                                                                            console.log(e)
+                                                                        })
+                                                                    }
                                                                 },
                                                                 {
                                                                     text: "No",
@@ -259,7 +275,15 @@ export const ItemDetails = ({ route,navigation }) => {
                                                     
                                                                 {
                                                                     text: "Yes",
-                                                                    onPress: async () => { setError (await(UpdateExchanges(details,"Removed by seller",navigation))) }
+                                                                    onPress: async () => { 
+                                                                        await UpdateExchanges(details,"Removed by seller",setError).then(res=>{
+                                                                            Search()
+                                                                            UserData()
+                                                                            navigation.goBack()
+                                                                        }).catch(e=>{
+                                                                            console.log(e)
+                                                                        })
+                                                                    }
                                                                 },
                                                                 {
                                                                     text: "No",
@@ -284,7 +308,15 @@ export const ItemDetails = ({ route,navigation }) => {
                                                         [                    
                                                             {
                                                                 text: "Yes",
-                                                                onPress: async () => { setError (await(UpdateExchanges(details,"Available",navigation))) }
+                                                                onPress: async () => { 
+                                                                    await UpdateExchanges(details,"Available",setError).then(res=>{
+                                                                        Search()
+                                                                        UserData()
+                                                                        navigation.goBack()
+                                                                    }).catch(e=>{
+                                                                        console.log(e)
+                                                                    })
+                                                                }
                                                             },
                                                             {
                                                                 text: "No",
@@ -305,7 +337,15 @@ export const ItemDetails = ({ route,navigation }) => {
                                                 
                                                             {
                                                                 text: "Yes",
-                                                                onPress: async () => { setError (await(UpdateExchanges(details,"On Hold",navigation))) }
+                                                                onPress: async () => { 
+                                                                    await UpdateExchanges(details,"On Hold",setError).then(res=>{
+                                                                        Search()
+                                                                        UserData()
+                                                                        navigation.goBack()
+                                                                    }).catch(e=>{
+                                                                        console.log(e)
+                                                                    })
+                                                                }
                                                             },
                                                             {
                                                                 text: "No",

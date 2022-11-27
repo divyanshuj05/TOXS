@@ -61,7 +61,7 @@ const Proceed = styled(Text)`
     font-family:${(props) => props.theme.fonts.heading};
 `;
 
-export const MenuList = ({ data, navigation, restaurant }) => {
+export const MenuList = ({ data, navigation, restaurant, vendor }) => {
 
     const { items, cost } = useContext(CartContext)
 
@@ -100,7 +100,7 @@ export const MenuList = ({ data, navigation, restaurant }) => {
                         <></>
                     ) :
                     (
-                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.4, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant})}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.4, flexDirection:"row" }} onPress={() => navigation.navigate("OrderList",{restaurant:restaurant,vendor:vendor})}>
                             <Proceed>Proceed to pay</Proceed>
                             <AntDesign style={{ marginLeft: 1 }} name="arrowright" size={19} color="white" />
                         </TouchableOpacity>

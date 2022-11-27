@@ -1,5 +1,5 @@
-import React, { useState,useContext,useEffect } from 'react';
-import { View,FlatList,TouchableOpacity, ScrollView, Text } from "react-native"
+import React, { useState,useContext, useEffect } from 'react';
+import { View,FlatList,TouchableOpacity, ScrollView, Text, RefreshControl } from "react-native"
 import styled from 'styled-components';
 import { FilterComponent } from '../components/buyFilter.components';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
@@ -33,14 +33,10 @@ const Empty=styled(Text)`
 export const BuyScreen = ({ navigation }) => {
 
     const [category,setCategory]=useState("")
+    const [exchangeLocal,setExchangeLocal]=useState([])
     const [sort,setSort]=useState("")
-
-    const { isLoading,exchange,Search,Sort }=useContext(ExchangeContext)
+    const { isLoading,exchange,Search,Sort, SortByStatus, refresh }=useContext(ExchangeContext)
     const { orientation } = useContext(DeviceOrientationContext)
-
-    useEffect(()=>{
-        Search("Select All")
-    },[])
 
     const renderItem = (item) => {
         return(
@@ -55,6 +51,25 @@ export const BuyScreen = ({ navigation }) => {
         )
     }
 
+    useEffect(()=>{
+        setExchangeLocal(exchange)
+    },[refresh])
+
+    const onRefresh = () => {
+        Search()
+        setCategory("Select All")
+        setSort("None")
+    }
+
+    if(exchangeLocal==[]||exchangeLocal==null||exchangeLocal==undefined)
+    {
+        return(
+            <View style={{ marginTop: 50 }}>
+                <ActivityIndicator color={Colors.red400} size={50} />
+            </View>
+        )
+    }
+
     const ContentView = () => {
         return(
             <>
@@ -63,16 +78,21 @@ export const BuyScreen = ({ navigation }) => {
                         sort={sort} 
                         category={category} 
                         setCategory={setCategory} 
-                        setSort={setSort} 
-                        Search={Search} 
+                        setSort={setSort}
                         Sort={Sort}
+                        SortByStatus={SortByStatus}
                     />    
                 </Head>
-                {exchange.length?
+                {exchangeLocal.length?
                 (
                     <FlatList 
+                        refreshControl={
+                            <RefreshControl 
+                                onRefresh={onRefresh}   
+                            />
+                        }
                         horizontal={orientation==1||orientation==2?false:true}
-                        data={exchange}
+                        data={exchangeLocal}
                         renderItem={renderItem}
                         keyExtractor={(item)=>item.imgName}
                     />

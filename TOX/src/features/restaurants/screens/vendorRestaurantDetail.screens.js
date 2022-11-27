@@ -1,5 +1,5 @@
 import React, {useState ,useContext,useEffect} from "react";
-import { FlatList,View, TouchableOpacity, Text } from "react-native";
+import { FlatList,View, TouchableOpacity, Text, ScrollView } from "react-native";
 import styled from 'styled-components';
 import { TextInput } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
@@ -117,9 +117,9 @@ export const VendorRestaurantDetail = ({ route }) => {
             ):(
                 <>
                     <FlatListStyle
-                    data={restaurantItems.menuList}
-                    renderItem={renderItem}
-                    keyExtractor={(item)=>item.title}
+                        data={restaurantItems.menuList}
+                        renderItem={renderItem}
+                        keyExtractor={(item)=>item.title}
                     />
                     <BottomBar>
                         {!!error?

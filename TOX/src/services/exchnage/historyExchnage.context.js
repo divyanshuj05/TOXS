@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useRef, useState } from 'react'
 import { AuthenticationContext } from '../authentication/authentication.context'
-import { RetrieveHistory, GetMobileData, RetrieveHistoryByStatus } from './exchange.service'
+import { RetrieveHistory, GetMobileData } from './exchange.service'
 
 export const ExchangeHistoryContext = createContext()
 
@@ -9,6 +9,8 @@ export const ExchangeHistoryContextProvider = ({children}) => {
     const { user } = useContext(AuthenticationContext)
 
     const history = useRef([])
+    const [historyCopy,setHistoryCopy]=useState([])
+    const [refresh,setRefresh]=useState(false)
     const [detailsLoading,setDetailsLoading]=useState(false)
     const [mobile,setMobile]=useState(null)
 
@@ -29,6 +31,7 @@ export const ExchangeHistoryContextProvider = ({children}) => {
         }
         res.sort(compare)
         history.current=res
+        setHistoryCopy(res)
     }
 
     const UserData = () => {
@@ -55,23 +58,23 @@ export const ExchangeHistoryContextProvider = ({children}) => {
         })
     }
 
-    const SearchByStatus = (status,type,mail) => {
+    const SearchByStatus = (status) => {
+        history.current=[]
+        setDetailsLoading(true)
         if(status=="Select All")
         {
-            UserData()
-            return
+            history.current=historyCopy
         }
         else{
-            setDetailsLoading(true)
-            history.current=[]
-            RetrieveHistoryByStatus(mail,status).then(res=>{
-                sort(res)
-                setDetailsLoading(false)
-            }).catch(err=>{
-                console.log(err)
-                setDetailsLoading(false)
-        })
+            historyCopy.forEach((ele)=>{
+                if(ele.status==status)
+                {
+                    history.current=[...history.current,ele]
+                }
+            })
         }
+        setDetailsLoading(false)
+        setRefresh(!refresh)
     }
 
     return(
@@ -81,7 +84,8 @@ export const ExchangeHistoryContextProvider = ({children}) => {
             UserData,
             RetrieveMobile,
             mobile,
-            SearchByStatus
+            SearchByStatus,
+            refresh
         }}>
             {children}
         </ExchangeHistoryContext.Provider>

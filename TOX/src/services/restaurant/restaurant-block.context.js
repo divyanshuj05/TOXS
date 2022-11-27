@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useRef } from "react";
 import { restaurantsRequest, Orders, SendVendorNoti } from "./resturant-block.services";
 import { Alert } from "react-native";
 import { SendNotification } from "../common/notisFunctions.services";
@@ -6,65 +6,88 @@ import { SendNotification } from "../common/notisFunctions.services";
 export const RestaurantContext = createContext();
 
 export const RestaurantContextProvider = ({ children }) => {
-    const [restaurants, setRestaurants] = useState([])
+    const restaurants=useRef([])
+    const [refresh,setRefresh]=useState(false)
     const [restaurantCopy, setRestaurantCopy] = useState([])
     const [isCopyLoading, setIsCopyLoading] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
 
-    const retrieveRestaurants = (Name, flag = 0) => {
+    const retrieveRestaurants = (flag = 0) => {
         setIsLoading(true)
-        setRestaurants([])
-        restaurantsRequest(Name).then((result) => {
+        restaurants.current=[]
+        restaurantsRequest().then((result) => {
             setIsLoading(false)
-            setRestaurants(result)
-            if (flag == 1) {
-                setRestaurantCopy(result)
-                setIsCopyLoading(false)
-            }
+            restaurants.current=result
+            setRefresh(!refresh)
+            setRestaurantCopy(result)
+            setIsCopyLoading(false)
         }).catch(err => {
             setIsError(err)
             setIsLoading(false)
         })
     }
 
-    const SendOrder= (email,amount,vendor,data,restaurant,navigation) => {
+    const sortByAddress = (value) => {
         setIsLoading(true)
-        Orders(email,amount,vendor,data,restaurant).then(res=>{
-            SendVendorNoti(vendor).then(res=>{
-                if(res!="null")
+        restaurants.current=[]
+        if(value=="Select All")
+        {
+            restaurants.current=restaurantCopy
+        }
+        else{
+            restaurantCopy.forEach((ele)=>{
+                if(ele.address==value)
                 {
-                    SendNotification(res,"New order","Check order list for new order")
+                    restaurants.current=[...restaurants.current,ele]
                 }
-                setIsLoading(false)
-                Alert.alert(
-                    "Order sent successfully",
-                    "Your order will be ready by some time",
-                    [
-                        {
-                            text: "Ok",
-                            onPress: () => { navigation.navigate("RestaurantsHome") }
-                        }
-                    ]
-                )
             })
-            
-        }).catch(e=>{
-            setIsLoading(false)
-            alert(e)
-            return
+        }
+        setRefresh(!refresh)
+        setIsLoading(false)
+    }
+
+    const SendOrder= (email,amount,vendor,data,restaurant) => {
+        return new Promise(async(resolve,reject)=>{
+            setIsLoading(true)
+            Orders(email,amount,vendor,data,restaurant).then(res=>{
+                SendVendorNoti(vendor).then(res=>{
+                    if(res!="null")
+                    {
+                        SendNotification(res,"New order","Check order list for new order")
+                    }
+                    setIsLoading(false)
+                    Alert.alert(
+                        "Order sent successfully",
+                        "Your order will be ready by some time",
+                        [
+                            {
+                                text: "Ok",
+                                onPress: () => { resolve("Done") }
+                            }
+                        ]
+                    )
+                })
+            }).catch(e=>{
+                setIsLoading(false)
+                alert(e)
+                reject("Failed")
+                return
+            })
         })
     }
 
     return (
         <RestaurantContext.Provider value={{ 
-            restaurants, 
+            restaurants:restaurants.current,
             restaurantCopy, 
             isLoading, 
             isCopyLoading, 
             isError, 
             Search: retrieveRestaurants,
-            SendOrder 
+            SendOrder,
+            sortByAddress,
+            refresh
         }}>
             {children}
         </RestaurantContext.Provider>

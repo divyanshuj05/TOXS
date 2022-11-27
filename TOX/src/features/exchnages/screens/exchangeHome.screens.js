@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TouchableOpacity, View, ScrollView, Image, Text } from 'react-native';
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import styled from 'styled-components'
@@ -6,6 +6,8 @@ import { logo_dark,logo_light } from '../../../../assets/images';
 import { AppThemeContext } from "../../../services/common/theme.context"
 import { AntDesign } from '@expo/vector-icons';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { ExchangeContext } from '../../../services/exchnage/exchange.context';
+import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
 
 const Container=styled(ScrollView)`
     flex:1;
@@ -52,6 +54,16 @@ export const ExchangeHome = ({ navigation }) => {
 
     const { scheme } = useContext(AppThemeContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const { Search } = useContext(ExchangeContext)
+    const { UserData } = useContext(ExchangeHistoryContext)
+
+    useEffect(()=>{
+        Search()
+    },[])
+
+    useEffect(()=>{
+        UserData()
+    },[])
 
     const AppLogoView = () => {
         return(

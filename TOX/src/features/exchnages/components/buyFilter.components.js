@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown'
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export const FilterComponent = ({ sort,category,setSort,setCategory,Search,Sort }) => {
+export const FilterComponent = ({ sort,category,setSort,setCategory,Sort,SortByStatus }) => {
 
     const options=[
         { label: 'Lab Coat', value: 'Lab Coat' },
@@ -16,7 +16,8 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Search,Sort 
        
     const sortData=[
         {label:'Low to High', value:'Ascending'},
-        {label:'High to Low',value:'Descending'}
+        {label:'High to Low',value:'Descending'},
+        {label:'None',value:'None'}
     ]    
 
     return(
@@ -28,7 +29,7 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Search,Sort 
                 selectedTextStyle={styles.selectedTextStyle}
                 iconStyle={styles.iconStyle}
                 value={category}
-                onChange={(item)=>{setCategory(item), Search(item.value)}}
+                onChange={(item)=>{setCategory(item), SortByStatus(item.value)}}
                 containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:16 }}
                 dropdownPosition="bottom"
                 activeColor="rgb(200,200,200)"
