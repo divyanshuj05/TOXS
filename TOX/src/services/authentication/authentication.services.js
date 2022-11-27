@@ -1,6 +1,8 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { storage } from '../../../database.config';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 export const loginCheck = (userName, password) => {
   if (userName === "") {
@@ -132,3 +134,44 @@ export const ForgotPasswordCheck = (userName,securityQuestionOne,securityOne,sec
 
   return true
 }
+
+export const StoreUserImage = async(image) => {
+    let randomstring=require("randomstring")
+    var name=randomstring.generate(7)
+    const response = await fetch(image.uri)
+    const blob = await response.blob();
+    var imgRef = ref(storage,`users/profile images/${name}`)
+    var metadata = { contentType: 'image/jpeg', };
+    return new Promise(async(resolve,reject)=>{
+        await uploadBytes(imgRef,blob,metadata).then(res=>{
+            getDownloadURL(res.ref).then((url)=>{
+                let response={
+                    url:url,
+                    imgName:name
+                }
+                resolve(response)
+            }).catch(err=>{
+                console.log(err)
+                reject("Some error occured! Please try again")
+            })
+        }).catch(err=>{
+            console.log(err)
+            reject("Some error occured! Please try again")
+        })  
+    })
+}
+
+export const RemoveStoredImage = (imgName) => {
+  const imgRef = ref(storage, `users/profile images/${imgName}`);
+  return new Promise(async(resolve,reject)=>{
+    deleteObject(imgRef).then((res) => {
+      resolve("Done")
+      return
+    }).catch((error) => {
+      console.log(error)
+      alert("Some error occured! Please try again")
+      reject("Fail")
+      return
+    });
+  })
+} 

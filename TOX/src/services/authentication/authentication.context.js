@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import { registerForPushNotificationsAsync, SendNotification } from "../common/notisFunctions.services";
-import { loginCheck, RegisterCheck, ForgotPasswordCheck } from "./authentication.services";
+import { loginCheck, RegisterCheck, ForgotPasswordCheck, StoreUserImage, RemoveStoredImage } from "./authentication.services";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { collection, addDoc, doc, getDoc, getDocs, query, where, setDoc, updateDoc } from "firebase/firestore";
@@ -337,6 +337,73 @@ export const AuthenticationContextProvider = ({ children }) => {
     return false;
   }
 
+  const SaveUserImage = (image) => {
+    if(image==""||image==null||image==undefined)
+    {
+      alert("Some error occured! Please try again")
+      return
+    }
+    setIsLoading(true)
+    if(user.photo=="null"||user.photo==undefined)
+    {}
+    else{
+      const res=RemoveUserImage()
+      if(res===false)
+      {
+        setIsLoading(false)
+        return
+      }
+      setIsLoading(true)
+    }
+    StoreUserImage(image).then(async(res)=>{
+      const {url,imgName}=res
+      const userRef=doc(db,user.type,user.id)
+      await updateDoc(userRef,{
+        photo:url,
+        imgName:imgName
+      }).then(res=>{
+          setUser({ ...user, photo: url,imgName:imgName })
+          removeUser()
+          saveUser({ ...user, photo: url,imgName:imgName })
+          setIsLoading(false)
+          return
+      }).catch(e=>{
+        setIsLoading(false)
+        alert("Some error occured!!")
+        return
+      })
+    }).catch(e=>{
+      setIsLoading(false)
+      alert(e)
+      return
+    })
+  }
+
+  const RemoveUserImage = () => {
+    setIsLoading(true)
+    RemoveStoredImage(user.imgName).then(async(res)=>{
+      const userRef=doc(db,user.type,user.id)
+      await updateDoc(userRef,{
+        photo:"null",
+        imgName:"null"
+      }).then(res=>{
+          setUser({ ...user, photo: "null",imgName:"null" })
+          removeUser()
+          saveUser({ ...user, photo: "null",imgName:"null" })
+          setIsLoading(false)
+          return true
+      }).catch(e=>{
+        setIsLoading(false)
+        alert("Some error occured!!")
+        return false
+      })
+    }).catch(e=>{
+      setIsLoading(false)
+      return false
+    })
+
+  }
+
   const removeUser = async () => {
     try {
       await AsyncStorage.removeItem("@userLogin");
@@ -386,7 +453,9 @@ export const AuthenticationContextProvider = ({ children }) => {
         setError,
         isLogging,
         UpdateDoc,
-        ForgotPassword
+        ForgotPassword,
+        SaveUserImage,
+        RemoveUserImage
       }}
     >
       {children}

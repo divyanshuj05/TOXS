@@ -54,13 +54,22 @@ const DropDownView=styled(View)`
 
 const Photo=styled(Text)`
     color:rgb(230,230,230)
-    border-radius:${props=>props.theme.space[4]}
     background-color:${props=>props.theme.colors.ui.basic}
-    padding-horizontal:40px
-    padding-vertical:${props=>props.theme.space[3]}
+    padding-horizontal:12px
+    padding-vertical:12px
     font-family:${props=>props.theme.fonts.heading}
     font-size:${props=>props.theme.fontSizes.body}
+    border-color:white
 `;
+
+const RemoveText=styled(Text)`
+    color:rgb(230,230,230)
+    background-color:${props=>props.theme.colors.ui.basic}
+    padding-horizontal:12px
+    padding-vertical:12px
+    font-family:${props=>props.theme.fonts.heading}
+    font-size:${props=>props.theme.fontSizes.body}
+`; 
 
 const Error = styled(Text)`
     margin-left:${(props) => props.theme.space[4]}; 
@@ -103,7 +112,12 @@ export const SellScreen = ({ navigation }) => {
     const { UserData } = useContext(ExchangeHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
 
-    const imageHandler =async () => {
+    const libraryImageHandler =async () => {
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissionResult.granted === false) {
+            alert("You've refused to allow this app to access your library!");
+            return;
+        }
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -115,6 +129,25 @@ export const SellScreen = ({ navigation }) => {
             if(result.type!="image") setError("Only images are allowed")
             else setImage(result);
           }
+    }
+
+    const cameraImagehandler = async() => {
+        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        if (permissionResult.granted === false) {
+          alert("You've refused to allow this app to access your camera!");
+          return;
+        }
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+        if (!result.cancelled) {
+            if(result==null) alert("Some error occured! Please try again")
+            if(result.type!="image") setError("Only images are allowed")
+            else setImage(result);
+        }
     }
 
     if(error!=null)
@@ -193,15 +226,32 @@ export const SellScreen = ({ navigation }) => {
                         </Row>
                         <Row>
                             <Item>Select Image</Item>
-                            <TouchableOpacity activeOpacity={0.65} onPress={()=>imageHandler()}>
-                                <Photo>Add Photo</Photo>
-                            </TouchableOpacity>
+                            <View style={{marginLeft:48,flexDirection:"row"}}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>cameraImagehandler()}>
+                                    <Photo style={{borderTopLeftRadius:16,borderBottomLeftRadius:16,borderRightWidth:1}}>Camera</Photo>
+                                </TouchableOpacity>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>libraryImageHandler()}>
+                                    <Photo style={{borderTopRightRadius:16,borderBottomRightRadius:16,borderLeftWidth:1}}>From Library</Photo>
+                                </TouchableOpacity>
+                            </View>
                         </Row>
                         {image?
-                        (<Image style={{flex: 1,
-                            width: 128,
-                            height: 128,
-                            resizeMode: 'contain',marginLeft:28}} source={{uri:image.uri}} />):(<></>)
+                        (
+                            <View style={{flexDirection:"row"}}>
+                                <Image style={{flex: 0.7,
+                                    width: 150,
+                                    height: 150,
+                                    resizeMode:"contain",
+                                    marginLeft:28
+                                }} 
+                                source={{uri:image.uri}} 
+                            />
+                            <TouchableOpacity activeOpacity={0.65} style={{justifyContent:"center",marginLeft:28}} onPress={()=>setImage(null)}>
+                                <Photo style={{borderRadius:16}}>Remove</Photo>
+                            </TouchableOpacity>
+                            </View>
+                        ):
+                        (<></>)
                         }
                         {error?
                         (
