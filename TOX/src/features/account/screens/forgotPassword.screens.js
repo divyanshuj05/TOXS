@@ -21,6 +21,7 @@ const AccountContainer = styled(View)`
   padding: ${(props) => props.theme.space[4]};
   margin-vertical:${(props) => props.theme.space[2]};
   margin-horizontal: ${(props) => props.theme.space[3]};
+  border-radius:12px;
 `;
 
 export const ForgotPassword = ({ route,navigation }) => {
@@ -101,6 +102,7 @@ export const ForgotPassword = ({ route,navigation }) => {
     if(orientation==1||orientation==2)
     {
         return(
+          <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={{flexGrow:1}}>
             <SafeArea>
                 <AccountBackground>
                     <Title style={{marginTop:50}}>TOXs</Title>
@@ -110,6 +112,7 @@ export const ForgotPassword = ({ route,navigation }) => {
                     </View>
                 </AccountBackground>
             </SafeArea>
+            </ScrollView>
         )
     }
 

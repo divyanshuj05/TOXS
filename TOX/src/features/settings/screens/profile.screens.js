@@ -8,10 +8,10 @@ import { Fontisto } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context'
+import { AppThemeContext } from "../../../services/common/theme.context"
 
 const Scroll = styled(ScrollView)`
     flex:1
-    background-color:${(props) => props.theme.background}
 `;
 
 const Title = styled(Text)`
@@ -81,6 +81,7 @@ const Error = styled(Text)`
 export const ProfileScreen = () => {
 
     const { user, UpdateDoc, isLoading } = useContext(AuthenticationContext)
+    const { scheme } = useContext(AppThemeContext)
     const { isOrientationLoading } = useContext(DeviceOrientationContext)
     const [updateUser, setUpdateUser] = useState(false)
     const [updateMobile, setUpdateMobile] = useState(false)
@@ -95,7 +96,7 @@ export const ProfileScreen = () => {
     if(isOrientationLoading)
     {
         return(
-            <Scroll>
+            <Scroll style={{backgroundColor:scheme=="dark"?"#191919":"#ffffff"}}>
                 <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
             </Scroll>
         )
@@ -103,13 +104,11 @@ export const ProfileScreen = () => {
 
     return (
         <SafeArea>
-            <Scroll>
+            <Scroll style={{backgroundColor:scheme=="dark"?"#191919":"#ffffff"}} keyboardShouldPersistTaps={'handled'}>
                 <Title>User Details</Title>
                 {isLoading?
                 (
-                    <Scroll>
-                        <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
-                    </Scroll>
+                    <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
                 )
                 :
                 (

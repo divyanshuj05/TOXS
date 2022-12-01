@@ -171,7 +171,7 @@ export const SellScreen = ({ navigation }) => {
     const data=[
     { label: 'Lab Coat', value: 'Lab Coat' },
     { label: 'Books', value: 'Books' },
-    { label: 'Drafters', value: 'Drafters' },
+    { label: 'Cycle', value: 'Cycle' },
     { label: 'Misc', value: 'Misc' }
     ]
 
@@ -193,7 +193,7 @@ export const SellScreen = ({ navigation }) => {
             ):
             (
                 <>
-                    <ScrollView style={{flex:0.92}}>
+                    <ScrollView style={{flex:0.92}} keyboardShouldPersistTaps={'handled'}>
                         <Row>
                             <Item>Name of item </Item>
                             <Input placeholder='Name' onChangeText={(text)=>setItem(text)} keyboardType="default" />
@@ -226,7 +226,7 @@ export const SellScreen = ({ navigation }) => {
                         </Row>
                         <Row>
                             <Item>Select Image</Item>
-                            <View style={{marginLeft:48,flexDirection:"row"}}>
+                            <View style={{marginLeft:32,flexDirection:"row"}}>
                                 <TouchableOpacity activeOpacity={0.65} onPress={()=>cameraImagehandler()}>
                                     <Photo style={{borderTopLeftRadius:16,borderBottomLeftRadius:16,borderRightWidth:1}}>Camera</Photo>
                                 </TouchableOpacity>

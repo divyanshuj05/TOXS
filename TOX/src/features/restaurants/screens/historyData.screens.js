@@ -59,6 +59,18 @@ const TextTouch=styled(Text)`
     font-size:${props=>props.theme.fontSizes.body}
 `;
 
+const Veg=styled(View)`
+    background-color:#007900;
+    border-radius:128px;
+    padding:4px;
+`;
+
+const NonVeg=styled(View)`
+    background-color:#990000;
+    border-radius:128px;
+    padding:4px;
+`;
+
 export const OrderDetails = ({route,navigation}) => {
 
     const { item } = route.params
@@ -131,17 +143,27 @@ export const OrderDetails = ({route,navigation}) => {
                 <View style={{marginVertical:8}}></View>
                 <TextWrap>Order:</TextWrap>
                 {item.order.map(item=>{
-                    const key=item.Name
+                    const key=item.title
                     return(
                         <Row key={key}>
+                            <View style={{marginLeft:16,justifyContent:"center"}}>
+                            {item.type=="Veg"?
+                                (
+                                    <Veg></Veg>
+                                ):
+                                (
+                                    <NonVeg></NonVeg>
+                                )
+                                }
+                            </View>
                             <View style={{flex:0.4}}>
-                                <TextWrap>{item.Name}</TextWrap>
+                                <TextWrap>{item.title}</TextWrap>
                             </View>
                             <View style={{flex:0.2}}>
-                                <TextWrap>x{item.Count}</TextWrap>
+                                <TextWrap>x{item.count}</TextWrap>
                             </View>
                             <View style={{flex:0.3}}>
-                                <TextWrap>₹{item.Price}</TextWrap>
+                                <TextWrap>₹{item.price}</TextWrap>
                             </View>
                         </Row>            
                     )

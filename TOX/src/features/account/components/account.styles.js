@@ -15,6 +15,7 @@ export const AccountCover = styled.View`
 export const AccountContainer = styled.View`
   background-color: rgba(255, 255, 255, 0.7);
   padding: ${(props) => props.theme.space[4]};
+  border-radius:12px;
   margin-horizontal: ${(props) => props.theme.space[5]};
   margin-vertical:${(props) => props.theme.space[3]};
 `;
@@ -23,6 +24,7 @@ export const AuthButton = styled(Button).attrs({
   color: "purple",
 })`
   padding: ${(props) => props.theme.space[2]};
+  border-radius:8px;
 `;
 
 export const AuthInput = styled(TextInput)`

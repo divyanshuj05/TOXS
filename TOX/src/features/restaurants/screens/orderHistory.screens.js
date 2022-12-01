@@ -136,7 +136,18 @@ export const OrderHistory = ({ navigation }) => {
                             keyExtractor={(item)=>randomstring.generate()}
                         />
                     ):(
-                        <Empty>No items found!!</Empty>
+                        <>
+                            <FlatList 
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                                data={[{number:1}]}
+                                renderItem={()=><Empty>No items found!!</Empty>}
+                                keyExtractor={(item)=>item.number}
+                            />
+                        </>
                     )
                 )
                 }

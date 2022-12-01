@@ -12,6 +12,7 @@ export const RestaurantContextProvider = ({ children }) => {
     const [isCopyLoading, setIsCopyLoading] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
+    const [paymentDone,setPaymentDone]=useState(false)
 
     const retrieveRestaurants = (flag = 0) => {
         setIsLoading(true)
@@ -57,6 +58,7 @@ export const RestaurantContextProvider = ({ children }) => {
                         SendNotification(res,"New order","Check order list for new order")
                     }
                     setIsLoading(false)
+                    setPaymentDone(true)
                     Alert.alert(
                         "Order sent successfully",
                         "Your order will be ready by some time",
@@ -87,7 +89,9 @@ export const RestaurantContextProvider = ({ children }) => {
             Search: retrieveRestaurants,
             SendOrder,
             sortByAddress,
-            refresh
+            refresh,
+            paymentDone,
+            setPaymentDone
         }}>
             {children}
         </RestaurantContext.Provider>

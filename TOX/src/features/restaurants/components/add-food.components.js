@@ -14,7 +14,6 @@ const Count = styled(Text)`
 const Wrapper = styled(View)`
     flex-direction:row;
     margin-left:100px;
-    margin-bottom:${(props) => props.theme.space[1]};
 `;
 
 const Add = styled(Text)`
@@ -48,11 +47,9 @@ const AddButton = styled(Text)`
     margin-left: ${(props) => props.theme.space[7]};
 `;
 
-export const AddFoodItems = ({ foodDetail }) => {
+export const AddFoodItems = ({ foodDetail, count=0 }) => {
 
-    const { title, price, notAdded } = foodDetail
-
-    const [subjectCount, setSubjectCount] = useState(0)
+    const [subjectCount, setSubjectCount] = useState(count)
 
     const { items, cost, cal } = useContext(CartContext)
 
@@ -62,16 +59,16 @@ export const AddFoodItems = ({ foodDetail }) => {
                 (
                     <Wrapper>
                         <Count>{subjectCount}</Count>
-                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount + 1), cal(parseInt(price,10), 1, title) }} >
+                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount + 1), cal(1, foodDetail) }} >
                             <Add>+</Add>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount - 1), cal(parseInt(-price,10), -1, title) }}>
+                        <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount - 1), cal(-1, foodDetail) }}>
                             <Subtract>-</Subtract>
                         </TouchableOpacity>
                     </Wrapper>
                 ) :
                 (
-                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount + 1), cal(parseInt(price,10), 1, title) }}>
+                    <TouchableOpacity activeOpacity={0.65} onPress={() => { setSubjectCount(subjectCount + 1), cal(1, foodDetail) }}>
                         <AddButton>Add</AddButton>
                     </TouchableOpacity>
                 )

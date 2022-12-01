@@ -31,7 +31,7 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         })
     }
 
-    const addItem = (title,cost,Restaurant) => {
+    const addItem = (title,cost,type,Restaurant) => {
         setIsLoading(true)
         if(title==""||cost=="")
         {
@@ -50,7 +50,7 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             setIsLoading(false)
             return "Negative numbers and spaces are not allowed"
         }
-        AddFoodItem(title,cost,Restaurant).then(res=>{
+        AddFoodItem(title,cost,type,Restaurant).then(res=>{
             Search(user.userName)
             return null
         }).catch(err=>{
@@ -60,7 +60,7 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         })
     }
 
-    const editItem = (title,oldCost,newCost,Restaurant) => { 
+    const editItem = (title,oldCost,type,newCost,Restaurant) => { 
         setIsLoading(true)
         if(newCost=="") 
         {
@@ -80,7 +80,7 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         if(newCost==oldCost) {
             setIsLoading(false)
             return null}
-            EditFoodItem(title,oldCost,newCost,Restaurant).then(res=>{
+            EditFoodItem(title,oldCost,type,newCost,Restaurant).then(res=>{
                 Search(user.userName)
                 return null
             }).catch(err=>{
@@ -91,9 +91,9 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         
     }
 
-    const deleteItem = (title,cost,Restaurant) => {
+    const deleteItem = (title,cost,type,Restaurant) => {
         setIsLoading(true)
-        DeleteFoodItem(title,cost,Restaurant).then(res=>{
+        DeleteFoodItem(title,cost,type,Restaurant).then(res=>{
             Search(user.userName)
             return null
         }).catch(err=>{

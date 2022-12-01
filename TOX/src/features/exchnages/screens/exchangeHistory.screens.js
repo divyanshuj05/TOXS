@@ -118,7 +118,18 @@ export const ExchangeHistory = ({ navigation }) => {
                             </ScrollView>        
                         )
                     ):(
-                        <Empty>No items found!!</Empty>
+                        <>
+                            <FlatList 
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                                data={[{number:1}]}
+                                renderItem={()=><Empty>No items found!!</Empty>}
+                                keyExtractor={(item)=>item.number}
+                            />
+                        </>
                     )
             )}
         </Container>

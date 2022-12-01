@@ -15,14 +15,14 @@ const ListView = styled(View)`
 `;
 
 const ListTitle = styled(Text)`
-    padding-left:${(props) => props.theme.space[3]};
+    margin-left:${(props) => props.theme.space[1]};
     padding-right:${(props) => props.theme.space[6]};
     font-family:${(props) => props.theme.fonts.heading};
     color:${(props) => props.theme.text};
 `;
 
 const ListPrice = styled(Text)`
-    padding-horizontal:${(props) => props.theme.space[3]};
+    padding-horizontal:20px;
     font-family:${(props) => props.theme.fonts.heading};
     padding-top:${(props) => props.theme.space[2]};
     color:${(props) => props.theme.text};
@@ -43,6 +43,18 @@ const Error=styled(Text)`
     color:${props => props.theme.colors.ui.error}
 `;
 
+const Veg=styled(View)`
+    background-color:#007900;
+    border-radius:128px;
+    padding:4px;
+`;
+
+const NonVeg=styled(View)`
+    background-color:#990000;
+    border-radius:128px;
+    padding:4px;
+`;
+
 export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
 
     const [edit,setEdit]=useState(false)
@@ -59,7 +71,7 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                 [
                     {
                         text: "Yes",
-                        onPress: async () => {setError(await (deleteItem(foodItem.title,foodItem.price,Restaurant))) }
+                        onPress: async () => {setError(await (deleteItem(foodItem.title,foodItem.price,foodItem.type,Restaurant))) }
                     },
                     {
                         text: "No",
@@ -78,6 +90,16 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
         return(
             <ListView>
                 <View style={{flexDirection:"row"}}>
+                    <View style={{marginLeft:8,justifyContent:"center"}}>
+                    {foodItem.type=="Veg"?
+                        (
+                            <Veg></Veg>
+                        ):
+                        (
+                            <NonVeg></NonVeg>
+                        )
+                        }
+                    </View>
                     <View style={{flex:0.65}}>
                     <ListTitle>
                         {foodItem.title}
@@ -93,7 +115,8 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                                 onChangeText={(text) => setCost(text)} /> 
                             <Touch activeOpacity={0.65} onPress={async()=>{
                                 setEdit(!edit)
-                                setError(await (editItem(foodItem.title,foodItem.price,cost,Restaurant)))
+                                setError(await (editItem(foodItem.title,foodItem.price,foodItem.type,cost,Restaurant)))
+                                setCost("")
                             }}>
                                 <Ionicons name="checkmark-circle-outline" size={26} color={scheme == "light" ? "black" : "white"} />
                             </Touch>

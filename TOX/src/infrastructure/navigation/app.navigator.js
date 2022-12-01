@@ -1,15 +1,14 @@
 import React, { useContext } from "react";
-import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { HomeNavigator } from "./home.navigator.js";
 import { AppThemeContext } from "../../services/common/theme.context.js";
+import { ProfileScreen } from "../../features/settings/screens/profile.screens.js";
 import { SettingsNavigator } from "./settings.navigator";
 import { FavouritesContextProvider } from "../../services/restaurant/favourites.context.js";
 import { CartContextProvider } from "../../services/restaurant/cart.context.js";
 import { RestaurantContextProvider } from "../../services/restaurant/restaurant-block.context.js";
-import { ProfileScreen } from "../../features/settings/screens/profile.screens.js";
 import { ExchangeContextProvider } from "../../services/exchnage/exchange.context.js";
 import { ExchangeHistoryContextProvider } from "../../services/exchnage/historyExchnage.context.js";
 import { RestaurantHistoryContextProvider } from "../../services/restaurant/orderHistory.context.js";

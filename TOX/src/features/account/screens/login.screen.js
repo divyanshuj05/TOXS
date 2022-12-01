@@ -26,6 +26,7 @@ const AccountContainer = styled(View)`
   padding: ${(props) => props.theme.space[4]};
   margin-vertical:${(props) => props.theme.space[2]};
   margin-horizontal: ${(props) => props.theme.space[3]};
+  border-radius:12px;
 `;
 
 export const LoginScreen = ({ route,navigation }) => {
@@ -132,7 +133,7 @@ export const LoginScreen = ({ route,navigation }) => {
   if(orientation==1||orientation==2)
   {
     return(
-      <ScrollView contentContainerStyle={{flexGrow:1}}>
+      <ScrollView contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps={'handled'}>
       <SafeArea>
         <AccountBackground>
           <Title>TOXs</Title>
@@ -153,7 +154,7 @@ export const LoginScreen = ({ route,navigation }) => {
               <Title>TOXs</Title>
               {BackButtonView()}
             </View>
-            <ScrollView style={{flex:0.35}} contentContainerStyle={{flexGrow:1}}>
+            <ScrollView style={{flex:0.35}} contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps={'handled'}>
               {ContentView()}
             </ScrollView>
           </View>

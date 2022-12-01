@@ -74,43 +74,45 @@ const PayLand = styled(Text)`
     margin-bottom:${(props) => props.theme.space[1]};
 `;
 
+const Veg=styled(View)`
+    background-color:#007900;
+    border-radius:128px;
+    padding:4px;
+`;
+
+const NonVeg=styled(View)`
+    background-color:#990000;
+    border-radius:128px;
+    padding:4px;
+`;
+
 export const OrderListScreen = ({ navigation,route }) => {
 
-    const { cost, items, order, unique, costItem } = useContext(CartContext)
+    const { cost, items, order } = useContext(CartContext)
     const { orientation } = useContext(DeviceOrientationContext)
     const { restaurant, vendor } = route.params
 
-    var data = []
-
-    const cal = () => {
-        let count = 0
-        for (let i = 0; i < unique.length; i++) {
-            var name = unique[i];
-            var rate = costItem[i];
-            for (let j = 0; j < order.length; j++) {
-                if (unique[i] === order[j]) {
-                    count = count + 1
-                }
-            }
-            if (count != 0) {
-                const temp = { "Name": name, "Count": count, "Price": rate * count }
-                data.push(temp)
-            }
-            count = 0
-        }
-    }
-    
     const renderItem = ({ item }) => {
         return (
             <ViewFlex>
-                <View style={{ flex: 0.5 }}>
-                    <ListText>{item.Name}</ListText>
+                <View style={{marginRight:8,marginTop:4}}>
+                {item.type=="Veg"?
+                    (
+                        <Veg></Veg>
+                    ):
+                    (
+                        <NonVeg></NonVeg>
+                    )
+                    }
+                </View>
+                <View style={{ flex: 0.4 }}>
+                    <ListText>{item.title}</ListText>
                 </View>
                 <View style={{ flex: 0.2 }}>
-                    <ListText>x {item.Count}</ListText>
+                    <ListText>x {item.count}</ListText>
                 </View>
                 <View style={{ flex: 0.3 }}>
-                    <ListText>₹{item.Price}</ListText>
+                    <ListText>₹{item.price*item.count}</ListText>
                 </View>
             </ViewFlex>
         )
@@ -119,7 +121,6 @@ export const OrderListScreen = ({ navigation,route }) => {
     return (
         <Container>
             <MainText>Your Order List</MainText>
-            {cal()}
             <ViewFlex>
                 <View style={{ flex: 0.5 }}>
                     <ListText>Name of item</ListText>
@@ -128,13 +129,13 @@ export const OrderListScreen = ({ navigation,route }) => {
                     <ListText>No of Items</ListText>
                 </View>
                 <View style={{ flex: 0.3 }}>
-                    <ListText>Price</ListText>
+                    <ListText>Total Price</ListText>
                 </View>
             </ViewFlex>
             <FlatListStyle
-                data={data}
+                data={order}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.Name}
+                keyExtractor={(item) => item.title}
             />
             <Total>
                 <View style={{ flex: 0.5 }}>
@@ -154,7 +155,7 @@ export const OrderListScreen = ({ navigation,route }) => {
                         <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant,vendor:vendor}) }}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:order,restaurant:restaurant,vendor:vendor}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>
@@ -164,7 +165,7 @@ export const OrderListScreen = ({ navigation,route }) => {
                         <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.goBack() }}>
                             <CancelLand>Go Back</CancelLand>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:data,restaurant:restaurant,vendor:vendor}) }}>
+                        <TouchableOpacity activeOpacity={0.65} style={{ flex: 0.5, justifyContent: 'center' }} onPress={() => { navigation.navigate("Payments",{cost:cost,data:order,restaurant:restaurant,vendor:vendor}) }}>
                             <PayLand>Pay amount</PayLand>
                         </TouchableOpacity>
                     </View>

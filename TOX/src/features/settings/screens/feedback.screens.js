@@ -75,7 +75,7 @@ export const FeedbackScreen = ({ navigation }) => {
     }
     
     return(
-        <Container>
+        <Container keyboardShouldPersistTaps={'handled'}>
             <Title>Send Feedback</Title>
             <Description>Describe your issue or suggestion</Description>
             <View style={{marginHorizontal:16}}>

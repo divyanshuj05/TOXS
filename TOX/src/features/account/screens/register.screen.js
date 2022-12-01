@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, Keyboard } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { AccountBackground, AuthButton, AuthInput, ErrorContainer } from "../components/account.styles";
 import { Text } from "../../common/components/typography/text.component";
@@ -27,6 +27,7 @@ const AccountContainer = styled(View)`
   padding: ${(props) => props.theme.space[4]};
   margin-vertical:${(props) => props.theme.space[2]};
   margin-horizontal: ${(props) => props.theme.space[3]};
+  border-radius:12px;
 `;
 
 export const RegisterScreen = ({ navigation }) => {
@@ -130,7 +131,7 @@ export const RegisterScreen = ({ navigation }) => {
   if(orientation==1||orientation==2)
   {
     return(
-      <ScrollView contentContainerStyle={{flexGrow:1}}>
+      <ScrollView contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps={'handled'}>
       <SafeArea>
         <AccountBackground>
           <Title>TOXs</Title>
@@ -153,7 +154,7 @@ export const RegisterScreen = ({ navigation }) => {
               {BackButtonView()}
             </View>
             <View style={{flex:0.6}}>
-              <ScrollView>
+              <ScrollView keyboardShouldPersistTaps={'handled'}>
                 {RegisterView()}
               </ScrollView>
             </View>

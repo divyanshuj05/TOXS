@@ -36,6 +36,7 @@ const Pay=styled(TouchableOpacity)`
   padding-horizontal:30px
   margin-horizontal:120px
   border-radius:${props=>props.theme.space[4]}
+  margin-bottom:16px;
 `;
 
 export const PaymentScreen = ({ route,navigation }) => {
@@ -53,13 +54,13 @@ export const PaymentScreen = ({ route,navigation }) => {
   const { SendOrder,isLoading } = useContext(RestaurantContext)
   const { confirmPayment,loading } = useConfirmPayment()
 
-  const handleStripe = () => {
+  const handleStripe = async() => {
     if(!cardDetails?.complete)
     {
         alert("Please enter card details first!!")
         return false
     }
-    const res=handleStripePay(confirmPayment,user.email,user.userName,amount)
+    const res=await handleStripePay(confirmPayment,user.email,user.userName,amount)
     return res
   }
   
@@ -76,7 +77,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                   <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />
                 ):
                 (
-                  <ScrollView>
+                  <ScrollView keyboardShouldPersistTaps={'handled'}>
                     <View style={{marginTop:30}}>
                       <TextWrap>Type: </TextWrap>
                       <TextWrap style={{marginBottom:30}}>Credit/Debit Card</TextWrap>

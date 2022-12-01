@@ -29,7 +29,7 @@ export const DropDownComponent = ({ restaurant = {}, value, setValue }) => {
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
-            containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:32 }}
+            containerStyle={{backgroundColor:"rgb(220,220,220)",borderRadius:16 }}
             iconStyle={styles.iconStyle}
             dropdownPosition="bottom"
             activeColor="rgb(200,200,200)"

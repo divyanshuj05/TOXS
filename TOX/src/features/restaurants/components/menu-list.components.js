@@ -16,18 +16,17 @@ const ListView = styled(View)`
     font-size: ${(props) => props.theme.fontSizes.body};
     padding-vertical:${(props) => props.theme.space[3]};
     margin-bottom:${(props) => props.theme.space[2]};
-    padding-right:${(props) => props.theme.space[3]};
 `;
 
 const ListTitle = styled(Text)`
-    padding-left:${(props) => props.theme.space[3]};
+    padding-left:${(props) => props.theme.space[2]};
     padding-right:${(props) => props.theme.space[6]};
     font-family:${(props) => props.theme.fonts.heading};
     color:${(props) => props.theme.text};
 `;
 
 const ListPrice = styled(Text)`
-    padding-horizontal:${(props) => props.theme.space[3]};
+    padding-horizontal:${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
     padding-top:${(props) => props.theme.space[2]};
     color:${(props) => props.theme.text};
@@ -61,24 +60,76 @@ const Proceed = styled(Text)`
     font-family:${(props) => props.theme.fonts.heading};
 `;
 
-export const MenuList = ({ data, navigation, restaurant, vendor }) => {
+const Veg=styled(View)`
+    background-color:#007900;
+    border-radius:128px;
+    padding:4px;
+`;
+
+const NonVeg=styled(View)`
+    background-color:#990000;
+    border-radius:128px;
+    padding:4px;
+`;
+
+export const MenuList = ({ data, navigation, restaurant, vendor, type }) => {
 
     const { items, cost } = useContext(CartContext)
 
     const renderItem = ({ item }) => {
-        return (
-            <View style={{alignItems:"center"}}>
-                <ListView>
-                    <ListTitle>
-                        {item.title}
-                    </ListTitle>
-                    <View style={{ flexDirection: 'row' }}>
-                        <ListPrice>
-                            ₹{item.price}
-                        </ListPrice>
-                        <AddFoodItems foodDetail={item} />
+        if(type=="Veg Only")
+        {
+            return(
+                item.type=="Veg"?
+                (
+                    <View style={{flexDirection:"row",justifyContent:"center"}}>  
+                        <View style={{marginLeft:8,justifyContent:"center"}}>
+                            <Veg></Veg>
+                        </View>
+                        <View style={{alignItems:"center"}}>
+                            <ListView>
+                                <ListTitle>
+                                    {item.title}
+                                </ListTitle>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <ListPrice>
+                                        ₹{item.price}
+                                    </ListPrice>
+                                    <AddFoodItems foodDetail={item} />
+                                </View>
+                            </ListView>
+                        </View>
                     </View>
-                </ListView>
+                ):
+                (<></>
+                )
+            )
+        }
+        return (
+            <View style={{flexDirection:"row",justifyContent:"center"}}>  
+                <View style={{marginLeft:8,justifyContent:"center"}}>
+                    {item.type=="Veg"?
+                    (
+                        <Veg></Veg>
+                    ):
+                    (
+                        <NonVeg></NonVeg>
+                    )
+                    }
+                </View>
+                <View style={{alignItems:"center"}}>
+                    <ListView>
+                        <ListTitle>
+                            {item.title}
+                        </ListTitle>
+                        <View style={{ flexDirection: 'row' }}>
+                            <ListPrice>
+                                ₹{item.price}
+                            </ListPrice>
+                            <AddFoodItems foodDetail={item} />
+                        </View>
+                    </ListView>
+                </View>
             </View>
         );
     };

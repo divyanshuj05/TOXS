@@ -9,7 +9,7 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Sort,SortByS
     const options=[
         { label: 'Lab Coat', value: 'Lab Coat' },
         { label: 'Books', value: 'Books' },
-        { label: 'Drafters', value: 'Drafters' },
+        { label: 'Cycle', value: 'Cycle' },
         { label: 'Misc', value: 'Misc' },
         { label: 'Select All', value: 'Select All' }
         ]
@@ -30,7 +30,7 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Sort,SortByS
                 iconStyle={styles.iconStyle}
                 value={category}
                 onChange={(item)=>{setCategory(item), SortByStatus(item.value)}}
-                containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:16 }}
+                containerStyle={{backgroundColor:"rgb(220,220,220)",borderRadius:16 }}
                 dropdownPosition="bottom"
                 activeColor="rgb(200,200,200)"
                 iconColor='white'
@@ -49,7 +49,7 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Sort,SortByS
                     onChange={(item)=>{setSort(item),Sort(item.value)}}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
-                    containerStyle={{backgroundColor:"rgb(185,185,185)",borderRadius:16 }}
+                    containerStyle={{backgroundColor:"rgb(220,220,220)",borderRadius:16 }}
                     dropdownPosition="bottom"
                     activeColor="rgb(200,200,200)"
                     iconColor='white'

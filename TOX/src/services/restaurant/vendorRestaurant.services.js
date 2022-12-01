@@ -19,11 +19,12 @@ export const VendorRestaurantsRequest = (Name) => {
     
 }
 
-export const AddFoodItem = async (Title,cost,Restaurant) => {
+export const AddFoodItem = async (Title,cost,type,Restaurant) => {
     return new Promise(async (resolve,reject)=>{
         let data={
             price:cost,
-            title:Title
+            title:Title,
+            type:type
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", Restaurant))
         const docs = await getDocs(Query)
@@ -38,15 +39,17 @@ export const AddFoodItem = async (Title,cost,Restaurant) => {
     })
 }
 
-export const EditFoodItem = async (Title,oldCost,newCost,restaurant) => {
+export const EditFoodItem = async (Title,oldCost,type,newCost,restaurant) => {
     return new Promise(async (resolve,reject)=>{
         let oldData={
             price:oldCost,
-            title:Title
+            title:Title,
+            type:type
         }
         let newData={
             price:newCost,
-            title:Title
+            title:Title,
+            type:type
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", restaurant))
         const docs = await getDocs(Query)
@@ -64,11 +67,12 @@ export const EditFoodItem = async (Title,oldCost,newCost,restaurant) => {
     })
 }
 
-export const DeleteFoodItem = (Title,cost,restaurant) => {
+export const DeleteFoodItem = (Title,cost,type,restaurant) => {
     return new Promise(async (resolve,reject)=>{
         let data={
             price:cost,
-            title:Title
+            title:Title,
+            type:type
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", restaurant))
         const docs = await getDocs(Query)

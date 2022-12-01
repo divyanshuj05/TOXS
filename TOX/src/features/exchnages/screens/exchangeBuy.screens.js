@@ -64,9 +64,11 @@ export const BuyScreen = ({ navigation }) => {
     if(exchangeLocal==[]||exchangeLocal==null||exchangeLocal==undefined)
     {
         return(
+            <Wrapper>
             <View style={{ marginTop: 50 }}>
                 <ActivityIndicator color={Colors.red400} size={50} />
             </View>
+            </Wrapper>
         )
     }
 
@@ -97,7 +99,18 @@ export const BuyScreen = ({ navigation }) => {
                         keyExtractor={(item)=>item.imgName}
                     />
                 ):(
-                    <Empty>No items found!!</Empty>
+                    <>
+                    <FlatList 
+                    refreshControl={
+                        <RefreshControl 
+                            onRefresh={onRefresh}
+                        />
+                    }
+                        data={[{number:1}]}
+                        renderItem={()=><Empty>No items found!!</Empty>}
+                        keyExtractor={(item)=>item.number}
+                    />
+                    </>
                 )}
             </>
         )
