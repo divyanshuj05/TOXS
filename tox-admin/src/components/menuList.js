@@ -12,6 +12,9 @@ export default function List({ menuList }){
                 <div className='list-item-container'>
                     <h3 className='form-input-text-primary'>Price</h3>
                 </div>
+                <div className='list-item-container'>
+                    <h3 className='form-input-text-primary'>Type</h3>
+                </div>
             </div>  
             {
                 menuList.map((item)=>{
@@ -23,6 +26,9 @@ export default function List({ menuList }){
                             </div>
                             <div className='list-item-container'>
                                 <h3 className='form-input-text-primary'>₹{item.price}</h3>
+                            </div>
+                            <div className='list-item-container'>
+                                <h3 className='form-input-text-primary'>{item.type}</h3>
                             </div>
                         </div>  
                     )

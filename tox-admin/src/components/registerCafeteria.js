@@ -10,6 +10,7 @@ export default function Cafeteria({ set, setMenuList, menuList }){
     const [openTime,setOpenTime]=useState(null)
     const [closeTime,setCloseTime]=useState(null)
     const [isLoading,setIsLoading]=useState(false)
+    const [foodType,setFoodType]=useState(null)
     const [item,setItem]=useState("")
     const [price,setPrice]=useState("")
 
@@ -34,7 +35,7 @@ export default function Cafeteria({ set, setMenuList, menuList }){
 
     const handleAddItem = (event) => {
         event.preventDefault()
-        if(!item||!price)
+        if(!item||!price||!foodType)
         {
             alert("Food item data not filled!!")
             return
@@ -44,16 +45,27 @@ export default function Cafeteria({ set, setMenuList, menuList }){
             alert("Price of food item is not a number!")
             return
         }
-        console.log(document.getElementsByClassName('form-input-quaternary').value)
+        for(let i=0;i<menuList.length;i++)
+        {
+            if(menuList[i].title===item)
+            {
+                alert(`Food item ${item} already exists`)
+                return
+            }
+        }
         document.getElementsByClassName('form-input-quaternary').value=null
-        
         const data={
             title:item,
-            price:price
+            price:price,
+            type:foodType
         }
         setMenuList([...menuList,data])
         setItem("")
         setPrice("")
+        setFoodType(null)
+        let ele = document.getElementsByName("food-type");
+        for(let i=0;i<ele.length;i++)
+            ele[i].checked = false;
     }
 
     const handleBackButton = (event) => {
@@ -62,9 +74,15 @@ export default function Cafeteria({ set, setMenuList, menuList }){
         set(false)
     }
 
+    const handleReset = () => {
+        setMenuList([])
+        setItem("")
+        setPrice("")
+    }
+
     return(
-        <div className='form-container'>
-            <form>
+        <div style={{ height:"100%"}}>
+            <form onReset={handleReset}>
                 <h2 id='container-title'>Register new cafeteria</h2>
                 <h3 className='form-input-text-primary'>Name</h3>
                 <input type={"text"} className='form-input-primary' placeholder='Cafeteria Name' onChange={(text)=>setName(text.target.value)} />
@@ -79,17 +97,26 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                     <input type={"time"} className='form-input-tertiary' placeholder='Closes at' onChange={(text)=>setCloseTime(text.target.value)}  />
                 </div>
                 <h3 className='form-input-text-primary'>Add food item</h3>
-                <div style={{display:"flex",marginLeft:"10%"}}>
-                    <div style={{display:"flex",flexDirection:"column",width:110}}>
-                        <h3 className='form-input-text-secondary'>Item name</h3>
-                        <input type={"text"} placeholder='Item name' className='form-input-quaternary' value={item} onChange={(text)=>setItem(text.target.value)} />
+                <div style={{display:"flex",marginLeft:"10%",flexDirection:"column"}}>
+                    <div style={{display:"flex"}}>
+                        <div style={{display:"flex",flexDirection:"column",width:110}}>
+                            <h3 className='form-input-text-secondary'>Item name</h3>
+                            <input type={"text"} placeholder='Item name' className='form-input-quaternary' value={item} onChange={(text)=>setItem(text.target.value)} />
+                        </div>
+                        <div style={{display:"flex",flexDirection:"column",width:110}}>
+                            <h3 className='form-input-text-secondary'>Item Price</h3>
+                            <input type={"text"} placeholder='Price ₹' className='form-input-quaternary' value={price} onChange={(text)=>setPrice(text.target.value)} />
+                        </div>
+                        <div style={{display:"flex",flexDirection:"column",width:110, justifyContent:"center"}}>
+                            <button className='quaternary-btn' onClick={(event)=>handleAddItem(event)} >Done</button>
+                        </div>
                     </div>
-                    <div style={{display:"flex",flexDirection:"column",width:110}}>
-                        <h3 className='form-input-text-secondary'>Item Price</h3>
-                        <input type={"text"} placeholder='Price ₹' className='form-input-quaternary' value={price} onChange={(text)=>setPrice(text.target.value)} />
-                    </div>
-                    <div style={{display:"flex",flexDirection:"column",width:110, justifyContent:"center"}}>
-                        <button className='quaternary-btn' onClick={(event)=>handleAddItem(event)} >Done</button>
+                    <div style={{display:"flex",marginTop:"1%"}} onChange={(event)=>setFoodType(event.target.value)}>
+                        <h3 className='food-type-text'>Item Type:</h3>
+                        <input type="radio" value="Veg" name="food-type" />
+                        <h3 for={"Veg"} className='food-type-text'>Veg</h3>
+                        <input type="radio" name="food-type" value="Non Veg" />
+                        <h3 for={"Non Veg"} className='food-type-text'>Non Veg</h3>
                     </div>
                 </div>
                 {isLoading?
@@ -99,7 +126,7 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                     (
                         <div className='container-btns'>
                             <button className='tertiary-btn' onClick={(event)=>handleBackButton(event)}>Back</button>
-                            <input className='tertiary-btn' type={"reset"} onClick={()=>setMenuList([])} />
+                            <input className='tertiary-btn' type={"reset"} />
                             <button className='tertiary-btn' onClick={(event)=>handleCafeteriaSubmit(event,set)}>Submit</button>
                         </div>
                     )

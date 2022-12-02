@@ -1,8 +1,3 @@
-.form-contaniner{
-    overflow-y: auto;
-    overflow-x: auto;
-}
-  
 #container-title{
     font-family: 'Oswald', sans-serif;
     font-weight: bolder;
@@ -95,6 +90,12 @@
     font-family: 'M PLUS 1 Code', sans-serif;
     margin: 0 0 0 0;
     width:100%;
+}
+
+.food-type-text{
+    font-weight: 100;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 0 8% 0 0;
 }
 
 .container-btns{

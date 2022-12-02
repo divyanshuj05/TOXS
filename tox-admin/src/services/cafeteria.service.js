@@ -47,7 +47,6 @@ export const RegisterCafeteria = (name,location,img,openTime,closeTime,menuList)
         await uploadBytesResumable(imgRef,img,metadata).then(async(res)=>{
             await getDownloadURL(res.ref).then((url)=>{
                 URL=url;
-                alert("Image uploaded")
                 resolve("Done")
             }).catch(err=>{
                 console.log(err)
@@ -87,8 +86,7 @@ export const AddFoodItems = (name,list) => {
             const docRef=doc(db, "cafeterias", Doc.id);
             await updateDoc(docRef, {
                 menuList:arrayUnion(...list)
-            }).then((res)=>{
-              alert("Food items list added")  
+            }).then((res)=>{  
               resolve("Done")
               return
             }).catch(err=>{
