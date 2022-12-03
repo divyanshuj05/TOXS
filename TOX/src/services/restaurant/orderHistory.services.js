@@ -3,7 +3,6 @@ import { collection, getDocs, query, where, updateDoc, doc } from "firebase/fire
 
 export const GetOrders = (name,coll) => {
     var array=[]
-
     if(coll=="users")
     {
         return new Promise(async(resolve,reject)=>{

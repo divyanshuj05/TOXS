@@ -40,7 +40,6 @@ export const handleStripePay = async(confirmPayment,mail,userName,cost) => {
                 alert(`Payment Confirmation Error ${error.message}`);
             } 
             else if (paymentIntent) {
-                console.log("Payment successful ", paymentIntent);
                 return true
             }
         }   

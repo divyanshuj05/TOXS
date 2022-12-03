@@ -5,7 +5,8 @@ import { VendorAppNavigator } from "./vendorApp.navigator";
 import { AccountNavigator } from "./account.navigator";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
 import { ActivityIndicator, Colors } from "react-native-paper";
-import { View, Text } from "react-native"
+import { View } from "react-native"
+import { DeliveryApp } from "./deliveryApp.navigator";
 
 export const Navigation = () => {
   const { isAuthenticated, isLogging, user } = useContext(AuthenticationContext);
@@ -25,10 +26,18 @@ export const Navigation = () => {
         user.type=="users"?
         (
           <AppNavigator />
-        ):(
-          <VendorAppNavigator />
+        ):
+        (
+          user.type=="vendors"?
+          (
+            <VendorAppNavigator />
+          ):
+          (
+            <DeliveryApp />
+          )
         )
-      ) : (<AccountNavigator />)}
+      ) : 
+      (<AccountNavigator />)}
     </NavigationContainer>
   );
 };

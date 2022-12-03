@@ -48,10 +48,10 @@ export const RestaurantContextProvider = ({ children }) => {
         setIsLoading(false)
     }
 
-    const SendOrder= (email,amount,vendor,data,restaurant) => {
+    const SendOrder= (email,mobile,amount,vendor,data,restaurant,location) => {
         return new Promise(async(resolve,reject)=>{
             setIsLoading(true)
-            Orders(email,amount,vendor,data,restaurant).then(res=>{
+            Orders(email,mobile,amount,vendor,data,restaurant,location).then(res=>{
                 SendVendorNoti(vendor).then(res=>{
                     if(res!="null")
                     {

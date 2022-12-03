@@ -35,7 +35,7 @@ export const restaurantsRequest = () => {
     })
 }
 
-export const Orders = (email,amount,vendor,data,restaurant) => {
+export const Orders = async(email,mobile,amount,vendor,order,restaurant,location) => {
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -43,28 +43,42 @@ export const Orders = (email,amount,vendor,data,restaurant) => {
     var yyyy = today.getFullYear();
     const time=today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
     today = yyyy + '-' + mm + '-' + dd;
-
-    var data={
-        orderBy:email,
-        vendor:vendor,
-        amount:amount,
-        order:data,
-        status:"Not Ready",
-        paymentType:"Card",
-        restaurant:restaurant,
-        orderDate:today,
-        orderTime:time
-    }
-    
-    return new Promise(async(resolve,reject)=>{
-        const orderRef=collection(db,"cafeteriaOrders")
-        await addDoc(orderRef,data).then(res=>{
-            resolve("Done")
-        }).catch(e=>{
-            console.log(e)
-            reject("Some error occured")
-        })
+    let randomstring=require("randomstring")
+    const whitespace=restaurant.replace(/\s+/g,'')
+    const temp=whitespace.substring(0,3).toUpperCase()
+    const key=temp+randomstring.generate({
+        length:6,
+        charset:'numeric'
     })
+      const Query = query(collection(db, "vendors"), where("userName", "==", vendor))
+      const docs = await getDocs(Query)
+      docs.forEach(async(doc) => {
+        var data={
+            orderBy:email,
+            userMobile:mobile,
+            vendorMobile:doc.data().mobileNo,
+            vendor:vendor,
+            amount:amount,
+            order:order,
+            location:location,
+            status:"Not Ready",
+            restaurant:restaurant,
+            orderDate:today,
+            orderTime:time,
+            key:key
+        }
+        return new Promise(async(resolve,reject)=>{
+            const orderRef=collection(db,"cafeteriaOrders")
+            await addDoc(orderRef,data).then(res=>{
+                resolve("Done")
+            }).catch(e=>{
+                console.log(e)
+                reject("Some error occured")
+            })
+        })
+      });
+
+    
 }
 
 export const SendVendorNoti = (name) => {

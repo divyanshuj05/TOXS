@@ -16,20 +16,20 @@ const ListView = styled(View)`
     font-size: ${(props) => props.theme.fontSizes.body};
     padding-vertical:${(props) => props.theme.space[3]};
     margin-bottom:${(props) => props.theme.space[2]};
+    align-items:center;
 `;
 
 const ListTitle = styled(Text)`
-    padding-left:${(props) => props.theme.space[2]};
-    padding-right:${(props) => props.theme.space[6]};
     font-family:${(props) => props.theme.fonts.heading};
     color:${(props) => props.theme.text};
+    font-size:14px;
+    margin-left:5px;
 `;
 
 const ListPrice = styled(Text)`
-    padding-horizontal:${(props) => props.theme.space[2]};
     font-family:${(props) => props.theme.fonts.heading};
-    padding-top:${(props) => props.theme.space[2]};
     color:${(props) => props.theme.text};
+    font-size:14px;
 `;
 
 const BottomBar = styled(View)`
@@ -82,55 +82,63 @@ export const MenuList = ({ data, navigation, restaurant, vendor, type }) => {
             return(
                 item.type=="Veg"?
                 (
-                    <View style={{flexDirection:"row",justifyContent:"center"}}>  
-                        <View style={{marginLeft:8,justifyContent:"center"}}>
+                    <>
+                        <View style={{flexDirection:"row",marginBottom:0,justifyContent:"center"}}>  
+                        <View style={{justifyContent:"center"}}>
                             <Veg></Veg>
                         </View>
-                        <View style={{alignItems:"center"}}>
-                            <ListView>
-                                <ListTitle>
-                                    {item.title}
-                                </ListTitle>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <ListPrice>
-                                        ₹{item.price}
-                                    </ListPrice>
-                                    <AddFoodItems foodDetail={item} />
-                                </View>
-                            </ListView>
+                        <View style={{flex:0.5,justifyContent:"center"}}>
+                            <ListTitle>
+                                {item.title}
+                            </ListTitle>
                         </View>
-                    </View>
+                        <View style={{flex:0.3}}>
+                            <AddFoodItems foodDetail={item} />
+                        </View>
+                        </View>
+                        <View style={{flexDirection:"row",marginBottom:30,justifyContent:"center"}}>
+                            <View style={{flex:0.8}}>
+                                <ListPrice>
+                                    ₹{item.price}
+                                </ListPrice>
+                            </View>
+                        </View>
+                    </>
                 ):
                 (<></>
                 )
             )
         }
         return (
-            <View style={{flexDirection:"row",justifyContent:"center"}}>  
-                <View style={{marginLeft:8,justifyContent:"center"}}>
-                    {item.type=="Veg"?
-                    (
-                        <Veg></Veg>
-                    ):
-                    (
-                        <NonVeg></NonVeg>
-                    )
-                    }
-                </View>
-                <View style={{alignItems:"center"}}>
-                    <ListView>
+            <>
+                <View style={{flexDirection:"row",marginBottom:0,justifyContent:"center"}}>  
+                    <View style={{justifyContent:"center"}}>
+                        {item.type=="Veg"?
+                        (
+                            <Veg></Veg>
+                        ):
+                        (
+                            <NonVeg></NonVeg>
+                        )
+                        }
+                    </View>
+                    <View style={{flex:0.5,justifyContent:"center"}}>
                         <ListTitle>
                             {item.title}
                         </ListTitle>
-                        <View style={{ flexDirection: 'row' }}>
-                            <ListPrice>
-                                ₹{item.price}
-                            </ListPrice>
-                            <AddFoodItems foodDetail={item} />
-                        </View>
-                    </ListView>
+                    </View>
+                    <View style={{flex:0.3}}>
+                        <AddFoodItems foodDetail={item} />
+                    </View>
                 </View>
-            </View>
+                <View style={{flexDirection:"row",marginBottom:30,justifyContent:"center"}}>
+                    <View style={{flex:0.8}}>
+                        <ListPrice>
+                            ₹{item.price}
+                        </ListPrice>
+                    </View>
+                </View>
+            </>
         );
     };
 

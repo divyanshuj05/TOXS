@@ -4,6 +4,7 @@ import { AccountScreen } from "../../features/account/screens/account.screen";
 import { LoginScreen } from "../../features/account/screens/login.screen";
 import { RegisterScreen } from "../../features/account/screens/register.screen";
 import { ForgotPassword } from "../../features/account/screens/forgotPassword.screens";
+import { DeliveryLogin } from "../../features/account/screens/deliveryLogin.screen";
 
 const Stack = createStackNavigator();
 
@@ -13,5 +14,6 @@ export const AccountNavigator = () => (
     <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="Register" component={RegisterScreen} />
     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+    <Stack.Screen name="DeliveryLogin" component={DeliveryLogin} />
   </Stack.Navigator>
 );

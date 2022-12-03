@@ -48,26 +48,16 @@ export const RestaurantHistoryContextProvider = ({children}) => {
     const OrderReady = (id,mail,navigation,type,status,name) => {
         setIsLoading(true)
         OrderReadyStatus(id,status).then(res=>{
-            if(type=="users")
-            { 
-                setIsLoading(false)
-                Search(mail,type)
-                Alert.alert(
-                    "Done",
-                    "Changes were successfully made",
-                    [
-                        {
-                            text:"Ok",
-                            onPress:()=>{navigation.goBack()}
-                        }
-                    ]
-                )
-                return
-            }
             GetNotiToken(mail).then(res=>{
                 if(res!="null")
                 {
-                    SendNotification(res,"Food Order","Your food order is ready to take")
+                    if(status=="Delivered")
+                    {
+                        SendNotification(res,"Food Order","Your food order has been delivered")
+                    }
+                    else{
+                        SendNotification(res,"Food Order","Your food order is ready to take")
+                    }
                 }
                 Search(name,type)
                 setIsLoading(false)

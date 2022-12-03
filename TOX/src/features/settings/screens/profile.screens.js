@@ -84,13 +84,10 @@ export const ProfileScreen = () => {
     const { scheme } = useContext(AppThemeContext)
     const { isOrientationLoading } = useContext(DeviceOrientationContext)
     const [updateUser, setUpdateUser] = useState(false)
-    const [updateMobile, setUpdateMobile] = useState(false)
     const [updatePass, setUpdatePass] = useState(false)
     const [errorUser, setErrorUser] = useState(null)
-    const [errorMob, setErrorMob] = useState(null)
     const [errorPass, setErrorPass] = useState(null)
     const [newUser, setNewUser] = useState("")
-    const [newMobile, setNewMobile] = useState("")
     const [newPass, setNewPass] = useState("")
 
     if(isOrientationLoading)
@@ -170,44 +167,8 @@ export const ProfileScreen = () => {
                         <BorderView>
                             <View style={{ flexDirection: "row" }}>
                                 <DetailsIconCopy name="mobile-alt" size={22} />
-                                {updateMobile ?
-                                    (
-                                        <>
-                                            <Input
-                                                label="Input new mobile number"
-                                                value={newMobile}
-                                                textContentType="telephoneNumber"
-                                                keyboardType="phone-pad"
-                                                autoCapitalize="none"
-                                                onChangeText={(text) => { setNewMobile(text) }} />
-                                            <TouchableOpacity activeOpacity={0.65} onPress={() => {
-                                                setErrorMob(null)
-                                                const result = UpdateDoc("mobileNo", newMobile,user.type)
-                                                if (result === true) {
-                                                    setUpdateMobile(false)
-                                                }
-                                                else { setErrorMob(result) }
-                                            }}>
-                                                <UpdateButtonCopy name="checkmark-circle-outline" size={26} />
-                                            </TouchableOpacity>
-                                        </>
-                                    ) :
-                                    (
-                                        <>
-                                            <Details>{user.mobileNo}</Details>
-                                            <TouchableOpacity activeOpacity={0.65} onPress={() => { setUpdateMobile(true), setErrorMob(null) }}>
-                                                <UpdateButton name="spinner-refresh" size={22} />
-                                            </TouchableOpacity>
-                                        </>
-                                    )
-
-                                }
+                                <Details>{user.mobileNo}</Details>
                             </View>
-                            {errorMob ?
-                                (
-                                    <Error>{errorMob}</Error>
-                                ) : (<></>)
-                            }
                         </BorderView>
 
                         <BorderView>

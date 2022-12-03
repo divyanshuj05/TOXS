@@ -44,6 +44,14 @@ export const AccountScreen = ({ navigation }) => {
               Vendor Login
             </AuthButton>
           </Spacer>
+          <Spacer size="large">
+            <AuthButton
+              icon="login"
+              mode="contained"
+              onPress={() => navigation.navigate("DeliveryLogin")}>
+              Delivery Login
+            </AuthButton>
+          </Spacer>
         </AccountContainer>
     )
   }
@@ -90,7 +98,7 @@ export const AccountScreen = ({ navigation }) => {
                   {UserView()}
                 </View>
                 <Title>TOXs</Title>
-                <View style={{flex:0.5,marginTop:32}}>
+                <View style={{flex:0.5}}>
                   {VendorView()}
                 </View>
               </View>

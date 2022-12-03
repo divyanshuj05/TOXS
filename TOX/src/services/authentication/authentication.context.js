@@ -63,6 +63,43 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
 
+  const deliveryLogin = async(cafeteria,key) => {
+    setIsLoading(true)
+    if(cafeteria==null||cafeteria=="")
+    {
+      setError("Error: Cafeteria feild empty")
+      setIsLoading(false)
+      return
+    }
+    if(key==null||key=="")
+    {
+      setError("Error: Security key not filled")
+      setIsLoading(false)
+      return
+    }
+    let flag=0
+    const Query=query(collection(db,"vendors"),where("restaurant","==",cafeteria),where("securityKey","==",key))
+    const querySnapshot = await getDocs(Query);
+    querySnapshot.forEach(doc => {
+      flag=1
+      setUser(null)
+      const userData={
+        "type":"delivery",
+        "cafteria":doc.data().restaurant,
+        "userName":doc.data().userName
+      }
+      setUser(userData)
+      saveUser(userData)
+      setIsLoading(false)
+      return
+    })
+    if(flag===0)
+    { 
+      setIsLoading(false)
+      setError("Error: Wrong credentails")
+    }
+  }
+
   const ForgotPassword = async(name,Coll,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) =>{
     setIsLoading(true)
     const res=ForgotPasswordCheck(name,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo)
@@ -113,8 +150,11 @@ export const AuthenticationContextProvider = ({ children }) => {
           {
               text: "Yes",
               onPress: () => {
-                const userRef=doc(db,user.type,user.id)
-                updateDoc(userRef,{"token":"null"})
+                if(user.type=="delivery")
+                {}else{
+                  const userRef=doc(db,user.type,user.id)
+                  updateDoc(userRef,{"token":"null"})
+                }
                 setUser(null);
                 removeUser();
               }
@@ -200,44 +240,6 @@ export const AuthenticationContextProvider = ({ children }) => {
     if (newFieldVal == "") {
       setIsLoading(false)
       return true;
-    }
-
-    if (field === "mobileNo") {
-      if (user.mobileNo == newFieldVal) {
-        setIsLoading(false)
-        return true
-      }
-      for (let i = 0; i < newFieldVal.length; i++) {
-        if (newFieldVal[i].match(/[0-9]/g) == null) {
-          setIsLoading(false)
-          return "Error: Mobile Number should contain only numbers!!"
-        }
-      }
-      if (newFieldVal.length !== 10) {
-        setIsLoading(false)
-        return "Error: Mobile Number length should be 10!!";
-      }
-
-      const data = { ...user, mobileNo: newFieldVal }
-      delete data.id
-      delete data.type
-      const docRef = doc(db, Coll, user.id)
-
-      setDoc(docRef, data)
-        .then(res => {
-          setUser({ ...user, mobileNo: newFieldVal,type:Coll })
-          removeUser()
-          saveUser({ ...user, mobileNo: newFieldVal,type:Coll })
-          setIsLoading(false)
-          return true
-        })
-        .catch(error => {
-          setIsLoading(false)
-          console.log(error);
-          return error
-        })
-
-      return true
     }
 
     if (field == "password") {
@@ -455,7 +457,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         UpdateDoc,
         ForgotPassword,
         SaveUserImage,
-        RemoveUserImage
+        RemoveUserImage,
+        deliveryLogin
       }}
     >
       {children}

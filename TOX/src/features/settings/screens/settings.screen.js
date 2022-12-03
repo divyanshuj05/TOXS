@@ -115,7 +115,7 @@ export const SettingsScreen = ({ navigation }) => {
             (
               <>
                 <SettingsItem
-                title="Feedback"
+                title="Contact and Feedback"
                 left={(props) => <List.Icon {...props} color={scheme == "light" ? "black" : "white"} icon="message-alert" />}
                 onPress={() => navigation.navigate("Feedback")}
                 titleStyle={{ color: scheme == "light" ? "black" : "white" }}

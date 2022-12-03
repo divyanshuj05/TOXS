@@ -89,21 +89,46 @@ export const OrderHistory = ({ navigation }) => {
     }
 
     const renderItem = (item) => {
-        return(
-            <TouchableOpacity activeOpacity={0.65} onPress={()=>navigation.navigate("OrderDetail",{item:item.item})}>
-                <Wrapper>
-                    <View style={{flex:0.5}}>
-                        <TextWrap>{item.item.restaurant} order</TextWrap>
-                    </View>
-                    <View style={{flex:0.2}}>
-                        <TextWrap>₹{item.item.amount}</TextWrap>
-                    </View>
-                    <View style={{flex:0.3}}>
-                        <TextWrap>{item.item.status}</TextWrap>
-                    </View>
-                </Wrapper>
-            </TouchableOpacity>
-        )
+        if(user.type=="delivery")
+        {
+            return(
+                item.item.location==""||item.item.location==undefined?
+                (
+                    <></>
+                ):
+                (
+                    <TouchableOpacity activeOpacity={0.65} onPress={()=>navigation.navigate("OrderDetail",{item:item.item})}>
+                        <Wrapper>
+                            <View style={{flex:0.5}}>
+                                <TextWrap>{item.item.restaurant} order</TextWrap>
+                            </View>
+                            <View style={{flex:0.2}}>
+                                <TextWrap>₹{item.item.amount}</TextWrap>
+                            </View>
+                            <View style={{flex:0.3}}>
+                                <TextWrap>{item.item.status}</TextWrap>
+                            </View>
+                        </Wrapper>
+                    </TouchableOpacity>
+                )
+            )
+        }else{
+            return(
+                <TouchableOpacity activeOpacity={0.65} onPress={()=>navigation.navigate("OrderDetail",{item:item.item})}>
+                    <Wrapper>
+                        <View style={{flex:0.5}}>
+                            <TextWrap>{item.item.restaurant} order</TextWrap>
+                        </View>
+                        <View style={{flex:0.2}}>
+                            <TextWrap>₹{item.item.amount}</TextWrap>
+                        </View>
+                        <View style={{flex:0.3}}>
+                            <TextWrap>{item.item.status}</TextWrap>
+                        </View>
+                    </Wrapper>
+                </TouchableOpacity>
+            )
+        }
     }
 
     const render = () => {
@@ -157,7 +182,7 @@ export const OrderHistory = ({ navigation }) => {
 
     return(
         <Container>
-            {user.type=="vendors"?
+            {user.type=="vendors"||user.type=="delivery"?
             (
                 <SafeArea>
                     {render()}

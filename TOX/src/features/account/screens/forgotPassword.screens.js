@@ -38,13 +38,20 @@ export const ForgotPassword = ({ route,navigation }) => {
 
     const BackButtonView = () => {
         return(
-          <Spacer size="xl">
-            <View style={{marginHorizontal:48, marginTop:32}}>
-            <AuthButton mode="contained" onPress={() => { navigation.goBack() }}>
-              Back
-            </AuthButton>
-            </View>
-          </Spacer>
+          isLoading?
+          (
+            <ActivityIndicator style={{marginTop:20}} animating={true} color={Colors.blue300} />
+          ):
+          (
+            <Spacer size="xl">
+              <View style={{marginHorizontal:48, marginTop:32}}>
+                <AuthButton mode="contained" onPress={() => { navigation.goBack() }}>
+                  Back
+                </AuthButton>
+              </View>
+            </Spacer>
+          )
+          
         )
       }
 
