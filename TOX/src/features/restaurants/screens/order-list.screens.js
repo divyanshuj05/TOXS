@@ -105,7 +105,7 @@ export const OrderListScreen = ({ navigation,route }) => {
                     )
                     }
                 </View>
-                <View style={{ flex: 0.4 }}>
+                <View style={{ flex: 0.5 }}>
                     <ListText>{item.title}</ListText>
                 </View>
                 <View style={{ flex: 0.2 }}>

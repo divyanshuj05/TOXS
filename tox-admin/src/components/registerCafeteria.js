@@ -113,10 +113,12 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                     </div>
                     <div style={{display:"flex",marginTop:"1%"}} onChange={(event)=>setFoodType(event.target.value)}>
                         <h3 className='food-type-text'>Item Type:</h3>
-                        <input type="radio" value="Veg" name="food-type" />
-                        <h3 for={"Veg"} className='food-type-text'>Veg</h3>
-                        <input type="radio" name="food-type" value="Non Veg" />
-                        <h3 for={"Non Veg"} className='food-type-text'>Non Veg</h3>
+                        <input type="radio" id="Veg" value="Veg" name="food-type" className='radio-btn' />
+                        <div id='veg-div'></div>
+                        <label for={"Veg"} className='food-type-text'>Veg</label>
+                        <input type="radio" id="Non Veg" name="food-type" value="Non Veg" className='radio-btn' />
+                        <div id='non-veg-div'></div>
+                        <label for={"Non Veg"} className='food-type-text'>Non Veg</label>
                     </div>
                 </div>
                 {isLoading?

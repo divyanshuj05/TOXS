@@ -92,12 +92,6 @@
     width:100%;
 }
 
-.food-type-text{
-    font-weight: 100;
-    font-family: 'M PLUS 1 Code', sans-serif;
-    margin: 0 8% 0 0;
-}
-
 .container-btns{
     display: flex;
   }
@@ -138,4 +132,72 @@
 .quaternary-btn:hover{
     transition-duration: 400ms;
     background-color:rgb(162, 84, 235);
+}
+
+.radio-btn{
+    display: none;
+}
+
+#non-veg-div{
+    border: 2px solid rgb(230,230,230);
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
+}
+
+#non-veg-div::after{
+    content: '';
+    background-color: #C90000;
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.25s;
+}
+
+#veg-div{
+    border: 2px solid rgb(230,230,230);
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
+}
+
+#veg-div::after{
+    content: '';
+    background-color: #008900;
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.25s;
+}
+
+.radio-btn:checked + #veg-div::after{
+    transform: scale(1);
+}
+
+.radio-btn:checked + #non-veg-div::after{
+    transform: scale(1);
+}
+
+.food-type-text{
+    font-weight: 100;
+    font-size: large;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 0 5% 0 0;
+    cursor:pointer;
 }

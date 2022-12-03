@@ -15,13 +15,14 @@ export default function Vendor({ set }){
     const [securityOne,setSecurityOne] = useState("")
     const [securityQuestionTwo,setSecurityQuestionTwo]=useState(null)
     const [securityTwo,setSecurityTwo] = useState("")
+    const [securityKey,setSecurityKey]=useState(null)
 
     const handleVendorSubmit =async (event,set) => {
         event.preventDefault()
-        const res=CheckVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo)
+        const res=CheckVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey)
         if(res===false) return
         setIsLoading(true)
-        await EnterVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo).then(res=>{
+        await EnterVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey).then(res=>{
             alert("Vendor successfully registered")
             setIsLoading(false)
             set(false)
@@ -66,6 +67,8 @@ export default function Vendor({ set }){
                     <option value="Your elder/younder sibling's pet name">Your elder/younder sibling's pet name</option>
                 </select>
                 <input className='form-input-primary' type={"text"} placeholder="Answer security question 2" onChange={(text)=>setSecurityTwo(text.target.value)} />
+                <h3 className='form-input-text-primary'>Security Key</h3>
+                <input className='form-input-primary' type={"text"} placeholder="Security Key" onChange={(text)=>setSecurityKey(text.target.value)} />
                 {isLoading?
                 (   
                     <p style={{textAlign:"center",marginTop:"5%"}}>Request processing...</p>

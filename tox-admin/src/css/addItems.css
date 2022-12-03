@@ -131,4 +131,72 @@
   ::-webkit-scrollbar-thumb {
     background: rgb(150,150,150); 
   }
+
+  .food-type-text{
+    font-weight: 100;
+    font-size: large;
+    font-family: 'M PLUS 1 Code', sans-serif;
+    margin: 0 5% 0 0;
+    cursor:pointer;
+}
+
+#non-veg-div{
+    border: 2px solid rgb(210,210,210);
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
+}
+
+#non-veg-div::after{
+    content: '';
+    background-color: #C90000;
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.25s;
+}
+
+.radio-btn:checked + #non-veg-div::after{
+    transform: scale(1);
+}
+
+#veg-div{
+    border: 2px solid rgb(150,150,150);
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
+}
+
+#veg-div::after{
+    content: '';
+    background-color: #008900;
+    height: 100%;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.25s;
+}
+
+.radio-btn:checked + #veg-div::after{
+    transform: scale(1);
+}
+
+.radio-btn{
+    display: none;
+}
   

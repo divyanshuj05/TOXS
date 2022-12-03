@@ -2,8 +2,8 @@
 import { db } from "../database.config"
 import { addDoc,query,where,collection,getDocs,doc,updateDoc } from "firebase/firestore"
 
-export const CheckVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo) => {
-    if(!name||!email||!mobile||!password||!cafe)
+export const CheckVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
+    if(!name||!email||!mobile||!password||!cafe||!securityKey)
     {
         alert("Fill information first!!")
         return false
@@ -89,7 +89,7 @@ export const CheckVendorData = (name,email,mobile,password,cafe,securityOne,secu
     return true
 }
 
-export const EnterVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo) => {
+export const EnterVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
   return new Promise(async(resolve,reject)=>{
     var flag=0;
     const cafeteriaQuery=query(collection(db,"cafeterias"),where("Name","==",cafe))
@@ -136,6 +136,7 @@ export const EnterVendorData = (name,email,mobile,password,cafe,securityOne,secu
       token:"null",
       securityOne:securityQuestionOne+" "+securityOne,
       securityTwo:securityQuestionTwo+" "+securityTwo,
+      securityKey:securityKey
     }
     await addDoc(collection(db,"vendors"),data).then(res=>{
       resolve("Vendor successfully registered")
