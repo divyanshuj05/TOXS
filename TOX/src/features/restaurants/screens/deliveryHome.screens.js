@@ -8,7 +8,6 @@ import { AntDesign,Ionicons } from '@expo/vector-icons';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context"
 import { ActivityIndicator,Colors } from 'react-native-paper';
-import { Navigation } from '../../../infrastructure/navigation';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 
 const Container=styled(View)`

@@ -8,6 +8,7 @@ import QRCode from "react-native-qrcode-svg"
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context"
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { SafeArea } from '../../../utils/components/safe-area.components';
+import { Audio } from "expo-av"
 
 const Container = styled(View)`
     flex:1;
@@ -144,8 +145,10 @@ export const OrderDetails = ({route,navigation}) => {
         }
     }
 
-    const handleBarCodeScanned = ({ type,data }) => {
+    const handleBarCodeScanned = async({ type,data }) => {
         setScan(false)
+        const { sound }=await Audio.Sound.createAsync(require("../../../../assets/beep.mp3"))
+        await sound.playAsync();
         if(data==item.key)
         {
             OrderReady(item.id,item.orderBy,navigation,type,"Delivered",user.userName)

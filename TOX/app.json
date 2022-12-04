@@ -2,14 +2,26 @@
   "expo": {
     "name": "TOX",
     "slug": "TOX",
-    "version": "1.1.1",
-    "icon": "./assets/TOX_LOGO.png",
+    "version": "1.2.0",
+    "icon": "./assets/mainLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/TOX_LOGO.png",
+      "image": "./assets/mainLogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#EFD6BE"
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notificationLogo.png",
+          "color": "#EFD6BE",
+          "sounds": [
+            "./assets/sharp.wav"
+          ]
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -17,13 +29,18 @@
       "**/*"
     ],
     "ios": {
+      "infoPlist":{
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      },
       "supportsTablet": true,
       "bundleIdentifier": "com.aryanb.TOX"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/TOX_LOGO.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/mainLogo.png",
+        "backgroundColor": "#EFD6BE"
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.aryanb.TOX"
