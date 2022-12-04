@@ -3,13 +3,14 @@ import { storage } from "../database.config"
 import { collection, query, where, getDocs, addDoc, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-export const CheckCafeteriaData = (name,location,img,openTime,closeTime,menuList) => {
-    if(!name||!location||!img||!openTime||!closeTime||!menuList.length)
+export const CheckCafeteriaData = (name,location,vendor,img,openTime,closeTime,menuList) => {
+    if(!name||!location||!img||!openTime||!closeTime||!menuList.length||!vendor)
     {
         alert("Fill information first!!")
         return false
     }
     const ext=img.type
+    console.log("iweiuerb"+ext)
     // eslint-disable-next-line eqeqeq
     if(ext!="image/jpeg"&&ext!="image/png"&&ext!="image/jpg")
     {
@@ -26,7 +27,7 @@ export const CheckCafeteriaData = (name,location,img,openTime,closeTime,menuList
     return true
 }
 
-export const RegisterCafeteria = (name,location,img,openTime,closeTime,menuList) => {
+export const RegisterCafeteria = (name,location,vendor,img,openTime,closeTime,menuList) => {
 
     return new Promise(async(resolve,reject)=>{
         var flag=0;
@@ -38,8 +39,24 @@ export const RegisterCafeteria = (name,location,img,openTime,closeTime,menuList)
         });
         if(flag===1)
         {
-            alert(`Cafeteria name ${name} already exists!!`)
-            reject("Cafeteria does not exist")
+            alert(`Cafeteria name "${name}" already exists!!`)
+            reject("Cafeteria already exist")
+            return
+        }
+        flag=0
+        const Query=query(collection(db,"vendors"),where("userName","==",vendor))
+        const ss = await getDocs(Query);
+        ss.forEach(async(Doc) => {
+            flag=1
+            const vendorRef=doc(db,"vendors",Doc.id)
+            await updateDoc(vendorRef,{
+                restaurant:name
+            })
+        });
+        if(flag===0)
+        {
+            alert(`Vendor "${vendor}" does not exist!!`)
+            reject("Vendor does not exist")
             return
         }
         var imgRef = ref(storage,`restaurants/cafeteria icons/${name}`)
@@ -64,13 +81,13 @@ export const RegisterCafeteria = (name,location,img,openTime,closeTime,menuList)
             icon:URL,
             menuList:menuList,
             timings:openTime+":00-"+closeTime+":00",
-            vendor:"null"
+            vendor:vendor
         }
         await addDoc(collection(db,"cafeterias"),data).then(res=>{
-            resolve("Vendor successfully registered")
+            resolve("Cafeteria successfully registered")
             return
         }).catch(e=>{
-            reject("Problem registering vendor. Please try again")
+            reject("Problem registering cafeteria. Please try again")
             return
         })
     })

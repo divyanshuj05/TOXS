@@ -120,7 +120,7 @@ export const RegisterScreen = ({ navigation }) => {
     return (
       isLoading?
       (
-        <ActivityIndicator style={{marginTop:20}} animating={true} color={Colors.blue300} />
+        <></>
       ):
       (
         <Spacer size="xl">

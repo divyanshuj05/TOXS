@@ -1,5 +1,5 @@
 import { db } from "../../../database.config"
-import { collection, getDoc, query, getDocs, where, arrayUnion, doc, arrayRemove, updateDoc } from "firebase/firestore";
+import { collection, query, getDocs, where, arrayUnion, doc, arrayRemove, updateDoc } from "firebase/firestore";
 
 export const VendorRestaurantsRequest = (Name) => {
 
@@ -24,7 +24,8 @@ export const AddFoodItem = async (Title,cost,type,Restaurant) => {
         let data={
             price:cost,
             title:Title,
-            type:type
+            type:type,
+            isPresent:true
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", Restaurant))
         const docs = await getDocs(Query)
@@ -39,17 +40,19 @@ export const AddFoodItem = async (Title,cost,type,Restaurant) => {
     })
 }
 
-export const EditFoodItem = async (Title,oldCost,type,newCost,restaurant) => {
+export const EditFoodItem = async (Title,oldCost,type,isPresent,newCost,restaurant) => {
     return new Promise(async (resolve,reject)=>{
         let oldData={
             price:oldCost,
             title:Title,
-            type:type
+            type:type,
+            isPresent:isPresent
         }
         let newData={
             price:newCost,
             title:Title,
-            type:type
+            type:type,
+            isPresent:isPresent
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", restaurant))
         const docs = await getDocs(Query)
@@ -67,12 +70,13 @@ export const EditFoodItem = async (Title,oldCost,type,newCost,restaurant) => {
     })
 }
 
-export const DeleteFoodItem = (Title,cost,type,restaurant) => {
+export const DeleteFoodItem = (Title,cost,type,isPresent,restaurant) => {
     return new Promise(async (resolve,reject)=>{
         let data={
             price:cost,
             title:Title,
-            type:type
+            type:type,
+            isPresent:isPresent
         }
         const Query = query(collection(db, "cafeterias"), where("Name", "==", restaurant))
         const docs = await getDocs(Query)
@@ -83,6 +87,36 @@ export const DeleteFoodItem = (Title,cost,type,restaurant) => {
             }).then((res)=>{
               resolve("Done")  
             }).catch(err=>{reject(err)});
+        })
+    })
+}
+
+export const ChangeVisibility = (item,status,restaurant) => {
+    return new Promise(async(resolve,reject)=>{
+        let oldData={
+            price:item.price,
+            title:item.title,
+            type:item.type,
+            isPresent:item.isPresent
+        }
+        let newData={
+            price:item.price,
+            title:item.title,
+            type:item.type,
+            isPresent:status
+        }
+        const Query = query(collection(db, "cafeterias"), where("Name", "==", restaurant))
+        const docs = await getDocs(Query)
+        docs.forEach(async (Doc)=>{
+            const docRef=doc(db, "cafeterias", Doc.id);
+            await updateDoc(docRef, {
+                menuList:arrayRemove(oldData)
+            }).then(async (res)=>{
+                await updateDoc(docRef,{
+                    menuList: arrayUnion(newData)
+                }).then((res)=>resolve("Done")).catch(err=>reject(err))
+            })
+            .catch(err=>reject(err));
         })
     })
 }

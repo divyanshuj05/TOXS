@@ -80,7 +80,7 @@ export const MenuList = ({ data, navigation, restaurant, vendor, type }) => {
         if(type=="Veg Only")
         {
             return(
-                item.type=="Veg"?
+                item.type=="Veg"&&item.isPresent===true?
                 (
                     <>
                         <View style={{flexDirection:"row",marginBottom:0,justifyContent:"center"}}>  
@@ -110,35 +110,41 @@ export const MenuList = ({ data, navigation, restaurant, vendor, type }) => {
             )
         }
         return (
-            <>
-                <View style={{flexDirection:"row",marginBottom:0,justifyContent:"center"}}>  
-                    <View style={{justifyContent:"center"}}>
-                        {item.type=="Veg"?
-                        (
-                            <Veg></Veg>
-                        ):
-                        (
-                            <NonVeg></NonVeg>
-                        )
-                        }
+            item.isPresent===true?
+            (
+                <>
+                    <View style={{flexDirection:"row",marginBottom:0,justifyContent:"center"}}>  
+                        <View style={{justifyContent:"center"}}>
+                            {item.type=="Veg"?
+                            (
+                                <Veg></Veg>
+                            ):
+                            (
+                                <NonVeg></NonVeg>
+                            )
+                            }
+                        </View>
+                        <View style={{flex:0.5,justifyContent:"center"}}>
+                            <ListTitle>
+                                {item.title}
+                            </ListTitle>
+                        </View>
+                        <View style={{flex:0.3}}>
+                            <AddFoodItems foodDetail={item} />
+                        </View>
                     </View>
-                    <View style={{flex:0.5,justifyContent:"center"}}>
-                        <ListTitle>
-                            {item.title}
-                        </ListTitle>
+                    <View style={{flexDirection:"row",marginBottom:30,justifyContent:"center"}}>
+                        <View style={{flex:0.8}}>
+                            <ListPrice>
+                                ₹{item.price}
+                            </ListPrice>
+                        </View>
                     </View>
-                    <View style={{flex:0.3}}>
-                        <AddFoodItems foodDetail={item} />
-                    </View>
-                </View>
-                <View style={{flexDirection:"row",marginBottom:30,justifyContent:"center"}}>
-                    <View style={{flex:0.8}}>
-                        <ListPrice>
-                            ₹{item.price}
-                        </ListPrice>
-                    </View>
-                </View>
-            </>
+                </>
+            ):
+            (
+                <></>
+            )
         );
     };
 

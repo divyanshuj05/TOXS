@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { View,TouchableOpacity, Text, Alert } from "react-native"
+import React, { useState, useContext, useEffect } from 'react'
+import { View,TouchableOpacity, Text, Alert, Switch } from "react-native"
 import styled from 'styled-components'
 import { TextInput } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -29,13 +29,14 @@ const ListPrice = styled(Text)`
 `;
 
 const Touch=styled(TouchableOpacity)`
-    margin-left:${(props) => props.theme.space[2]};
-    margin-top:${(props) => props.theme.space[2]};
+    margin-left:${(props) => props.theme.space[4]};
+    justify-content:center;
 `;
 
 const Input=styled(TextInput)`
-    height:50px;
-    width:100px;
+    height:22px;
+    width:120px;
+    padding:8px
 `;
 
 const Error=styled(Text)`
@@ -60,9 +61,13 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
     const [edit,setEdit]=useState(false)
     const [cost,setCost]=useState("")
     const [error,setError]=useState(null)
-
+    const [checked,setChecked]=useState(foodItem.isPresent)
     const { scheme } = useContext(AppThemeContext)
-    const { editItem,deleteItem } = useContext(VendorRestaurantContext)
+    const { editItem,deleteItem,changeItemVisibility } = useContext(VendorRestaurantContext)
+
+    useEffect(()=>{
+        setChecked(foodItem.isPresent)
+    },[foodItem.isPresent])
 
     const deleteButton = () => {
             Alert.alert(
@@ -71,7 +76,7 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                 [
                     {
                         text: "Yes",
-                        onPress: async () => {setError(await (deleteItem(foodItem.title,foodItem.price,foodItem.type,Restaurant))) }
+                        onPress: async () => {setError(await (deleteItem(foodItem.title,foodItem.price,foodItem.type,foodItem.isPresent,Restaurant))) }
                     },
                     {
                         text: "No",
@@ -86,36 +91,54 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
         setTimeout(()=>{setError(null)},5000)
     }
 
+    const toggleSwitch = async() => {
+        if(checked==true)
+        {
+            setError(await(changeItemVisibility(foodItem,false,Restaurant)))
+        }else{
+            setError(await(changeItemVisibility(foodItem,true,Restaurant)))
+        }
+    }
+
     const MenuListView = () => {
         return(
             <ListView>
                 <View style={{flexDirection:"row"}}>
                     <View style={{marginLeft:8,justifyContent:"center"}}>
-                    {foodItem.type=="Veg"?
-                        (
-                            <Veg></Veg>
-                        ):
-                        (
-                            <NonVeg></NonVeg>
-                        )
+                        {foodItem.type=="Veg"?
+                            (
+                                <Veg></Veg>
+                            ):
+                            (
+                                <NonVeg></NonVeg>
+                            )
                         }
                     </View>
-                    <View style={{flex:0.65}}>
-                    <ListTitle>
-                        {foodItem.title}
-                    </ListTitle></View>
+                    <View style={{flex:0.9}}>
+                        <ListTitle>
+                            {foodItem.title}
+                        </ListTitle></View>
+                    </View>
+                <View style={{flexDirection:"row"}}>
+                    <View style={{flex:0.4}}>
+                        <ListPrice>
+                            ₹{foodItem.price}
+                        </ListPrice>
+                    </View>
                     {edit?
                     (
-                        <View style={{flexDirection:"row",flex:0.45}}>
+                        <View style={{flexDirection:"row",flex:0.4,marginTop:-24}}>
                             <Input
+                                mode='outlined'
                                 label="Item Cost"
                                 textContentType="telephoneNumber"
                                 keyboardType="phone-pad"
                                 autoCapitalize="none"
-                                onChangeText={(text) => setCost(text)} /> 
+                                onChangeText={(text) => setCost(text)}
+                            /> 
                             <Touch activeOpacity={0.65} onPress={async()=>{
                                 setEdit(!edit)
-                                setError(await (editItem(foodItem.title,foodItem.price,foodItem.type,cost,Restaurant)))
+                                setError(await (editItem(foodItem.title,foodItem.price,foodItem.type,foodItem.isPresent,cost,Restaurant)))
                                 setCost("")
                             }}>
                                 <Ionicons name="checkmark-circle-outline" size={26} color={scheme == "light" ? "black" : "white"} />
@@ -124,23 +147,30 @@ export const VendorMenuDetail= ({ foodItem,Restaurant, oriTag }) => {
                     ):
                     (
                         <>
-                            <View style={{flex:0.1}}>
+                            <View style={{flex:0.22,alignItems:"center",marginTop:-25}}>
+                                <Switch
+                                    style={{margin:0}}
+                                    trackColor={{ false: "#641212", true: "#126412" }}
+                                    thumbColor={checked ? "green" : "red"}
+                                    ios_backgroundColor="#3e3e3e"
+                                    onValueChange={toggleSwitch}
+                                    value={checked}
+                                />
+                            </View>
+                            <View style={{flex:0.17,alignItems:"center"}}>
                                 <TouchableOpacity activeOpacity={0.65} onPress={()=>setEdit(!edit)}>
                                     <MaterialIcons name="edit" size={22} color={scheme == "light" ? "black" : "white"} />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{flex:0.35}}>
-                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:64}} onPress={()=>deleteButton()}>
+                            <View style={{flex:0.17,alignItems:"center"}}>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>deleteButton()}>
                                     <MaterialIcons name="delete" size={22} color={scheme == "light" ? "black" : "white"} />
                                 </TouchableOpacity>
                             </View>
                         </>
                     )
                     }
-                    </View>
-                <ListPrice>
-                    ₹{foodItem.price}
-                </ListPrice>
+                </View>
                 {!!error?
                 (
                     <Error>{error}</Error>

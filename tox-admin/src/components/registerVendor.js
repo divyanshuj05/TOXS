@@ -9,7 +9,6 @@ export default function Vendor({ set }){
     const [mail,setMail]=useState(null)
     const [mobile,setMobile]=useState(null)
     const [password,setPassword]=useState(null)
-    const [cafe,setCafe]=useState(null)
     const [isLoading,setIsLoading]=useState(false)
     const [securityQuestionOne,setSecurityQuestionOne]=useState(null)
     const [securityOne,setSecurityOne] = useState("")
@@ -19,10 +18,10 @@ export default function Vendor({ set }){
 
     const handleVendorSubmit =async (event,set) => {
         event.preventDefault()
-        const res=CheckVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey)
+        const res=CheckVendorData(name,mail,mobile,password,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey)
         if(res===false) return
         setIsLoading(true)
-        await EnterVendorData(name,mail,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey).then(res=>{
+        await EnterVendorData(name,mail,mobile,password,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey).then(res=>{
             alert("Vendor successfully registered")
             setIsLoading(false)
             set(false)
@@ -45,8 +44,6 @@ export default function Vendor({ set }){
                 <input className='form-input-primary' type={"text"} placeholder="Mobile Number" onChange={(text)=>setMobile(text.target.value)} />
                 <h3 className='form-input-text-primary'>Password</h3>
                 <input className='form-input-primary' type={"password"} placeholder="Password" onChange={(text)=>setPassword(text.target.value)} />
-                <h3 className='form-input-text-primary'>Cafteria of vendor</h3>
-                <input className='form-input-primary' type={"text"} placeholder="Cafteria" onChange={(text)=>setCafe(text.target.value)} />
                 <h3 for="security1" className='form-input-text-primary'>Security Question 1</h3>
                 <select name="security1" className="form-input-dropdown" onChange={(text)=>setSecurityQuestionOne(text.target.value)}>
                     <option value="" disabled selected hidden>Select question 1</option>
@@ -56,7 +53,7 @@ export default function Vendor({ set }){
                     <option value="Your favourite food">Your favourite food</option>
                     <option value="Your elder/younder sibling's pet name">Your elder/younder sibling's pet name</option>
                 </select>
-                <input className='form-input-primary' type={"text"} placeholder="Answer security question 1" onChange={(text)=>setSecurityOne(text.target.value)} />
+                <input className='form-input-primary' type={"password"} placeholder="Answer security question 1" onChange={(text)=>setSecurityOne(text.target.value)} />
                 <h3 for="security2" className='form-input-text-primary'>Security Question 2</h3>
                 <select name="security2" className="form-input-dropdown" onChange={(text)=>setSecurityQuestionTwo(text.target.value)}>
                     <option value="" disabled selected hidden>Select question 2</option>
@@ -66,9 +63,9 @@ export default function Vendor({ set }){
                     <option value="Your favourite food">Your favourite food</option>
                     <option value="Your elder/younder sibling's pet name">Your elder/younder sibling's pet name</option>
                 </select>
-                <input className='form-input-primary' type={"text"} placeholder="Answer security question 2" onChange={(text)=>setSecurityTwo(text.target.value)} />
+                <input className='form-input-primary' type={"password"} placeholder="Answer security question 2" onChange={(text)=>setSecurityTwo(text.target.value)} />
                 <h3 className='form-input-text-primary'>Security Key</h3>
-                <input className='form-input-primary' type={"text"} placeholder="Security Key" onChange={(text)=>setSecurityKey(text.target.value)} />
+                <input className='form-input-primary' type={"password"} placeholder="Security Key" onChange={(text)=>setSecurityKey(text.target.value)} />
                 {isLoading?
                 (   
                     <p style={{textAlign:"center",marginTop:"5%"}}>Request processing...</p>

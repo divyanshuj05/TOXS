@@ -10,16 +10,17 @@ export default function Cafeteria({ set, setMenuList, menuList }){
     const [openTime,setOpenTime]=useState(null)
     const [closeTime,setCloseTime]=useState(null)
     const [isLoading,setIsLoading]=useState(false)
+    const [vendor,setVendor]=useState(null)
     const [foodType,setFoodType]=useState(null)
     const [item,setItem]=useState("")
     const [price,setPrice]=useState("")
 
     const handleCafeteriaSubmit = async(event,set) => {
         event.preventDefault()
-        const res=CheckCafeteriaData(name,location,img,openTime,closeTime,menuList)
+        const res=CheckCafeteriaData(name,location,vendor,img,openTime,closeTime,menuList)
         if(res===false) return
         setIsLoading(true)
-        await RegisterCafeteria(name,location,img,openTime,closeTime,menuList).then(res=>{
+        await RegisterCafeteria(name,location,vendor,img,openTime,closeTime,menuList).then(res=>{
             setIsLoading(false)
             set(false)
             setMenuList([])
@@ -57,7 +58,8 @@ export default function Cafeteria({ set, setMenuList, menuList }){
         const data={
             title:item,
             price:price,
-            type:foodType
+            type:foodType,
+            isPresent:true
         }
         setMenuList([...menuList,data])
         setItem("")
@@ -88,6 +90,8 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                 <input type={"text"} className='form-input-primary' placeholder='Cafeteria Name' onChange={(text)=>setName(text.target.value)} />
                 <h3 className='form-input-text-primary'>Location</h3>
                 <input type={"text"} className='form-input-primary' placeholder='Location' onChange={(text)=>setLocation(text.target.value)}  />
+                <h3 className='form-input-text-primary'>Vendor Name</h3>
+                <input type={"text"} className='form-input-primary' placeholder='Vendor Name' onChange={(text)=>setVendor(text.target.value)}  />
                 <h3 className='form-input-text-primary'>Select an image</h3>
                 <input type={"file"} className='form-input-secondary' placeholder='Select File' onChange={(text)=>setImg(text.target.files[0])}  />
                 <h3 className='form-input-text-primary'>Timings of cafeteria</h3>

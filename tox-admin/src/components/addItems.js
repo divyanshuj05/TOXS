@@ -39,7 +39,8 @@ export default function AddItems({ set, setMenuList, menuList }){
         const data={
             title:item,
             price:price,
-            type:foodType
+            type:foodType,
+            isPresent:true
         }
         setMenuList([...menuList,data])
         setItem("")
@@ -92,7 +93,7 @@ export default function AddItems({ set, setMenuList, menuList }){
     }
 
     return(
-        <div className='form-container'>
+        <div style={{height:"100%"}}>
             <form>
                 <div className='container-food-items-content'>
                     <h2 id='container-title'>Add food items to cafeteria</h2>

@@ -1,5 +1,5 @@
-import React,{ createContext, useState, useEffect, useContext,useRef } from 'react'
-import { VendorRestaurantsRequest,AddFoodItem,EditFoodItem,DeleteFoodItem } from './vendorRestaurant.services'
+import React,{ createContext, useState, useContext,useRef } from 'react'
+import { VendorRestaurantsRequest,AddFoodItem,EditFoodItem,DeleteFoodItem,ChangeVisibility } from './vendorRestaurant.services'
 import { AuthenticationContext } from "../authentication/authentication.context"
 
 export const VendorRestaurantContext=createContext()
@@ -60,7 +60,18 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         })
     }
 
-    const editItem = (title,oldCost,type,newCost,Restaurant) => { 
+    const changeItemVisibility = (foodItem,status,Restaurant) => {
+        setIsLoading(true)
+        ChangeVisibility(foodItem,status,Restaurant).then(res=>{
+            Search(user.userName)
+            return null
+        }).catch(e=>{
+            console.log(e)
+            return "Operation failed!!"
+        })
+    }
+
+    const editItem = (title,oldCost,type,isPresent,newCost,Restaurant) => { 
         setIsLoading(true)
         if(newCost=="") 
         {
@@ -80,7 +91,7 @@ export const VendorRestaurantContextProvider = ({ children }) => {
         if(newCost==oldCost) {
             setIsLoading(false)
             return null}
-            EditFoodItem(title,oldCost,type,newCost,Restaurant).then(res=>{
+            EditFoodItem(title,oldCost,type,isPresent,newCost,Restaurant).then(res=>{
                 Search(user.userName)
                 return null
             }).catch(err=>{
@@ -88,12 +99,11 @@ export const VendorRestaurantContextProvider = ({ children }) => {
                 setIsLoading(false)
                 return err
             })
-        
     }
 
-    const deleteItem = (title,cost,type,Restaurant) => {
+    const deleteItem = (title,cost,type,isPresent,Restaurant) => {
         setIsLoading(true)
-        DeleteFoodItem(title,cost,type,Restaurant).then(res=>{
+        DeleteFoodItem(title,cost,type,isPresent,Restaurant).then(res=>{
             Search(user.userName)
             return null
         }).catch(err=>{
@@ -101,7 +111,6 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             setIsLoading(false)
             return "Operation failed!!"
         })
-
     }
 
     return(
@@ -113,7 +122,8 @@ export const VendorRestaurantContextProvider = ({ children }) => {
             editItem,
             deleteItem,
             Search,
-            sortMenuList
+            sortMenuList,
+            changeItemVisibility
         }}>
             {children}
         </VendorRestaurantContext.Provider>

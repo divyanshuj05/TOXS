@@ -1,9 +1,9 @@
 /* eslint-disable eqeqeq */
 import { db } from "../database.config"
-import { addDoc,query,where,collection,getDocs,doc,updateDoc } from "firebase/firestore"
+import { addDoc,query,where,collection,getDocs } from "firebase/firestore"
 
-export const CheckVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
-    if(!name||!email||!mobile||!password||!cafe||!securityKey)
+export const CheckVendorData = (name,email,mobile,password,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
+    if(!name||!email||!mobile||!password||!securityKey)
     {
         alert("Fill information first!!")
         return false
@@ -89,25 +89,9 @@ export const CheckVendorData = (name,email,mobile,password,cafe,securityOne,secu
     return true
 }
 
-export const EnterVendorData = (name,email,mobile,password,cafe,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
+export const EnterVendorData = (name,email,mobile,password,securityOne,securityQuestionOne,securityTwo,securityQuestionTwo,securityKey) => {
   return new Promise(async(resolve,reject)=>{
     var flag=0;
-    const cafeteriaQuery=query(collection(db,"cafeterias"),where("Name","==",cafe))
-    const querySnapshot = await getDocs(cafeteriaQuery);
-    querySnapshot.forEach(async(Doc) => {
-      flag=1
-      const ref=doc(db,"cafeterias",Doc.id)
-      await updateDoc(ref, {
-        "vendor": name
-      });
-    });
-    if(flag===0)
-    {
-      alert("Cafteria does not exist!!")
-      reject("Cafeteria does not exist")
-      return
-    }
-    flag=0
     let q = query(collection(db, "vendors"), where("userName", "==", name))
     let dupUser = await getDocs(q);
     dupUser.forEach(doc => {
@@ -132,7 +116,7 @@ export const EnterVendorData = (name,email,mobile,password,cafe,securityOne,secu
       email:email,
       mobileNo:mobile,
       password:password,
-      restaurant:cafe,
+      restaurant:"null",
       token:"null",
       securityOne:securityQuestionOne+" "+securityOne,
       securityTwo:securityQuestionTwo+" "+securityTwo,

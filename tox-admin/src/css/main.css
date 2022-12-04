@@ -24,6 +24,29 @@
   border-radius: 8px;
 }
 
+.width-control{
+  display: flex;
+}
+
+@media only screen and (max-width:650px) {
+  .content-container{
+    background-color: rgba(230, 230, 230, 0.7);
+    flex-direction: column;
+    display: flex;
+    height: 70vh;
+    width: 50vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+
+  .width-control{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 #container-title{
   font-family: 'Oswald', sans-serif;
   font-weight: bold;

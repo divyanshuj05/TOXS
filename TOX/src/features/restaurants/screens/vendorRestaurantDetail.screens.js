@@ -48,6 +48,12 @@ const AddText=styled(Text)`
     font-family:${(props) => props.theme.fonts.heading};
 `;
 
+const Error=styled(Text)`
+    color:${props => props.theme.colors.ui.error}
+    font-size:16px;
+    font-family:${(props) => props.theme.fonts.heading};
+`;
+
 const Add=styled(Text)`
     color:${(props) => props.theme.text};
     font-size:14px;
@@ -194,7 +200,9 @@ export const VendorRestaurantDetail = ({ route }) => {
                     <BottomBar>
                         {!!error?
                         (
-                            <AddText>Error: {error}</AddText>
+                            <View style={{flex:1,alignItems:"center"}}>
+                                <Error>Error: {error}</Error>
+                            </View>
                         ):
                         (
                             <TouchableOpacity activeOpacity={0.65} onPress={()=>setAdd(!add)} style={{flex:1,alignItems:"center"}}>
