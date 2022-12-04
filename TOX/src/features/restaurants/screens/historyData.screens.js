@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ScrollView, Alert, View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native'
+import { ScrollView, Alert, View, Text, TouchableOpacity, Platform, Linking, Button } from 'react-native'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 import styled from 'styled-components'
@@ -9,6 +9,8 @@ import { DeviceOrientationContext } from "../../../services/common/deviceOrienta
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { Audio } from "expo-av"
+import { Ionicons } from '@expo/vector-icons';
+import { AppThemeContext } from '../../../services/common/theme.context';
 
 const Container = styled(View)`
     flex:1;
@@ -99,6 +101,7 @@ export const OrderDetails = ({route,navigation}) => {
     const [addSecurity,setAddSecurity]=useState(false)
     const [security,setSecurity]=useState(null)
     const [scan,setScan]=useState(false)
+    const { scheme }=useContext(AppThemeContext)
 
     const handleOrderReady = (type,status) => {
         Alert.alert(
@@ -158,6 +161,16 @@ export const OrderDetails = ({route,navigation}) => {
         }
     }
 
+    const handleTel = (mobile) => {
+        if(Platform.OS==="android")
+        {
+            Linking.openURL(`tel: ${mobile}`)
+        }
+        else{
+            Linking.openURL(`telprompt: ${mobile}`)
+        }
+    }
+
     if(isLoading)
     {
         return(
@@ -210,8 +223,11 @@ export const OrderDetails = ({route,navigation}) => {
                             <View style={{flex:0.4}}>
                                 <TextWrap>Vendor Mobile</TextWrap>
                             </View>
-                            <View style={{flex:0.6}}>
+                            <View style={{flex:0.6,flexDirection:"row"}}>
                                 <TextWrap>{item.vendorMobile}</TextWrap>
+                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48}} onPress={()=>handleTel(item.vendorMobile)}>
+                                    <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                                </TouchableOpacity>
                             </View>
                         </Row>
                     ):
@@ -220,8 +236,11 @@ export const OrderDetails = ({route,navigation}) => {
                             <View style={{flex:0.4}}>
                                 <TextWrap>Customer Mobile</TextWrap>
                             </View>
-                            <View style={{flex:0.6}}>
+                            <View style={{flex:0.6, flexDirection:"row"}}>
                                 <TextWrap>{item.userMobile}</TextWrap>
+                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48}} onPress={()=>handleTel(item.userMobile)}>
+                                    <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                                </TouchableOpacity>
                             </View>
                         </Row>
                     )
@@ -292,7 +311,7 @@ export const OrderDetails = ({route,navigation}) => {
                                             placeholder='Enter security key'
                                             style={{flex:0.8,height:30,marginLeft:32}}
                                             value={security}
-                                            keyboardType="numeric"
+                                            keyboardType="default"
                                             onChangeText={(text)=>setSecurity(text)}
                                         />
                                         <TouchBtn activeOpacity={0.65} style={{flex:0.2}} onPress={()=>handleManualScan(item.key)}>

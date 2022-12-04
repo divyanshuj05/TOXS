@@ -92,6 +92,14 @@ export default function AddItems({ set, setMenuList, menuList }){
         })
     }
 
+    const handleVeg = () => {
+        document.getElementById("Veg").checked=true
+    }
+
+    const handleNonVeg = () => {
+        document.getElementById("Non-Veg").checked=true
+    }
+
     return(
         <div style={{height:"100%"}}>
             <form>
@@ -116,10 +124,10 @@ export default function AddItems({ set, setMenuList, menuList }){
                         <div style={{display:"flex",marginTop:"1%"}} onChange={(event)=>setFoodType(event.target.value)}>
                             <h3 className='food-type-text'>Item Type:</h3>
                             <input id="Veg" type="radio" value="Veg" name="food-type" className='radio-btn' />
-                            <div id='veg-div'></div>
+                            <div id='veg-div' onClick={handleVeg}></div>
                             <label for={"Veg"} className='food-type-text'>Veg</label>
                             <input id="Non-Veg" type="radio" name="food-type" value="Non Veg" className='radio-btn' />
-                            <div id='non-veg-div'></div>
+                            <div id='non-veg-div' onClick={handleNonVeg}></div>
                             <label for={"Non-Veg"} className='food-type-text'>Non Veg</label>
                         </div>
                     </div>

@@ -151,6 +151,7 @@
     justify-items: center;
     box-sizing: border-box;
     margin-top: 0.25em;
+    cursor: pointer;
 }
 
 #non-veg-div::after{
@@ -162,6 +163,19 @@
     border-radius: 50%;
     transform: scale(0);
     transition: transform 0.25s;
+}
+
+.radio-btn:checked + #non-veg-div{
+    border: 2px solid #C90000;
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
 }
 
 .radio-btn:checked + #non-veg-div::after{
@@ -179,6 +193,7 @@
     justify-items: center;
     box-sizing: border-box;
     margin-top: 0.25em;
+    cursor: pointer;
 }
 
 #veg-div::after{
@@ -190,6 +205,19 @@
     border-radius: 50%;
     transform: scale(0);
     transition: transform 0.25s;
+}
+
+.radio-btn:checked + #veg-div{
+    border: 2px solid #008900;
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
 }
 
 .radio-btn:checked + #veg-div::after{

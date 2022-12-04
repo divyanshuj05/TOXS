@@ -78,8 +78,8 @@ const flatlist_data = [
     },
     {
         icon: TLX_logo,
-        text: "TLX",
-        subText: "(Thapar Online Exchnage)",
+        text: "TEX",
+        subText: "(Thapar Exchnage Service)",
         color: colors.bg.primary
     }
 ]

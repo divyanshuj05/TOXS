@@ -149,6 +149,7 @@
     justify-items: center;
     box-sizing: border-box;
     margin-top: 0.25em;
+    cursor: pointer;
 }
 
 #non-veg-div::after{
@@ -173,6 +174,7 @@
     justify-items: center;
     box-sizing: border-box;
     margin-top: 0.25em;
+    cursor: pointer;
 }
 
 #veg-div::after{
@@ -190,8 +192,34 @@
     transform: scale(1);
 }
 
+.radio-btn:checked + #veg-div{
+    border: 2px solid #008900;
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
+}
+
 .radio-btn:checked + #non-veg-div::after{
     transform: scale(1);
+}
+
+.radio-btn:checked + #non-veg-div{
+    border: 2px solid #C90000;
+    border-radius: 50%;
+    display: block;
+    padding: 1px;
+    margin-right: 2%;
+    width: 1em;
+    height: 1em;
+    justify-items: center;
+    box-sizing: border-box;
+    margin-top: 0.25em;
 }
 
 .food-type-text{
