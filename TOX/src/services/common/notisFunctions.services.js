@@ -21,7 +21,7 @@ export async function registerForPushNotificationsAsync() {
         alert('Permission for notification not granted! You will not receive any notifications');
         return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
+    token = (await Notifications.getExpoPushTokenAsync({experienceId:'@com.aryanb.TOX'})).data;
     return token;
 }
 

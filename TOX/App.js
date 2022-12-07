@@ -7,6 +7,7 @@ import { AuthenticationContextProvider } from "./src/services/authentication/aut
 import { DeviceOrientationContextProvider } from "./src/services/common/deviceOrientation.context";
 import { DeviceOffline } from "./src/features/common/screens/offlineDevice.screens";
 import NetInfo from "@react-native-community/netinfo"
+import 'expo-dev-client';
 
 export default function App() {
 

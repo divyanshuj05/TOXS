@@ -35,7 +35,7 @@ export const restaurantsRequest = () => {
     })
 }
 
-export const Orders = async(email,mobile,amount,vendor,order,restaurant,location) => {
+export const Orders = async(email,mobile,amount,vendor,order,restaurant,location,type,id) => {
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -65,7 +65,9 @@ export const Orders = async(email,mobile,amount,vendor,order,restaurant,location
             restaurant:restaurant,
             orderDate:today,
             orderTime:time,
-            key:key
+            key:key,
+            paymentMethod:type,
+            paymentID:id
         }
         return new Promise(async(resolve,reject)=>{
             const orderRef=collection(db,"cafeteriaOrders")

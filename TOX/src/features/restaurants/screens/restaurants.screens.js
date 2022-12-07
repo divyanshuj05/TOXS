@@ -108,7 +108,7 @@ export const RestaurantScreen = ({ navigation }) => {
                         (<></>) : 
                         (
                             <FavWrap>
-                            {isCopyLoading ? 
+                            {isCopyLoading||isLoading ? 
                             (
                                 <View style={{ marginTop: 50 }}>
                                     <ActivityIndicator color={Colors.red400} size={50} />

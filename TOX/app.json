@@ -29,7 +29,7 @@
       "**/*"
     ],
     "ios": {
-      "infoPlist":{
+      "infoPlist": {
         "UIBackgroundModes": [
           "audio"
         ]
@@ -44,6 +44,11 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.aryanb.TOX"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "467764a2-4d68-4120-92a1-e926f852a1dc"
+      }
     }
   }
 }
