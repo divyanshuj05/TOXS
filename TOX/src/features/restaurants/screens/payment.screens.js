@@ -81,7 +81,7 @@ export const PaymentScreen = ({ route,navigation }) => {
     return res
   }
 
-  const handleRazorPay = () => {
+  const handleRazorPay = async() => {
     if(type=="")
     {
       alert("Fill order collection option")
@@ -96,27 +96,29 @@ export const PaymentScreen = ({ route,navigation }) => {
     }
     var options = {
       description: 'Food orders payment',
-      image: '../../../../assets/mainLogo.png',
+      image: 'https://i.imgur.com/3g7nmJC.png',
       currency: 'INR',
-      key: '',
+      key: 'rzp_test_tIkGtSeYXZsOdB',
       amount: amount*100,
       name: 'TOX',
       prefill: {
-        email: user.email,
+        email: user.email, 
         contact: user.mobileNo,
         name: user.userName
       },
-      theme: {color: scheme=="dark"?"white":"#191919"}
+      theme: "rgb(100, 50, 150)"
     }
-    
-    RazorpayCheckout.open(options).then((data) => {
+
+    await RazorpayCheckout.open(options).then((data) => {
       console.log(`Success: ${data.razorpay_payment_id}`);
-      return data.razorpay_payment_id
+      //return data.razorpay_payment_id
+      return false
     }).catch((error) => {
-      console.log(error.code)
+      console.log(error)
       alert("Some error occured! Please try again");
       return false
     });
+    console.log("AFter")
   }
 
   return (
@@ -238,8 +240,8 @@ export const PaymentScreen = ({ route,navigation }) => {
                           <View style={{flex:0.5}}>
                             <Pay activeOpacity={0.65} onPress={async()=>{
                               const res=handleRazorPay()
-                              if(res==false){}
-                              else{
+                              if(res==false){console.log("return back")}
+                              /*else{
                                 await SendOrder(user.email,user.mobileNo,amount,vendor,data,restaurant,location,"razorpay",res).then(res=>{
                                   SearchHistory(user.email,user.type)
                                   navigation.navigate("RestaurantsHome")
@@ -247,7 +249,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                                   console.log(e)
                                   alert("Some error occured")
                                 })
-                              }
+                              }*/
                             }}>
                               <Text style={{color:"white",textAlign:"center",fontSize:16}}>Pay</Text>
                             </Pay>

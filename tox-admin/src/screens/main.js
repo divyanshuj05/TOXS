@@ -41,13 +41,15 @@ export default function Main(){
               (cafteria?
                 (
                   <div className='width-control'>
-                    <div className='content-container' style={{marginRight:10}}>
+                    <div className='content-container'>
                       <Cafeteria set={setCafeteria} setMenuList={setMenuList} menuList={menuList} />
                     </div>
                     {menuList.length?
                     (
-                      <div className='content-container'>
-                        <List menuList={menuList} />
+                      <div className='list-margin-control'>
+                        <div className='content-container'>
+                          <List menuList={menuList} />
+                        </div>
                       </div>
                     ):
                     (

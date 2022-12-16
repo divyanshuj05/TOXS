@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../css/addItems.css"
-import { AddFoodItems } from '../services/cafeteria.service'
+import { AddFoodItems, GettAllCafeterias } from '../services/cafeteria.service'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,6 +11,23 @@ export default function AddItems({ set, setMenuList, menuList }){
     const [price,setPrice]=useState("")
     const [foodType,setFoodType]=useState(null)
     const [isLoading,setIsLoading]=useState(false)
+    const [allCafeterias,setAllCafeterias]=useState([])
+    const [cafeteriaLoading,setCafeteriaLoading]=useState(false)
+
+    useEffect(()=>{
+        setCafeteriaLoading(true)
+        GettAllCafeterias().then(res=>{
+            setAllCafeterias(res)
+            setCafeteriaLoading(false)
+        }).catch(e=>{
+            console.log(e)
+            setCafeteriaLoading(false)
+            toast.warn("Some error occured while getting cafeteria names",{
+                position:"top-center",
+                theme:"colored"
+            })
+        })
+    },[])
 
     const handleBackButton = (event) => {
         event.preventDefault()
@@ -67,7 +84,6 @@ export default function AddItems({ set, setMenuList, menuList }){
         setMenuList([])
         setItem("")
         setPrice("")
-        setCafeteria("")
         let ele = document.getElementsByName("food-type");
         for(let i=0;i<ele.length;i++)
             ele[i].checked = false;
@@ -100,7 +116,6 @@ export default function AddItems({ set, setMenuList, menuList }){
             setCafeteria("")
             setMenuList([])
             setIsLoading(false)
-            set(false)
             toast.success("Food items added",{
                 position:"top-center",
                 theme:"colored"
@@ -126,6 +141,14 @@ export default function AddItems({ set, setMenuList, menuList }){
         setFoodType("Non Veg")
     }
 
+    if(cafeteriaLoading){
+        return(
+            <div style={{height:"100%"}}>
+                <p style={{textAlign:"center",marginTop:"5%"}}>Loading...</p>
+            </div>
+        )        
+    }
+
     return(
         <>
             <div style={{height:"100%"}}>
@@ -133,7 +156,26 @@ export default function AddItems({ set, setMenuList, menuList }){
                     <div className='container-food-items-content'>
                         <h2 id='container-title'>Add food items to cafeteria</h2>
                         <h3 className='form-input-text-primary-title'>Cafeteria Name</h3>
-                        <input type={"text"} value={cafeteria} className='form-input-primary' placeholder='Name' onChange={(text)=>setCafeteria(text.target.value)} />
+                        <select className="form-input-primary" onClick={(text)=>setCafeteria(text.target.value)}>
+                        {allCafeterias.length===0?
+                        (
+                            <>
+                                <option value="" disabled selected hidden>No Cafeterias Available</option>
+                            </>
+                        ):
+                        (
+                            <>
+                                <option value="" disabled selected hidden>Select Cafeteria</option>
+                                {allCafeterias.map((item)=>{
+                                    const key=item
+                                    return(
+                                        <option key={key} value={item}>{item}</option>
+                                    )
+                                })}
+                            </>   
+                        )
+                        }
+                        </select>
                         <div style={{display:"flex",marginLeft:"10%",marginTop:"3.5%",flexDirection:"column"}}>
                             <div style={{display:"flex"}}>
                                 <div style={{display:"flex",flexDirection:"column",width:110}}>
@@ -166,10 +208,10 @@ export default function AddItems({ set, setMenuList, menuList }){
                                     <div style={{display:"flex",flex:0.33}}>
                                         <h3 className='text-primary'>Items</h3>
                                     </div>
-                                    <div style={{display:"flex",flex:0.33}}>
+                                    <div style={{display:"flex",flex:0.33,margin:0}}>
                                         <h3 className='text-primary'>Price</h3>
                                     </div>
-                                    <div style={{display:"flex",flex:0.33}}>
+                                    <div style={{display:"flex",flex:0.33,margin:0}}>
                                         <h3 className='text-primary'>Type</h3>
                                     </div>
                                 </div>
@@ -181,10 +223,10 @@ export default function AddItems({ set, setMenuList, menuList }){
                                                 <div style={{display:"flex",flex:0.33}}>
                                                     <h3 className='text-secondary'>{item.title}</h3>
                                                 </div>
-                                                <div style={{display:"flex",flex:0.33,margin:"0"}}>
+                                                <div style={{display:"flex",flex:0.33,margin:0}}>
                                                     <h3 className='text-secondary'>₹{item.price}</h3>
                                                 </div>
-                                                <div style={{display:"flex",flex:0.33,margin:"0"}}>
+                                                <div style={{display:"flex",flex:0.33,margin:0}}>
                                                     <h3 className='text-secondary'>{item.type}</h3>
                                                 </div>
                                             </div>

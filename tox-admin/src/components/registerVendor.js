@@ -74,7 +74,7 @@ export default function Vendor({ set }){
                     <h3 className='form-input-text-primary'>Password</h3>
                     <input className='form-input-primary' value={password} type={"password"} placeholder="Password" onChange={(text)=>setPassword(text.target.value)} />
                     <h3 for="security1" className='form-input-text-primary'>Security Question 1</h3>
-                    <select name="security1" className="form-input-dropdown" value={securityQuestionOne} onChange={(text)=>setSecurityQuestionOne(text.target.value)}>
+                    <select name="security1" className="form-input-dropdown" onClick={(text)=>setSecurityQuestionOne(text.target.value)}>
                         <option value="" disabled selected hidden>Select question 1</option>
                         <option value="Your favourite movie">Your favourite movie</option>
                         <option value="First pet name">First pet name</option>
@@ -84,7 +84,7 @@ export default function Vendor({ set }){
                     </select>
                     <input className='form-input-primary' type={"password"} value={securityOne} placeholder="Answer security question 1" onChange={(text)=>setSecurityOne(text.target.value)} />
                     <h3 for="security2" className='form-input-text-primary'>Security Question 2</h3>
-                    <select name="security2" className="form-input-dropdown" value={securityQuestionTwo} onChange={(text)=>setSecurityQuestionTwo(text.target.value)}>
+                    <select name="security2" className="form-input-dropdown" onClick={(text)=>setSecurityQuestionTwo(text.target.value)}>
                         <option value="" disabled selected hidden>Select question 2</option>
                         <option value="Your favourite movie">Your favourite movie</option>
                         <option value="First pet name">First pet name</option>

@@ -28,7 +28,11 @@
   display: flex;
 }
 
-@media only screen and (max-width:650px) {
+.list-margin-control{
+  margin-left: 0.75%;
+}
+
+@media only screen and (max-width:800px) {
   .content-container{
     background-color: rgba(230, 230, 230, 0.7);
     flex-direction: column;
@@ -44,6 +48,10 @@
   .width-control{
     display: flex;
     flex-direction: column;
+  }
+
+  .list-margin-control{
+    margin-left: 0;
   }
 }
 

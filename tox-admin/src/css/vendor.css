@@ -80,5 +80,15 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(150,150,150); 
+  background: rgb(100,100,100); 
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition-duration: 200ms;
+  background: rgb(101, 12, 184);
+}
+
+select.decorated option:hover {
+  box-shadow: 0 0 10px 100px red inset;
 }

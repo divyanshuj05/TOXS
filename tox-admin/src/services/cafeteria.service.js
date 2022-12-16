@@ -38,21 +38,14 @@ export const RegisterCafeteria = (name,location,vendor,img,openTime,closeTime,me
             reject(`Cafeteria name "${name}" already exists!!`)
             return
         }
-        flag=0
         const Query=query(collection(db,"vendors"),where("userName","==",vendor))
         const ss = await getDocs(Query);
         ss.forEach(async(Doc) => {
-            flag=1
             const vendorRef=doc(db,"vendors",Doc.id)
             await updateDoc(vendorRef,{
                 restaurant:name
             })
         });
-        if(flag===0)
-        {
-            reject(`Vendor "${vendor}" does not exist!!`)
-            return
-        }
         var imgRef = ref(storage,`restaurants/cafeteria icons/${name}`)
         var metadata = { contentType: img.type };
         await uploadBytesResumable(imgRef,img,metadata).then(async(res)=>{
@@ -87,13 +80,35 @@ export const RegisterCafeteria = (name,location,vendor,img,openTime,closeTime,me
     })
 }   
 
+export const GetAllVendors = () => {
+    return new Promise(async(resolve,reject)=>{
+        let array=[]
+        const Query=query(collection(db,"vendors"),where("restaurant","==","null"))
+        const querySnapshot = await getDocs(Query);
+        querySnapshot.forEach((Doc)=>{
+            array.push(Doc.data().userName)
+        })
+        resolve(array)
+    })
+}
+
+export const GettAllCafeterias = () => {
+    return new Promise(async(resolve,reject)=>{
+        let array=[]
+        const Query=query(collection(db,"cafeterias"))
+        const querySnapshot = await getDocs(Query);
+        querySnapshot.forEach((Doc)=>{
+            array.push(Doc.data().Name)
+        })
+        resolve(array)
+    })
+}
+
 export const AddFoodItems = (name,list) => {
     return new Promise (async(resolve,reject)=>{
-        let flag=0
         const cafeteriaQuery=query(collection(db,"cafeterias"),where("Name","==",name))
         const querySnapshot = await getDocs(cafeteriaQuery);
         querySnapshot.forEach(async(Doc) => {
-            flag=1
             const docRef=doc(db, "cafeterias", Doc.id);
             await updateDoc(docRef, {
                 menuList:arrayUnion(...list)
@@ -106,10 +121,5 @@ export const AddFoodItems = (name,list) => {
                 return
             });
         });
-        if(flag===0)
-        {
-            reject(`Cafeteria name "${name}" does not exists!`)
-            return
-        }
     })
 }

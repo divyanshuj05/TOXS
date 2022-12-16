@@ -1,23 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../css/cafeteria.css"
-import { CheckCafeteriaData, RegisterCafeteria } from '../services/cafeteria.service'
+import { CheckCafeteriaData, RegisterCafeteria, GetAllVendors } from '../services/cafeteria.service'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Cafeteria({ set, setMenuList, menuList }){
 
-    const [name,setName]=useState(null)
-    const [location,setLocation]=useState(null)
-    const [img,setImg]=useState(null)
-    const [openTime,setOpenTime]=useState(null)
-    const [closeTime,setCloseTime]=useState(null)
+    const [name,setName]=useState("")
+    const [location,setLocation]=useState("")
+    const [img,setImg]=useState("")
+    const [openTime,setOpenTime]=useState("")
+    const [closeTime,setCloseTime]=useState("")
     const [isLoading,setIsLoading]=useState(false)
-    const [vendor,setVendor]=useState(null)
+    const [vendor,setVendor]=useState("")
     const [foodType,setFoodType]=useState(null)
     const [item,setItem]=useState("")
     const [price,setPrice]=useState("")
+    const [allVendors,setAllVendors]=useState([])
+    const [vendorLoading,setVendorLoading]=useState(false)
 
-    const handleCafeteriaSubmit = async(event,set) => {
+    useEffect(()=>{
+        setVendorLoading(true)
+        GetAllVendors().then(res=>{
+            setAllVendors(res)
+            setVendorLoading(false)
+        }).catch(e=>{
+            console.log(e)
+            setVendorLoading(false)
+            toast.warn("Some error occured while getting vendors",{
+                position:"top-center",
+                theme:"colored"
+            })
+        })
+    },[])
+
+    const handleCafeteriaSubmit = async(event) => {
         event.preventDefault()
         const res=CheckCafeteriaData(name,location,vendor,img,openTime,closeTime,menuList)
         if(res!==true)
@@ -34,11 +51,12 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                 position:"top-center",
                 theme:"colored"
             })
+            handleReset()
             setIsLoading(false)
-            setMenuList([])
             return
         }).catch(e=>{
             setIsLoading(false)
+            handleReset()
             toast.error(e,{
                 position:"top-center",
                 theme:"colored"
@@ -102,6 +120,12 @@ export default function Cafeteria({ set, setMenuList, menuList }){
         setMenuList([])
         setItem("")
         setPrice("")
+        setName("")
+        setLocation("")
+        setVendor("")
+        setOpenTime("")
+        setCloseTime("")
+        document.getElementById("file").value=""
     }
 
     const handleVeg = () => {
@@ -114,24 +138,51 @@ export default function Cafeteria({ set, setMenuList, menuList }){
         setFoodType("Non Veg")
     }
 
+    if(vendorLoading){
+        return(
+            <div style={{height:"100%"}}>
+                <p style={{textAlign:"center",marginTop:"5%"}}>Loading...</p>
+            </div>
+        )        
+    }
+
     return(
         <>
             <div style={{ height:"100%"}}>
                 <form onReset={handleReset}>
                     <h2 id='container-title'>Register new cafeteria</h2>
                     <h3 className='form-input-text-primary'>Name</h3>
-                    <input type={"text"} className='form-input-primary' placeholder='Cafeteria Name' onChange={(text)=>setName(text.target.value)} />
+                    <input value={name} type={"text"} className='form-input-primary' placeholder='Cafeteria Name' onChange={(text)=>setName(text.target.value)} />
                     <h3 className='form-input-text-primary'>Location</h3>
-                    <input type={"text"} className='form-input-primary' placeholder='Location' onChange={(text)=>setLocation(text.target.value)}  />
+                    <input value={location} type={"text"} className='form-input-primary' placeholder='Location' onChange={(text)=>setLocation(text.target.value)}  />
                     <h3 className='form-input-text-primary'>Vendor Name</h3>
-                    <input type={"text"} className='form-input-primary' placeholder='Vendor Name' onChange={(text)=>setVendor(text.target.value)}  />
+                    <select className="form-input-primary" onClick={(text)=>setVendor(text.target.value)}>
+                    {allVendors.length===0?
+                    (
+                        <>
+                            <option value="" disabled selected hidden>No Vendors Available</option>
+                        </>
+                    ):
+                    (
+                        <>
+                            <option value="" disabled selected hidden>Select Vendor</option>
+                            {allVendors.map((item)=>{
+                                const key=item
+                                return(
+                                    <option key={key} value={item}>{item}</option>
+                                )
+                            })}
+                        </>   
+                    )
+                    }
+                    </select>
                     <h3 className='form-input-text-primary'>Select an image</h3>
-                    <input type={"file"} className='form-input-secondary' placeholder='Select File' onChange={(text)=>setImg(text.target.files[0])}  />
+                    <input id="file" type={"file"} className='form-input-secondary' placeholder='Select File' onChange={(text)=>setImg(text.target.files[0])}  />
                     <h3 className='form-input-text-primary'>Timings of cafeteria</h3>
                     <div style={{display:"flex",marginLeft:"10%"}}>
-                        <input type={"time"} className='form-input-tertiary' placeholder='Open at' onChange={(text)=>setOpenTime(text.target.value)}  />
+                        <input value={openTime} type={"time"} className='form-input-tertiary' placeholder='Open at' onChange={(text)=>setOpenTime(text.target.value)}  />
                         <h5 style={{margin:4}}>to</h5>
-                        <input type={"time"} className='form-input-tertiary' placeholder='Closes at' onChange={(text)=>setCloseTime(text.target.value)}  />
+                        <input value={closeTime} type={"time"} className='form-input-tertiary' placeholder='Closes at' onChange={(text)=>setCloseTime(text.target.value)}  />
                     </div>
                     <h3 className='form-input-text-primary'>Add food item</h3>
                     <div style={{display:"flex",marginLeft:"10%",flexDirection:"column"}}>
@@ -160,7 +211,7 @@ export default function Cafeteria({ set, setMenuList, menuList }){
                     </div>
                     {isLoading?
                         (   
-                            <p style={{textAlign:"center",marginTop:"5%"}}>Request processing...</p>
+                            <p style={{textAlign:"center",marginVertical:"5%"}}>Request processing...</p>
                         ):
                         (
                             <div className='container-btns'>
