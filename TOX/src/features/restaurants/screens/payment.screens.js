@@ -46,7 +46,6 @@ export const PaymentScreen = ({ route,navigation }) => {
   const { cost,data,restaurant,vendor } = route.params
   const { SearchHistory } = useContext(RestaurantHistoryContext) 
   const { scheme } = useContext(AppThemeContext)
-  var tempCost=cost+((cost*3.5)/100)
   const { user } = useContext(AuthenticationContext)
   const [ cardDetails,setCardDetails ] = useState()
   const [ stripe,setStripe ] = useState(false)
@@ -98,7 +97,7 @@ export const PaymentScreen = ({ route,navigation }) => {
       description: 'Food orders payment',
       image: 'https://i.imgur.com/3g7nmJC.png',
       currency: 'INR',
-      key: 'rzp_test_tIkGtSeYXZsOdB',
+      key: 'rzp_test_23riL3W5SsEFp0',
       amount: amount*100,
       name: 'TOX',
       prefill: {
@@ -108,17 +107,16 @@ export const PaymentScreen = ({ route,navigation }) => {
       },
       theme: "rgb(100, 50, 150)"
     }
-
+    let res=undefined
     await RazorpayCheckout.open(options).then((data) => {
       console.log(`Success: ${data.razorpay_payment_id}`);
-      //return data.razorpay_payment_id
-      return false
+      res=data.razorpay_payment_id
     }).catch((error) => {
       console.log(error)
       alert("Some error occured! Please try again");
-      return false
+      res=false
     });
-    console.log("AFter")
+    return res
   }
 
   return (
@@ -137,20 +135,21 @@ export const PaymentScreen = ({ route,navigation }) => {
                 <View style={{flexDirection:"row", alignItems:"center",marginLeft:32}}>
                   <RadioButton
                       status={ type === 'mySelf' ? 'checked' : 'unchecked' }
-                      onPress={() => {setType('mySelf'),setAddLocation(false),setLocation("")}}
+                      onPress={() => {setType('mySelf'),setAddLocation(false),setLocation(""),setAmount(type===""?amount:amount-20)}}
                       color="rgb(100, 50, 150)"
                       uncheckedColor={scheme=="dark"?"white":"#191919"}
                   />
-                  <TextWrap style={{marginLeft:0}} onPress={() => {setType('mySelf'),setAddLocation(false),setLocation("")}}>I'll collect by myself</TextWrap> 
+                  <TextWrap style={{marginLeft:0}} onPress={() => {setType('mySelf'),setAddLocation(false),setLocation(""),setAmount(type===""?amount:amount-20)}}>I'll collect by myself</TextWrap> 
                 </View>
                 <View style={{flexDirection:"row", alignItems:"center",marginLeft:32}}>
                   <RadioButton
                       status={ type === 'Deliver' ? 'checked' : 'unchecked' }
-                      onPress={() => {setType('Deliver'),setAddLocation(true)}}
+                      onPress={() => {setType('Deliver'),setAddLocation(true),setAmount(amount+20)}}
                       color="rgb(100, 50, 150)"
                       uncheckedColor={scheme=="dark"?"white":"#191919"}
                   />
-                  <TextWrap style={{marginLeft:0}} onPress={() => {setType('Deliver'),setAddLocation(true)}}>Deliver to my location</TextWrap> 
+                  <TextWrap style={{marginLeft:0}} onPress={() => {setType('Deliver'),setAddLocation(true),setAmount(amount+20)}}>Deliver to my location</TextWrap> 
+                  <TextWrap style={{fontSize:12}}>*Extra ₹20</TextWrap>
                 </View>
                 {addLocation?
                 (
@@ -193,10 +192,10 @@ export const PaymentScreen = ({ route,navigation }) => {
                           cardStyle={{backgroundColor:"#cfcfcf",}}
                         />
                       </View>
-                      <TextWrap style={{fontSize:12}}>*This may incur some extra cost</TextWrap>
+                      <TextWrap style={{fontSize:12}}>*Extra 3.5% of cost</TextWrap>
                       <View style={{flexDirection:"row"}}>
                         <View style={{flex:0.5}}>
-                          <Pay activeOpacity={0.65} onPress={()=>{setStripe(false),setAmount(cost),setPaymentType("N/A")}}>
+                          <Pay activeOpacity={0.65} onPress={()=>{setStripe(false),setAmount(type==="Deliver"?cost+20:cost),setPaymentType("N/A")}}>
                             <Text style={{color:"white",textAlign:"center",fontSize:16}}>Close</Text>
                           </Pay>
                         </View>
@@ -233,15 +232,16 @@ export const PaymentScreen = ({ route,navigation }) => {
                     <>
                       <View style={{flexDirection:"row"}}>
                           <View style={{flex:0.5}}>
-                            <Pay activeOpacity={0.65} onPress={()=>{setRazorPay(false),setPaymentType("N/A")}}>
+                          <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>
+                            <Pay activeOpacity={0.65} onPress={()=>{setRazorPay(false),setPaymentType("N/A"),setAmount(type==="Deliver"?cost+20:cost)}}>
                               <Text style={{color:"white",textAlign:"center",fontSize:16}}>Close</Text>
                             </Pay>
                           </View>
                           <View style={{flex:0.5}}>
                             <Pay activeOpacity={0.65} onPress={async()=>{
-                              const res=handleRazorPay()
-                              if(res==false){console.log("return back")}
-                              /*else{
+                              const res=await handleRazorPay()
+                              if(res==false){}
+                              else{
                                 await SendOrder(user.email,user.mobileNo,amount,vendor,data,restaurant,location,"razorpay",res).then(res=>{
                                   SearchHistory(user.email,user.type)
                                   navigation.navigate("RestaurantsHome")
@@ -249,7 +249,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                                   console.log(e)
                                   alert("Some error occured")
                                 })
-                              }*/
+                              }
                             }}>
                               <Text style={{color:"white",textAlign:"center",fontSize:16}}>Pay</Text>
                             </Pay>
@@ -264,19 +264,20 @@ export const PaymentScreen = ({ route,navigation }) => {
                       <View style={{flex:0.7}}>
                         <TextWrap style={{marginTop:50}}>Pay via Card</TextWrap>
                       </View>
-                      <TouchableOpacity activeOpacity={0.65} style={{flex:0.15,marginTop:45,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setPaymentType("Credit/Debit Card"),setStripe(true),setAmount(Math.floor(tempCost))}}>
+                      <TouchableOpacity activeOpacity={0.65} style={{flex:0.15,marginTop:45,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setPaymentType("Credit/Debit Card"),setStripe(true),setAmount(Math.floor(amount+(cost*3.5)/100))}}>
                         <Text style={{color:"white",textAlign:"center"}}>Choose</Text>
                       </TouchableOpacity> 
                     </View>
-                    <TextWrap style={{fontSize:12}}>*This may incur some extra cost</TextWrap>
-                    <View style={{flexDirection:"row",marginBottom:16}}>
+                    <TextWrap style={{fontSize:12}}>*Extra 3.5% of cost</TextWrap>
+                    <View style={{flexDirection:"row",marginBottom:0}}>
                       <View style={{flex:0.7}}>
                         <TextWrap style={{marginTop:50}}>Razor Pay</TextWrap>
                       </View>
-                      <TouchableOpacity activeOpacity={0.65} style={{flex:0.15,marginTop:45,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setRazorPay(true),setAmount(cost),setPaymentType("Razor Pay")}}>
+                      <TouchableOpacity activeOpacity={0.65} style={{flex:0.15,marginTop:45,backgroundColor:"rgb(56, 10, 100)",padding:8,borderRadius:32}} onPress={()=>{setRazorPay(true),setAmount(Math.floor(amount+(cost*2)/100)),setPaymentType("Razor Pay")}}>
                         <Text style={{color:"white",textAlign:"center"}}>Choose</Text>
                       </TouchableOpacity> 
                     </View>
+                    <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>
                   </>
                 )
               )
