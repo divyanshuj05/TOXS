@@ -12,5 +12,5 @@ Technologies and tools used:
 4. Stipe API and razorpay sdk for payments
 
 Branches for different OS:
-1. Branch "main" contains code compatible with both Android(better version in "razorapy-test" branch) and iOS
+1. Branch "main" contains code compatible with both Android(better version in "razorpay-test" branch) and iOS
 2. Branch "razorpay-test" contains code compatible with only Android
