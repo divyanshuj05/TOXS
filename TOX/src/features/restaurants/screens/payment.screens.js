@@ -269,7 +269,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                       </TouchableOpacity> 
                     </View>
                     <TextWrap style={{fontSize:12}}>*Extra 3.5% of cost</TextWrap>
-                    <View style={{flexDirection:"row",marginBottom:0}}>
+                    {/*<View style={{flexDirection:"row",marginBottom:0}}>
                       <View style={{flex:0.7}}>
                         <TextWrap style={{marginTop:50}}>Razor Pay</TextWrap>
                       </View>
@@ -277,7 +277,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                         <Text style={{color:"white",textAlign:"center"}}>Choose</Text>
                       </TouchableOpacity> 
                     </View>
-                    <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>
+                <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>*/}
                   </>
                 )
               )

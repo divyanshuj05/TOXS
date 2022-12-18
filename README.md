@@ -10,3 +10,7 @@ Technologies and tools used:
 2. React (web view frontend)
 3. Firebase serives (firestore, storage etc)
 4. Stipe API and razorpay sdk for payments
+
+Branches for different OS:
+1. Branch "main" contains code compatible with both Android(better version in "razorapy-test" branch) and iOS
+2. Branch "razorpay-test" contains code compatible with only Android
