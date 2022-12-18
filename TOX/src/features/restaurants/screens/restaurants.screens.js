@@ -107,19 +107,25 @@ export const RestaurantScreen = ({ navigation }) => {
                         {favourites.length === 0 || favourites === null ?
                         (<></>) : 
                         (
-                            <FavWrap>
-                            {isCopyLoading ? 
+                            value===null||value==="Select All"?
                             (
-                                <View style={{ marginTop: 50 }}>
-                                    <ActivityIndicator color={Colors.red400} size={50} />
-                                </View>
-                            ) : 
+                                <FavWrap>
+                                {isCopyLoading||isLoading ? 
+                                (
+                                    <View style={{ marginTop: 50 }}>
+                                        <ActivityIndicator color={Colors.red400} size={50} />
+                                    </View>
+                                ) : 
+                                (
+                                    <ScrollView>
+                                        <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} oriTag={0} />
+                                    </ScrollView>
+                                )}
+                                </FavWrap>
+                            ):
                             (
-                                <ScrollView>
-                                    <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} oriTag={0} />
-                                </ScrollView>
-                            )}
-                            </FavWrap>
+                                <></>
+                            )
                         )
                         }
                         <CardContainer>

@@ -93,7 +93,7 @@ export const ExchangeHome = ({ navigation }) => {
     const ContentView = () => {
         return(
             <>
-                <Facility_Name>Thapar Exchange Service</Facility_Name> 
+                <Facility_Name>Thapar Online Exchange Service</Facility_Name> 
                 <Exchange_Facility>
                     <TouchableOpacity activeOpacity={0.65} style={{flexDirection:"row",marginHorizontal:32}} onPress={()=>navigation.navigate("SellHome")} >
                         <Exchange_Text>Sell an item</Exchange_Text>

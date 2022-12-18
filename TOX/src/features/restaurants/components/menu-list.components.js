@@ -157,8 +157,8 @@ export const MenuList = ({ data, navigation, restaurant, vendor, type }) => {
             />
             <BottomBar>
                 <View style={{flex:0.6,flexDirection:'row'}}>
-                    <ItemText>Items {items}</ItemText>
-                    <CostText>Cost {cost}</CostText>
+                    <ItemText>Items: {items}</ItemText>
+                    <CostText>Total: ₹{cost}</CostText>
                 </View>
                 {items === 0 ?
                     (

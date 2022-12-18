@@ -79,7 +79,7 @@ const flatlist_data = [
     {
         icon: TLX_logo,
         text: "TEX",
-        subText: "(Thapar Exchnage Service)",
+        subText: "(Thapar Online Exchange)",
         color: colors.bg.primary
     }
 ]

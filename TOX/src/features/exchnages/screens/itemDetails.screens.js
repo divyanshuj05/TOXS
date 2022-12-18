@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { TouchableOpacity, View,Alert, ScrollView,Text, Image } from 'react-native';
+import { TouchableOpacity, View,Alert, ScrollView,Text, Image, Platform, Linking } from 'react-native';
 import styled from 'styled-components'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
+import { Ionicons } from '@expo/vector-icons';
+import { AppThemeContext } from '../../../services/common/theme.context';
 
 const Container=styled(View)`
     flex:1
@@ -95,6 +97,7 @@ export const ItemDetails = ({ route,navigation }) => {
     const { isLoading, UpdateExchanges, Search } = useContext(ExchangeContext)
     const { RetrieveMobile, detailsLoading, mobile, UserData } = useContext(ExchangeHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
+    const { scheme } = useContext(AppThemeContext)
 
     const [error,setError]=useState(null)
     
@@ -117,6 +120,16 @@ export const ItemDetails = ({ route,navigation }) => {
             RetrieveMobile(details.seller)
         }
     },[])
+
+    const handleMobile = (phone) => {
+        if(Platform.OS==="android")
+        {
+            Linking.openURL(`tel: ${phone}`)
+        }
+        else{
+            Linking.openURL(`telprompt: ${phone}`)
+        }
+    }
 
     const DetailsView = () => {
         return(
@@ -166,7 +179,12 @@ export const ItemDetails = ({ route,navigation }) => {
                                 </Row>
                                 <Row>
                                     <F1><Desc>Buyer Number: </Desc></F1>
-                                    <F2><Desc>{mobile}</Desc></F2>
+                                    <F2 style={{flexDirection:"row"}}>
+                                        <Desc>{mobile}</Desc>
+                                        <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48}} onPress={()=>handleMobile(mobile)}>
+                                            <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                                        </TouchableOpacity>
+                                    </F2>
                                 </Row>
                             </>
                         )
@@ -182,7 +200,12 @@ export const ItemDetails = ({ route,navigation }) => {
                         </Row>
                         <Row>
                             <F1><Desc>Seller Number: </Desc></F1>
-                            <F2><Desc>{mobile}</Desc></F2>
+                            <F2 style={{flexDirection:"row"}}>
+                                <Desc>{mobile}</Desc>
+                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48,marginVertical:16}} onPress={()=>handleMobile(mobile)}>
+                                    <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                                </TouchableOpacity>
+                            </F2>
                         </Row>
                     </>
                 ):
