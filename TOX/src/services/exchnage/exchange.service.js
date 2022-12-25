@@ -1,4 +1,4 @@
-import { collection, addDoc,query,where, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc,query,where, getDocs, setDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { db,storage } from "../../../database.config"
 import { SendNotification } from "../common/notisFunctions.services";
@@ -44,7 +44,7 @@ export const AddItem = (item,desc,price,category,url,name,email) => {
         category:category,
         imageURL:url,
         seller:email,
-        buyer:"null",
+        buyers:[],
         status:"Available",
         imgName:name,
         postDate:today,
@@ -80,18 +80,21 @@ export const RetrieveData = () => {
     })
 }
 
-export const UpdateData = async (obj,status,mail) => {
+export const UpdateData = async (obj,status,soldTo,mail) => {
     const docRef=doc(db,"exchanges",obj.id)
     delete obj.id
     if(status=="Available")
     {
         return new Promise(async(resolve,reject)=>{
-            const newData={...obj,"status":status,"buyer":"null"}
-            setDoc(docRef,newData).then(res=>{
+            const stat=obj.buyers.length==1?"Available":"On Hold"
+            updateDoc(docRef,{
+                "status":stat,
+                "buyers":arrayRemove(mail)
+            }).then(res=>{
                 GetMobileData(obj.seller).then(res=>{
                     if(res.token!="null")
                     {
-                        SendNotification(res.token,`Exchnage of ${obj.name}`,"Buyer has removed item from hold.")
+                        SendNotification(res.token,`Exchnage of ${obj.name}`,"A Buyer has removed item from hold.")
                     }
                     resolve("Done")
                 })
@@ -104,8 +107,10 @@ export const UpdateData = async (obj,status,mail) => {
     else if(status=="On Hold")
     {
         return new Promise(async(resolve,reject)=>{
-            const newData={...obj,"status":status,"buyer":mail}
-            setDoc(docRef,newData).then(res=>{
+            updateDoc(docRef,{
+                "status":status,
+                "buyers":arrayUnion(mail)
+            }).then(res=>{
                 GetMobileData(obj.seller).then(res=>{
                     if(res.token!="null")
                     {
@@ -119,26 +124,27 @@ export const UpdateData = async (obj,status,mail) => {
             })
         })
     }
+    else if(status=="Sold"){
+        return new Promise(async(resolve,reject)=>{
+            updateDoc(docRef,{
+                "status":status,
+                "buyer":soldTo
+            }).then(res=>{
+                resolve("Done")
+                return
+            }).catch(err=>{
+                console.log(err)
+                reject("Operation failed!! Please try again")
+            })
+        })
+    }
     else{
         return new Promise(async(resolve,reject)=>{
-            const newData={...obj,"status":status}
-            setDoc(docRef,newData).then(res=>{
-                if(status=="Removed by seller")
-                {
-                    if(obj.buyer!="null")
-                    {
-                        GetMobileData(obj.buyer).then(res=>{
-                            if(res.token!="null")
-                            {
-                                SendNotification(res.token,`Exchnage of ${obj.name}`,"Seller does not want to sell the item")
-                            }
-                            resolve("Done")
-                        })
-                    }
-                    resolve("Done")
-                    return
-                }
+            updateDoc(docRef,{
+                "status":status
+            }).then(res=>{
                 resolve("Done")
+                return
             }).catch(err=>{
                 console.log(err)
                 reject("Operation failed!! Please try again")
@@ -159,7 +165,7 @@ export const RetrieveHistory = (email) => {
             let temp=Object.assign(doc.data(),{"id":doc.id})
             array.push(temp)
         });
-        Query = query(collection(db, "exchanges"), where("buyer", "==" , email))
+        Query = query(collection(db, "exchanges"), where("buyers", "array-contains" , email))
         snapShot = await getDocs(Query)
         snapShot.forEach(doc => {
             let temp=Object.assign(doc.data(),{"id":doc.id})

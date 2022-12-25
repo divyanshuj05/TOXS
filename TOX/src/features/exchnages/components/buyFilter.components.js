@@ -10,7 +10,7 @@ export const FilterComponent = ({ sort,category,setSort,setCategory,Sort,SortByS
         { label: 'Lab Coat', value: 'Lab Coat' },
         { label: 'Books', value: 'Books' },
         { label: 'Cycle', value: 'Cycle' },
-        { label: 'Misc', value: 'Misc' },
+        { label: 'Drafter', value: 'Drafter' },
         { label: 'Select All', value: 'Select All' }
         ]
        

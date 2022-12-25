@@ -4,8 +4,7 @@ import { AppNavigator } from "./app.navigator";
 import { VendorAppNavigator } from "./vendorApp.navigator";
 import { AccountNavigator } from "./account.navigator";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
-import { ActivityIndicator, Colors } from "react-native-paper";
-import { View } from "react-native"
+import { View, ActivityIndicator } from "react-native"
 import { DeliveryApp } from "./deliveryApp.navigator";
 
 export const Navigation = () => {
@@ -14,7 +13,7 @@ export const Navigation = () => {
   if (isLogging) {
     return (
       <View style={{ justifyContent: "center", flex: 1 }}>
-        <ActivityIndicator color={Colors.blue300} size={50} />
+        <ActivityIndicator color="purple" size={50} />
       </View>
     )
   }

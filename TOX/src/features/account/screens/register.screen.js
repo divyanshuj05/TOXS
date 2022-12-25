@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ScrollView, View, StyleSheet, Keyboard } from "react-native";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { ScrollView, View, ActivityIndicator } from "react-native";
 import { AccountBackground, AuthButton, AuthInput, ErrorContainer } from "../components/account.styles";
 import { Text } from "../../common/components/typography/text.component";
 import { Spacer } from "../../common/components/spacer/spacer.component";
@@ -9,6 +8,7 @@ import { DeviceOrientationContext } from "../../../services/common/deviceOrienta
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import styled from "styled-components";
 import { SecurityDropdown } from "../components/securityDropdown.components";
+import { RadioButton } from "react-native-paper"
 
 const Title = styled(Text)`
   text-align:center
@@ -40,6 +40,7 @@ export const RegisterScreen = ({ navigation }) => {
   const [securityOne,setSecurityOne] = useState("")
   const [securityQuestionTwo,setSecurityQuestionTwo]=useState(null)
   const [securityTwo,setSecurityTwo] = useState("")
+  const [mobileDisplay,setMobileDisplay]=useState(null)
   const { onRegister, isLoading, error, setError } = useContext(AuthenticationContext);
   const { orientation } = useContext(DeviceOrientationContext)
 
@@ -78,6 +79,25 @@ export const RegisterScreen = ({ navigation }) => {
                   autoCapitalize="none"
                   onChangeText={(u) => setMobileNo(u)}
                 />
+                <Text style={{fontSize:14}}>Want your mobile number to be displayed to others?</Text>
+                <View style={{flex:1,flexDirection:"row"}}>
+                    <View style={{flex:0.5,flexDirection:"row"}}>
+                      <RadioButton
+                          status={ mobileDisplay === 'Yes' ? 'checked' : 'unchecked' }
+                          onPress={() => {setMobileDisplay("Yes")}}
+                          color="purple"
+                      />
+                      <Text style={{fontSize:14,marginTop:6}} onPress={()=>setMobileDisplay("Yes")}>Yes</Text>
+                  </View>
+                  <View style={{flexDirection:"row",flex:0.5}}>
+                    <RadioButton
+                        status={ mobileDisplay === 'No' ? 'checked' : 'unchecked' }
+                        onPress={() => {setMobileDisplay("No")}}
+                        color="purple"
+                    />
+                    <Text style={{fontSize:14,marginTop:6}} onPress={()=>setMobileDisplay("No")}>No</Text>
+                  </View>
+                </View>
               </Spacer>
               <Spacer size="large">
                 <AuthInput
@@ -104,12 +124,12 @@ export const RegisterScreen = ({ navigation }) => {
               <AuthButton
                 icon="food"
                 mode="contained"
-                onPress={() => { setError(null), onRegister(userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) }}
+                onPress={() => { setError(null), onRegister(userName, email, MobileNo,mobileDisplay, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) }}
               >
                 Register
               </AuthButton>
             ) : (
-              <ActivityIndicator animating={true} color={Colors.blue300} />
+              <ActivityIndicator size={25} color="purple" />
             )}
           </Spacer>
         </AccountContainer>

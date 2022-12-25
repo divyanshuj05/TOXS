@@ -1,11 +1,10 @@
 import React, {useState ,useContext,useEffect} from "react";
-import { FlatList,View, TouchableOpacity, Text, ScrollView } from "react-native";
+import { FlatList,View, TouchableOpacity, Text, ScrollView, ActivityIndicator } from "react-native";
 import styled from 'styled-components';
 import { TextInput } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
 import { VendorMenuDetail } from "../components/vendorMenuDetails.components";
 import { VendorRestaurantContext } from "../../../services/restaurant/vendorRestaurant.context";
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 import { RadioButton } from 'react-native-paper';
 import { AppThemeContext } from "../../../services/common/theme.context";
@@ -109,7 +108,7 @@ export const VendorRestaurantDetail = ({ route }) => {
     {
         return(
             <View style={{marginTop:50}}>
-                <ActivityIndicator color={Colors.red400} size={50} />
+                <ActivityIndicator color="purple" size={50} />
             </View>
         )
     }
@@ -120,7 +119,7 @@ export const VendorRestaurantDetail = ({ route }) => {
             {isLoading||localLoading?
             (
                 <View style={{marginTop:50}}>
-                    <ActivityIndicator color={Colors.red400} size={50} />
+                    <ActivityIndicator color="purple" size={50} />
                 </View>
             ):(
                 <>

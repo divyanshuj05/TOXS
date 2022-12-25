@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, ScrollView, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { List, Avatar } from "react-native-paper";
 import { Text } from "../../common/components/typography/text.component";
@@ -9,7 +9,7 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 import { AppThemeContext } from "../../../services/common/theme.context";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 import * as ImagePicker from "expo-image-picker"
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 const Container = styled(ScrollView)`
   flex:1;
@@ -55,8 +55,13 @@ export const SettingsScreen = ({ navigation }) => {
             if(result==null) alert("Some error occured! Please try again")
             if(result.type!="image") setError("Only images are allowed")
             else {
-              setImage(result)
-              SaveUserImage(result)
+              const compressRes = await manipulateAsync(
+                result.uri,
+                [],
+                { compress: 0.2, format: SaveFormat.JPEG }
+              );
+              setImage(compressRes)
+              SaveUserImage(compressRes)
             };
         }
   }
@@ -66,7 +71,7 @@ export const SettingsScreen = ({ navigation }) => {
       <AvatarContainer>
         {isLoading?
         (
-          <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+          <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
         ):
         (
           user.photo==null||user.photo=="null"||user.photo==undefined?

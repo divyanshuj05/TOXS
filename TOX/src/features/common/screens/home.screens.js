@@ -1,12 +1,11 @@
 import React,{useContext} from 'react';
-import { FlatList, TouchableOpacity, View, ScrollView,Text,Image } from "react-native";
+import { FlatList, TouchableOpacity, View, ScrollView,Text,Image, ActivityIndicator } from "react-native";
 import styled from 'styled-components';
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { logo_light,logo_dark, TPO_logo, TLX_logo } from "../../../../assets/images";
 import { colors } from '../../../infrastructure/theme/colors';
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
-import { ActivityIndicator, Colors } from "react-native-paper";
 
 const Container = styled(ScrollView)`
     background-color:${(props) => props.theme.background};
@@ -93,7 +92,7 @@ export const HomeScreen = ({ navigation }) => {
     {
         return(
             <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
-                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
             </View>
         )
     }

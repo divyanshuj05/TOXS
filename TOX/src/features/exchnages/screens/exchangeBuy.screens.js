@@ -1,9 +1,8 @@
 import React, { useState,useContext, useEffect } from 'react';
-import { View,FlatList,TouchableOpacity, ScrollView, Text, RefreshControl } from "react-native"
+import { View,FlatList,TouchableOpacity, ScrollView, Text, RefreshControl, ActivityIndicator } from "react-native"
 import styled from 'styled-components';
 import { FilterComponent } from '../components/buyFilter.components';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { FadeInView } from '../../common/components/animations/fade.animation';
 import { ItemInfoCard } from '../components/itemInfoCard.components';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
@@ -41,8 +40,7 @@ export const BuyScreen = ({ navigation }) => {
     const renderItem = (item) => {
         return(
             <TouchableOpacity activeOpacity={0.65} onPress={()=>{
-                if(item.item.status=="Available") navigation.navigate("ItemDetails",{details:item.item,get:0})
-                else alert("Item is already on hold!")
+                navigation.navigate("ItemDetails",{details:item.item,get:1})
             }}>
                 <FadeInView>
                     <ItemInfoCard item={item} />
@@ -66,7 +64,7 @@ export const BuyScreen = ({ navigation }) => {
         return(
             <Wrapper>
             <View style={{ marginTop: 50 }}>
-                <ActivityIndicator color={Colors.red400} size={50} />
+                <ActivityIndicator color="purple" size={50} />
             </View>
             </Wrapper>
         )
@@ -121,7 +119,7 @@ export const BuyScreen = ({ navigation }) => {
             {isLoading?
                 (
                     <View style={{ marginTop: 50 }}>
-                        <ActivityIndicator color={Colors.red400} size={50} />
+                        <ActivityIndicator color="purple" size={50} />
                     </View>
                 ):
                 (
@@ -132,9 +130,16 @@ export const BuyScreen = ({ navigation }) => {
                         </>
                     ):
                     (
-                        <ScrollView>
-                            {ContentView()}
-                        </ScrollView>
+                        <FlatList horizontal={false} 
+                            data={[1]}
+                            refreshControl={
+                                <RefreshControl 
+                                    onRefresh={onRefresh}
+                                />
+                            } 
+                            renderItem={ContentView}
+                            keyExtractor={(ele)=>ele}
+                        /> 
                     )
                 )
             }

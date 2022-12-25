@@ -1,9 +1,8 @@
 import React,{ useContext, useRef, useEffect, useState } from 'react'
-import { FlatList, TouchableOpacity, View, Text, RefreshControl } from 'react-native';
+import { FlatList, TouchableOpacity, View, Text, RefreshControl, ActivityIndicator } from 'react-native';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context'
 import styled from 'styled-components'
-import { ActivityIndicator,Colors } from 'react-native-paper';
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { HistoryFilterComponent } from '../components/historyDropdown.components';
 var randomstring=require("randomstring")
@@ -83,7 +82,7 @@ export const OrderHistory = ({ navigation }) => {
     {
         return(
             <Container>
-                <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}} />
+                <ActivityIndicator color="purple" size={50} style={{marginTop:50}} />
             </Container>
         )
     }
@@ -145,7 +144,7 @@ export const OrderHistory = ({ navigation }) => {
                 </View>
                 {isLoading?
                 (
-                    <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}} />
+                    <ActivityIndicator color="purple" size={50} style={{marginTop:50}} />
                 ):
                 (
                     history.length? 

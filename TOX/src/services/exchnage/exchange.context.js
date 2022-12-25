@@ -1,6 +1,6 @@
 import React, { createContext,useContext,useState,useRef } from 'react'
 import { AuthenticationContext } from "../authentication/authentication.context"
-import { StoreImage, AddItem, RetrieveData, UpdateData } from './exchange.service'
+import { StoreImage, AddItem, RetrieveData, UpdateData, GetMobileData } from './exchange.service'
 import { Alert } from 'react-native'
 
 export const ExchangeContext = createContext()
@@ -12,6 +12,7 @@ export const ExchangeContextProvider = ({ children }) => {
     const [refresh,setRefresh]=useState(false)
     const [exchangeCopy,setExchangeCopy]=useState([])
     const [isLoading,setIsLoading]=useState(false)
+    const buyersData=useRef([])
 
     const Search = () => {
         setIsLoading(true)
@@ -164,10 +165,10 @@ export const ExchangeContextProvider = ({ children }) => {
         })
     }
 
-    const UpdateExchanges = (obj,status,setError) => {
+    const UpdateExchanges = (obj,status,soldTo=null,setError) => {
         return new Promise(async(resolve,reject)=>{
             setIsLoading(true)
-            UpdateData(obj,status,user.email).then(res=>{
+            UpdateData(obj,status,soldTo,user.email).then(res=>{
                 Alert.alert(
                     "Done",
                     "Changes were successfully made",
@@ -186,6 +187,37 @@ export const ExchangeContextProvider = ({ children }) => {
         })
     }
 
+    const RetrieveBuyersDetails = (buyers) => {
+        for(let i=0;i<buyers.length;i++)
+        {
+            const data={
+                "mail":buyers[i],
+                "mobile":null
+            }
+            buyersData.current.push(data)
+        }
+        for(let i=0;i<buyers.length;i++) 
+        {
+            GetMobileData(buyers[i]).then(res=>{
+                if(res.mobileNo!=undefined||res.mobileNo!=null) 
+                {
+                    if(res.mobileDisplay==="No"){
+                        const ind=buyersData.current.findIndex(ele=>ele.mail==buyers[i])
+                        buyersData.current[ind].mobile="No" 
+                    }
+                    else{
+                        const ind=buyersData.current.findIndex(ele=>ele.mail==buyers[i])
+                        buyersData.current[ind].mobile=res.mobileNo
+                    }
+                }
+            })
+        }
+    }
+
+    const Destroy = () => {
+        buyersData.current=[]
+    }
+
     return(
         <ExchangeContext.Provider value={{
             addItem,
@@ -195,7 +227,10 @@ export const ExchangeContextProvider = ({ children }) => {
             Sort,
             UpdateExchanges,
             SortByStatus,
-            refresh
+            refresh,
+            RetrieveBuyersDetails,
+            buyersData:buyersData.current,
+            Destroy
         }}>
             {children}
         </ExchangeContext.Provider>

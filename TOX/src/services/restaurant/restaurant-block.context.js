@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useRef } from "react";
-import { restaurantsRequest, Orders, SendVendorNoti } from "./resturant-block.services";
+import { restaurantsRequest, Orders, SendVendorNoti, GetMobileData } from "./resturant-block.services";
 import { Alert } from "react-native";
 import { SendNotification } from "../common/notisFunctions.services";
 
@@ -48,10 +48,10 @@ export const RestaurantContextProvider = ({ children }) => {
         setIsLoading(false)
     }
 
-    const SendOrder= (email,mobile,amount,vendor,data,restaurant,location,type,id) => {
+    const SendOrder= (email,amount,vendor,data,restaurant,location,type,id) => {
         return new Promise(async(resolve,reject)=>{
             setIsLoading(true)
-            Orders(email,mobile,amount,vendor,data,restaurant,location,type,id).then(res=>{
+            Orders(email,amount,vendor,data,restaurant,location,type,id).then(res=>{
                 SendVendorNoti(vendor).then(res=>{
                     if(res!="null")
                     {
@@ -60,7 +60,7 @@ export const RestaurantContextProvider = ({ children }) => {
                     setIsLoading(false)
                     setPaymentDone(true)
                     Alert.alert(
-                        "Order sent successfully",
+                        "Order sent successfully", 
                         "Your order will be ready by some time",
                         [
                             {

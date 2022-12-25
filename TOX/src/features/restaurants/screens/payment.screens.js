@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
-import { Text,View, Alert, TouchableOpacity,ScrollView } from "react-native";
+import { Text,View, Alert, TouchableOpacity,ScrollView, ActivityIndicator } from "react-native";
 import styled from 'styled-components';
 import { StripeProvider, CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { handleStripePay } from '../../../services/restaurant/stripePay.services';
-import { ActivityIndicator, Colors, TextInput, RadioButton } from 'react-native-paper';
+import { TextInput, RadioButton } from 'react-native-paper';
 import { RestaurantContext } from '../../../services/restaurant/restaurant-block.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 import { AppThemeContext } from '../../../services/common/theme.context';
@@ -32,7 +32,7 @@ const TextWrap=styled(Text)`
 `;
 
 const Pay=styled(TouchableOpacity)`
-  margin-top:50px;
+  margin-top:32px;
   background-color:${props=>props.theme.colors.ui.basic}
   padding-vertical:12px
   padding-horizontal:28px
@@ -174,7 +174,7 @@ export const PaymentScreen = ({ route,navigation }) => {
               (
                 loading||isLoading?
                   (
-                    <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />
+                    <ActivityIndicator color="purple" size={50} style={{marginTop:50}}  />
                   ):
                   (
                     <>
@@ -205,7 +205,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                           if(res==false){}
                           else
                           { 
-                            await SendOrder(user.email,user.mobileNo,amount,vendor,data,restaurant,location,"stripe",res).then(res=>{
+                            await SendOrder(user.email,amount,vendor,data,restaurant,location,"stripe",res).then(res=>{
                               SearchHistory(user.email,user.type)
                               navigation.navigate("RestaurantsHome")
                             }).catch(e=>{
@@ -226,23 +226,23 @@ export const PaymentScreen = ({ route,navigation }) => {
                 (
                   isLoading?
                   (
-                    <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />   
+                    <ActivityIndicator color="purple" size={50} style={{marginTop:50}}  />   
                   ):
                   (                  
                     <>
                       <View style={{flexDirection:"row"}}>
                           <View style={{flex:0.5}}>
-                          <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>
                             <Pay activeOpacity={0.65} onPress={()=>{setRazorPay(false),setPaymentType("N/A"),setAmount(type==="Deliver"?cost+20:cost)}}>
                               <Text style={{color:"white",textAlign:"center",fontSize:16}}>Close</Text>
                             </Pay>
+                            <TextWrap style={{fontSize:12}}>*Extra 2% of cost</TextWrap>
                           </View>
                           <View style={{flex:0.5}}>
                             <Pay activeOpacity={0.65} onPress={async()=>{
                               const res=await handleRazorPay()
                               if(res==false){}
                               else{
-                                await SendOrder(user.email,user.mobileNo,amount,vendor,data,restaurant,location,"razorpay",res).then(res=>{
+                                await SendOrder(user.email,amount,vendor,data,restaurant,location,"razorpay",res).then(res=>{
                                   SearchHistory(user.email,user.type)
                                   navigation.navigate("RestaurantsHome")
                                 }).catch(e=>{
@@ -253,6 +253,7 @@ export const PaymentScreen = ({ route,navigation }) => {
                             }}>
                               <Text style={{color:"white",textAlign:"center",fontSize:16}}>Pay</Text>
                             </Pay>
+                            
                           </View>
                         </View>
                       </>

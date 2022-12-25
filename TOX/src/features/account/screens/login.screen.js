@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, ScrollView } from "react-native";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { View, ScrollView, ActivityIndicator } from "react-native";
 import { SafeArea } from "../../../utils/components/safe-area.components";
 import {
   AccountBackground,
@@ -110,7 +109,7 @@ export const LoginScreen = ({ route,navigation }) => {
               </AuthButton>
             </>
           ) : (
-            <ActivityIndicator animating={true} color={Colors.blue300} />
+            <ActivityIndicator size={25} color="purple" />
           )}
         </Spacer>
       </AccountContainer>

@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { View, TouchableOpacity, Text, ScrollView } from "react-native"
+import { View, TouchableOpacity, Text, ScrollView, Switch, ActivityIndicator } from "react-native"
 import { AuthenticationContext } from '../../../services/authentication/authentication.context'
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context'
 import { AppThemeContext } from "../../../services/common/theme.context"
 
@@ -30,6 +29,13 @@ const DetailsIcon = styled(Ionicons)`
     margin-bottom: 29px;
     margin-top: 29px;
     flex:0.1
+`;
+
+const MobileVisText = styled(Text)`
+    color:${props => props.theme.text}
+    margin-left:${(props) => props.theme.space[4]};
+    margin-bottom: 29px;
+    font-size: ${(props) => props.theme.fontSizes.body};
 `;
 
 const DetailsIconCopy = styled(Fontisto)`
@@ -94,18 +100,22 @@ export const ProfileScreen = () => {
     {
         return(
             <Scroll style={{backgroundColor:scheme=="dark"?"#191919":"#ffffff"}}>
-                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
             </Scroll>
         )
     }
 
+    const handleMobileVisible = () => {
+        const newVal=user.mobileDisplay==="Yes" ? "No":"Yes"
+        UpdateDoc("mobileDisplay",newVal,user.type)
+    }
     return (
         <SafeArea>
             <Scroll style={{backgroundColor:scheme=="dark"?"#191919":"#ffffff"}} keyboardShouldPersistTaps={'handled'}>
                 <Title>User Details</Title>
                 {isLoading?
                 (
-                    <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                    <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
                 )
                 :
                 (
@@ -147,7 +157,6 @@ export const ProfileScreen = () => {
                                             (<></>)}
                                         </>
                                     )
-
                                 }
                             </View>
                             {errorUser ?
@@ -169,6 +178,27 @@ export const ProfileScreen = () => {
                                 <DetailsIconCopy name="mobile-alt" size={22} />
                                 <Details>{user.mobileNo}</Details>
                             </View>
+                            {user.type==="users"?
+                            (
+                                <View style={{flex:1,flexDirection:"row"}}>
+                                    <View style={{flex:0.7}}>
+                                        <MobileVisText>Mobile Number Visibility: {user.mobileDisplay==="Yes" ? "On":"Off"}</MobileVisText>
+                                    </View>
+                                    <View style={{flex:0.3}}>
+                                        <Switch
+                                            style={{alignSelf:"center",margin:-12}}
+                                            trackColor={{ true: "#126412", false: "#641212" }}
+                                            thumbColor={user.mobileDisplay==="Yes" ? "green":"red"}
+                                            onValueChange={handleMobileVisible}
+                                            value={user.mobileDisplay==="Yes"?true:false}
+                                        />
+                                    </View>
+                                </View>
+                            ):
+                            (
+                                <></>
+                            )
+                            }
                         </BorderView>
 
                         <BorderView>

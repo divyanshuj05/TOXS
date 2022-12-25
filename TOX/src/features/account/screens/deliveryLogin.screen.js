@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View ,ScrollView } from "react-native"
+import { View ,ScrollView, ActivityIndicator } from "react-native"
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context'
 import { SafeArea } from '../../../utils/components/safe-area.components'
 import styled from 'styled-components'
@@ -7,7 +7,6 @@ import { AccountBackground, AuthButton, AuthInput,AuthInputLand, ErrorContainer 
 import { Text } from '../../common/components/typography/text.component'
 import { Spacer } from '../../common/components/spacer/spacer.component'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context'
-import { ActivityIndicator, Colors } from 'react-native-paper'
 
 const Title = styled(Text)`
   text-align:center
@@ -37,7 +36,7 @@ export const DeliveryLogin = ({ navigation }) => {
           (
             <>
               <AuthInput
-                label="Cafeteria Name"
+                label="Vendor's Cafeteria"
                 value={name}
                 textContentType="username"
                 keyboardType="default"
@@ -46,7 +45,7 @@ export const DeliveryLogin = ({ navigation }) => {
               />
               <Spacer size="large">
                 <AuthInput
-                    label="Cafeteria's security key"
+                    label="Vendor's security key"
                     value={key}
                     textContentType="password"
                     secureTextEntry
@@ -94,7 +93,7 @@ export const DeliveryLogin = ({ navigation }) => {
                   Login
                   </AuthButton>
               ) : (
-                  <ActivityIndicator animating={true} color={Colors.blue300} />
+                  <ActivityIndicator size={25} color={"purple"} />
               )}
           </Spacer>
         </AccountContainer>

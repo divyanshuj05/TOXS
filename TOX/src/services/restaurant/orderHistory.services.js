@@ -60,3 +60,14 @@ export const GetNotiToken = (email) => {
     reject("Operation failed!! Please try again")
     })
 }
+
+export const GetMobileData = (email) => {
+    return new Promise(async(resolve,reject)=>{
+    const Query = query(collection(db, "users"), where("email", "==", email))
+    const docs = await getDocs(Query)
+    docs.forEach(doc => {
+      resolve(doc.data())
+    });
+    reject("Operation failed!! Please try again")
+    })
+}

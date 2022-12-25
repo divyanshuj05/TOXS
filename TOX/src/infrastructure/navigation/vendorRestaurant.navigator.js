@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { View } from "react-native"
+import { View, ActivityIndicator } from "react-native"
 import { TransitionPresets, createStackNavigator } from "@react-navigation/stack";
 import { VendorRestaurantScreen } from "../../features/restaurants/screens/vendorRestaurants.screens";
 import { VendorRestaurantDetail } from "../../features/restaurants/screens/vendorRestaurantDetail.screens";
 import { DeviceOrientationContext } from "../../services/common/deviceOrientation.context";
 import { AppThemeContext } from "../../services/common/theme.context";
-import { ActivityIndicator,Colors } from "react-native-paper";
 
 const RestaurantStack = createStackNavigator();
 
@@ -18,7 +17,7 @@ export const VendorRestaurantsNavigator = () => {
   {
     return(
         <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
-            <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+            <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
         </View>
     )
   }

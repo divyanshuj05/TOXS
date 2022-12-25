@@ -16,7 +16,7 @@ export const loginCheck = (userName, password) => {
   return true
 }
 
-export const RegisterCheck = (userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
+export const RegisterCheck = (userName, email, MobileNo,mobileDisplay, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
 
   if (userName === "") {
     return "Error: User field empty!!";
@@ -30,13 +30,9 @@ export const RegisterCheck = (userName, email, MobileNo, password,securityQuesti
     return "Error: E-Mail field empty!!";
   }
   else {
-    if (email.includes("@gmail.com") === false) {
       if (email.includes("@thapar.edu") === false) {
-        if (email.includes("@outlook.com") === false) {
-          return "Error: E Mail format not correct/not supported!!";
-        }
+          return "Error: Only thapar.edu mail supported!!";
       }
-    }
   }
 
   if (MobileNo == "") {
@@ -51,6 +47,11 @@ export const RegisterCheck = (userName, email, MobileNo, password,securityQuesti
 
   if (MobileNo.length !== 10) {
     return "Error: Mobile Number length should be 10!!";
+  }
+
+  if(mobileDisplay===null||mobileDisplay===undefined)
+  {
+    return "Error: Select mobile number display method!!"
   }
 
   if (password === "") {

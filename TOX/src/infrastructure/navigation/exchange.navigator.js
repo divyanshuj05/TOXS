@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { ExchangeHome } from '../../features/exchnages/screens/exchangeHome.screens'
 import { SellScreen } from '../../features/exchnages/screens/exchnageSell.screens'
 import { BuyScreen } from '../../features/exchnages/screens/exchangeBuy.screens'
 import { ExchangeHistory } from '../../features/exchnages/screens/exchangeHistory.screens'
 import { ItemDetails } from '../../features/exchnages/screens/itemDetails.screens'
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { AppThemeContext } from '../../services/common/theme.context'
 import { DeviceOrientationContext } from '../../services/common/deviceOrientation.context'
+import { BuyersList } from '../../features/exchnages/screens/buyersList.screens'
 
 const ExchnageStack=createStackNavigator()
 
@@ -21,7 +21,7 @@ export const ExchangeNavigator = () => {
   {
     return(
         <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
-            <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+            <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
         </View>
     )
   }
@@ -47,6 +47,10 @@ export const ExchangeNavigator = () => {
       <ExchnageStack.Screen
         name="ItemDetails"
         component={ItemDetails}
+      />
+      <ExchnageStack.Screen
+        name="BuyersList"
+        component={BuyersList}
       />
     </ExchnageStack.Navigator>
     )

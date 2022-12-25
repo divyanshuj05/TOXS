@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { TouchableOpacity, FlatList, View, Alert, SafeAreaView, RefreshControl, ScrollView, Text } from "react-native";
+import { TouchableOpacity, FlatList, View, Alert, SafeAreaView, RefreshControl, ScrollView, Text, ActivityIndicator } from "react-native";
 import { RestaurantInfoCard } from "../components/restaurantInfoCard.components.js";
 import styled from "styled-components/native";
 import { FadeInView } from "../../common/components/animations/fade.animation"
 import { DropDownComponent } from "../components/dropdown.components.js";
 import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context.js";
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { FavouritesContext } from "../../../services/restaurant/favourites.context.js";
 import { FavBar } from "../components/favouritesBar.components.js";
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context.js";
@@ -89,7 +88,7 @@ export const RestaurantScreen = ({ navigation }) => {
         return(
             <Container>
                 <View style={{ marginTop: 50 }}>
-                    <ActivityIndicator color={Colors.red400} size={50} />
+                    <ActivityIndicator color="purple" size={50} />
                 </View>
             </Container>
         )
@@ -107,32 +106,26 @@ export const RestaurantScreen = ({ navigation }) => {
                         {favourites.length === 0 || favourites === null ?
                         (<></>) : 
                         (
-                            value===null||value==="Select All"?
+                            <FavWrap>
+                            {isCopyLoading||isLoading ? 
                             (
-                                <FavWrap>
-                                {isCopyLoading||isLoading ? 
-                                (
-                                    <View style={{ marginTop: 50 }}>
-                                        <ActivityIndicator color={Colors.red400} size={50} />
-                                    </View>
-                                ) : 
-                                (
-                                    <ScrollView>
-                                        <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} oriTag={0} />
-                                    </ScrollView>
-                                )}
-                                </FavWrap>
-                            ):
+                                <View style={{ marginTop: 50 }}>
+                                    <ActivityIndicator color="purple" size={50} />
+                                </View>
+                            ) : 
                             (
-                                <></>
-                            )
+                                <ScrollView>
+                                    <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} oriTag={0} />
+                                </ScrollView>
+                            )}
+                            </FavWrap>
                         )
                         }
                         <CardContainer>
                         {isLoading ?
                             (
                                 <View>
-                                    <ActivityIndicator color={Colors.red400} size={50} />
+                                    <ActivityIndicator color="purple" size={50} />
                                 </View>
                             ) :
                             (
@@ -206,7 +199,7 @@ export const RestaurantScreen = ({ navigation }) => {
                                     <FavWrapLand>
                                         {isCopyLoading ? (
                                         <View style={{ marginTop: 50 }}>
-                                            <ActivityIndicator color={Colors.red400} size={50} />
+                                            <ActivityIndicator color="purple" size={50} />
                                         </View>
                                         ) : (
                                         <FavBar favourites={favourites} restaurants={restaurantCopy} navigation={navigation} oriTag={1}  />
@@ -223,7 +216,7 @@ export const RestaurantScreen = ({ navigation }) => {
                             {isLoading ?
                                 (
                                     <View>
-                                        <ActivityIndicator color={Colors.red400} size={50} />
+                                        <ActivityIndicator color="purple" size={50} />
                                     </View>
                                 ) :
                                 (

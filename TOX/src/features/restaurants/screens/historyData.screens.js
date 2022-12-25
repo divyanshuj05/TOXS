@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
-import { ScrollView, Alert, View, Text, TouchableOpacity, Platform, Linking, Button } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
+import { ScrollView, Alert, View, Text, TouchableOpacity, Platform, Linking, Button, ActivityIndicator } from 'react-native'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 import styled from 'styled-components'
-import { ActivityIndicator,Colors, TextInput } from 'react-native-paper';
 import QRCode from "react-native-qrcode-svg"
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context"
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -11,6 +10,7 @@ import { SafeArea } from '../../../utils/components/safe-area.components';
 import { Audio } from "expo-av"
 import { Ionicons } from '@expo/vector-icons';
 import { AppThemeContext } from '../../../services/common/theme.context';
+import { Fontisto } from '@expo/vector-icons';
 
 const Container = styled(View)`
     flex:1;
@@ -96,12 +96,16 @@ export const OrderDetails = ({route,navigation}) => {
 
     const { item } = route.params
     const { user } = useContext(AuthenticationContext)
-    const { OrderReady,isLoading } = useContext(RestaurantHistoryContext)
+    const { OrderReady,isLoading, GetCustomerData, mobile } = useContext(RestaurantHistoryContext)
     const { orientation } = useContext(DeviceOrientationContext)
     const [addSecurity,setAddSecurity]=useState(false)
     const [security,setSecurity]=useState(null)
     const [scan,setScan]=useState(false)
     const { scheme }=useContext(AppThemeContext)
+
+    useEffect(()=>{
+        GetCustomerData(item.orderBy)
+    },[])
 
     const handleOrderReady = (type,status) => {
         Alert.alert(
@@ -171,13 +175,8 @@ export const OrderDetails = ({route,navigation}) => {
         }
     }
 
-    if(isLoading)
-    {
-        return(
-            <Container>
-                <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />
-            </Container>
-        )
+    const handleMail = (mail) => {
+        Linking.openURL(`mailto: ${mail}`)
     }
 
     const Render = () => {
@@ -232,17 +231,53 @@ export const OrderDetails = ({route,navigation}) => {
                         </Row>
                     ):
                     (
+                        <>
                         <Row>
                             <View style={{flex:0.4}}>
                                 <TextWrap>Customer Mobile</TextWrap>
                             </View>
-                            <View style={{flex:0.6, flexDirection:"row"}}>
-                                <TextWrap>{item.userMobile}</TextWrap>
-                                <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48}} onPress={()=>handleTel(item.userMobile)}>
-                                    <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                            {isLoading?
+                            (
+                                <View style={{flex:0.6, justifyContent:"center"}}>
+                                    <ActivityIndicator color="purple" />
+                                </View>
+                            ):
+                            (
+                                mobile==="Null"?
+                                (
+                                    <View style={{flex:0.6, flexDirection:"row"}}>
+                                        <TextWrap>Customer has disabled permission</TextWrap>
+                                    </View>
+                                ):
+                                (
+                                    <View style={{flex:0.6, flexDirection:"row"}}>
+                                        <TextWrap>{mobile}</TextWrap>
+                                        <TouchableOpacity activeOpacity={0.65} style={{marginLeft:48}} onPress={()=>handleTel(item.userMobile)}>
+                                            <Ionicons name="call-outline" size={24} color={scheme=="dark"?"white":"#191919"} />
+                                        </TouchableOpacity>
+                                    </View>
+                                )
+                            )
+                            }
+                        </Row>
+                        <Row>
+                            <View style={{flex:0.4}}>
+                                <TextWrap>Customer Mail</TextWrap>
+                            </View>
+                            <View style={{flex:0.6}}>
+                                <TextWrap>{item.orderBy}</TextWrap>
+                            </View>
+                        </Row>
+                        <Row>
+                            <View style={{flex:0.4}}></View>
+                            <View style={{flex:0.6,flexDirection:"row"}}>
+                                <TextWrap></TextWrap>
+                                <TouchableOpacity activeOpacity={0.65} onPress={()=>handleMail(item.orderBy)}>
+                                    <Fontisto name="email" size={24} color={scheme=="dark"?"white":"#191919"} />
                                 </TouchableOpacity>
                             </View>
                         </Row>
+                    </>
                     )
                     }
                     {item.location==""?

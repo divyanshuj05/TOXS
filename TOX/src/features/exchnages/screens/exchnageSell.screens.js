@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { View,ScrollView,StyleSheet,TouchableOpacity,Image, Text } from "react-native"
+import { View,ScrollView,StyleSheet,TouchableOpacity,Image, Text, ActivityIndicator } from "react-native"
 import { TextInput } from "react-native-paper"
 import styled from 'styled-components';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ExchangeContext } from '../../../services/exchnage/exchange.context';
 import * as ImagePicker from "expo-image-picker"
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { Alert } from 'react-native'
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 const Wrapper = styled(View)`
     flex:1;
@@ -127,7 +127,14 @@ export const SellScreen = ({ navigation }) => {
       
           if (!result.cancelled) {
             if(result.type!="image") setError("Only images are allowed")
-            else setImage(result);
+            else{
+                const compressRes = await manipulateAsync(
+                    result.uri,
+                    [],
+                    { compress: 0.5, format: SaveFormat.JPEG }
+                  );
+                setImage(compressRes);
+            }
           }
     }
 
@@ -146,7 +153,14 @@ export const SellScreen = ({ navigation }) => {
         if (!result.cancelled) {
             if(result==null) alert("Some error occured! Please try again")
             if(result.type!="image") setError("Only images are allowed")
-            else setImage(result);
+            else{
+                const compressRes = await manipulateAsync(
+                    result.uri,
+                    [],
+                    { compress: 0.2, format: SaveFormat.JPEG }
+                  );
+                setImage(compressRes);
+            }
         }
     }
 
@@ -172,7 +186,7 @@ export const SellScreen = ({ navigation }) => {
     { label: 'Lab Coat', value: 'Lab Coat' },
     { label: 'Books', value: 'Books' },
     { label: 'Cycle', value: 'Cycle' },
-    { label: 'Misc', value: 'Misc' }
+    { label: 'Drafter', value: 'Drafter' }
     ]
 
     return (
@@ -188,7 +202,7 @@ export const SellScreen = ({ navigation }) => {
             {isLoading?
             (
                 <View style={{ marginTop: 50 }}>
-                    <ActivityIndicator color={Colors.red400} size={50} />
+                    <ActivityIndicator color="purple" size={50} />
                 </View>
             ):
             (
@@ -226,12 +240,12 @@ export const SellScreen = ({ navigation }) => {
                         </Row>
                         <Row>
                             <Item>Select Image</Item>
-                            <View style={{marginLeft:32,flexDirection:"row"}}>
+                            <View style={{flexDirection:"row"}}>
                                 <TouchableOpacity activeOpacity={0.65} onPress={()=>cameraImagehandler()}>
                                     <Photo style={{borderTopLeftRadius:16,borderBottomLeftRadius:16,borderRightWidth:1}}>Camera</Photo>
                                 </TouchableOpacity>
                                 <TouchableOpacity activeOpacity={0.65} onPress={()=>libraryImageHandler()}>
-                                    <Photo style={{borderTopRightRadius:16,borderBottomRightRadius:16,borderLeftWidth:1}}>From Library</Photo>
+                                    <Photo style={{borderTopRightRadius:16,borderBottomRightRadius:16,borderLeftWidth:1}}>Gallery</Photo>
                                 </TouchableOpacity>
                             </View>
                         </Row>

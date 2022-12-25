@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl } from "react-native"
+import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl, ActivityIndicator } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 import styled from 'styled-components'
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { RestaurantInfoCard } from '../components/restaurantInfoCard.components';
 import { FadeInView } from '../../common/components/animations/fade.animation';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
@@ -67,7 +66,7 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                 {isLoading ?
                     (
                         <View>
-                            <ActivityIndicator color={Colors.red400} size={50} />
+                            <ActivityIndicator color="purple" size={50} />
                         </View>
                     ) :
                     (
@@ -103,7 +102,7 @@ export const VendorRestaurantScreen = ({ navigation }) => {
                 {isLoading ?
                     (
                         <View>
-                            <ActivityIndicator color={Colors.red400} size={50} />
+                            <ActivityIndicator color="purple" size={50} />
                         </View>
                     ) :
                     (

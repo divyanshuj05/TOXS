@@ -3,8 +3,7 @@ import { SettingsScreen } from "../../features/settings/screens/settings.screen"
 import { DeviceOrientationContext } from "../../services/common/deviceOrientation.context";
 import { AppThemeContext } from "../../services/common/theme.context";
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
-import { View } from "react-native"
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { View, ActivityIndicator } from "react-native"
 import { FeedbackScreen } from "../../features/settings/screens/feedback.screens";
 
 const SettingsStack = createStackNavigator();
@@ -19,7 +18,7 @@ export const SettingsNavigator = ({ navigation }) => {
     {isOrientationLoading?
       (
         <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
-          <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+          <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
         </View>
       ):
       (

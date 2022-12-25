@@ -1,12 +1,11 @@
 import React,{useContext,useEffect} from 'react'
-import { FlatList, TouchableOpacity, View, Image, Text } from 'react-native';
+import { FlatList, TouchableOpacity, View, Image, Text, ActivityIndicator } from 'react-native';
 import { logo_light,logo_dark, TPO_logo, Vendor_Image } from "../../../../assets/images";
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import styled from 'styled-components';
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { colors } from '../../../infrastructure/theme/colors';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { VendorRestaurantContext } from '../../../services/restaurant/vendorRestaurant.context';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
@@ -140,7 +139,7 @@ export const VendorHome = ({ navigation }) => {
     {
         return(
             <View style={{ flex:1,backgroundColor:scheme === "dark" ? "black" : "white" }}>
-                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
             </View>
         )
     }

@@ -35,7 +35,7 @@ export const restaurantsRequest = () => {
     })
 }
 
-export const Orders = async(email,mobile,amount,vendor,order,restaurant,location,type,id) => {
+export const Orders = async(email,amount,vendor,order,restaurant,location,type,id) => {
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -55,7 +55,6 @@ export const Orders = async(email,mobile,amount,vendor,order,restaurant,location
       docs.forEach(async(doc) => {
         var data={
             orderBy:email,
-            userMobile:mobile,
             vendorMobile:doc.data().mobileNo,
             vendor:vendor,
             amount:amount,

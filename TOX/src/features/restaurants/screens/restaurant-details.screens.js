@@ -1,9 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Alert, Text, View, Switch } from "react-native";
+import { Alert, Text, View, Switch, ActivityIndicator } from "react-native";
 import styled from 'styled-components';
 import { MenuList } from "../components/menu-list.components";
 import { CartContext } from "../../../services/restaurant/cart.context";
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { SafeArea } from "../../../utils/components/safe-area.components"
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context";
 import { RestaurantContext } from "../../../services/restaurant/restaurant-block.context";
@@ -47,7 +46,7 @@ const EmptyList=styled(Text)`
 export const RestaurantDetails = ({ route, navigation }) => {
     const { restaurent } = route.params;
     const { tag } = route.params
-    const { restaurants, paymentDone, setPaymentDone }=useContext(RestaurantContext)
+    const { restaurants, paymentDone, setPaymentDone, restaurantCopy }=useContext(RestaurantContext)
     const { destroy, removeItems } = useContext(CartContext);
     const { LockOrientation, UnlockOrientation, orientation } = useContext(DeviceOrientationContext)
     const [restaurantMenuList, setRestaurantMenuList] = useState([]) 
@@ -97,7 +96,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
         setFoodType("Veg and Non Veg")
         setToggleEnabled(false)
         LockOrientation()
-        restaurants.forEach(element => {
+        restaurantCopy.forEach(element => {
             if(element.Name==restaurent)
             {
                 if(element.menuList!=undefined)
@@ -133,7 +132,7 @@ export const RestaurantDetails = ({ route, navigation }) => {
             {restaurantMenuList==[]?
             (
                 <IndicatorView>
-                    <ActivityIndicator color={Colors.red400} size={50} />
+                    <ActivityIndicator color="purple" size={50} />
                 </IndicatorView>
             ):
             (

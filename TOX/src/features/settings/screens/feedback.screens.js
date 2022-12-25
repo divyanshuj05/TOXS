@@ -1,8 +1,7 @@
 import React,{ useState,useContext,useRef } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styled from 'styled-components'
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
-import { ActivityIndicator,Colors } from 'react-native-paper';
 import { StoreFeedback } from '../../../services/common/userFeedback.services';
 
 const Container=styled(ScrollView)`
@@ -69,7 +68,7 @@ export const FeedbackScreen = ({ navigation }) => {
     if(isLoading){
         return(
             <Container>
-                <ActivityIndicator style={{marginTop:50}} color={Colors.red400} size={50} />
+                <ActivityIndicator style={{marginTop:50}} color="purple" size={50} />
             </Container>
         )
     }

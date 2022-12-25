@@ -49,8 +49,13 @@ export const ExchangeHistoryContextProvider = ({children}) => {
     const RetrieveMobile = (email) => {
         setDetailsLoading(true)
         GetMobileData(email).then(res=>{
+            if(res.mobileDisplay==="No"){
+                setMobile("Null")
+            }
+            else{
+                setMobile(res.mobileNo)
+            }
             setDetailsLoading(false)
-            setMobile(res.mobileNo)
             return
         }).catch(err=>{
             setDetailsLoading(false)

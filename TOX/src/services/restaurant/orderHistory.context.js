@@ -1,5 +1,5 @@
 import React,{ createContext,useState,useRef } from 'react'
-import { GetOrders, OrderReadyStatus, GetNotiToken } from './orderHistory.services'
+import { GetOrders, OrderReadyStatus, GetNotiToken, GetMobileData } from './orderHistory.services'
 import { SendNotification } from '../common/notisFunctions.services'
 import { Alert } from 'react-native'
 
@@ -11,6 +11,7 @@ export const RestaurantHistoryContextProvider = ({children}) => {
     const [refresh,setRefresh]=useState(false)
     const [historyCopy,setHistoryCopy]=useState([])
     const [isLoading,setIsLoading]=useState(false)
+    const [mobile,setMobile]=useState(null)
 
     const sort = (res) => {
         function compare(a,b){
@@ -103,6 +104,24 @@ export const RestaurantHistoryContextProvider = ({children}) => {
         setIsLoading(false)
     }
 
+    const GetCustomerData = (mail) => {
+        setIsLoading(true)
+        setMobile(null)
+        GetMobileData(mail).then(res=>{
+            if(res.mobileDisplay==="No"){
+                setMobile("Null")
+            }
+            else{
+                setMobile(res.mobileNo)
+            }
+            setIsLoading(false)
+            return
+        }).catch(err=>{
+            setIsLoading(false)
+            return null
+        })
+    }
+
     return(
         <RestaurantHistoryContext.Provider value={{
             history:history.current,
@@ -110,7 +129,9 @@ export const RestaurantHistoryContextProvider = ({children}) => {
             SearchHistory:Search,
             OrderReady,
             SearchByStatus,
-            refresh
+            refresh,
+            GetCustomerData,
+            mobile
         }}>
             {children}
         </RestaurantHistoryContext.Provider>

@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { logo_light,logo_dark } from "../../../../assets/images";
-import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native"
+import { Text, View, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native"
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { AppThemeContext } from '../../../services/common/theme.context';
 import { AntDesign,Ionicons } from '@expo/vector-icons';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
 import { DeviceOrientationContext } from "../../../services/common/deviceOrientation.context"
-import { ActivityIndicator,Colors } from 'react-native-paper';
 import { RestaurantHistoryContext } from '../../../services/restaurant/orderHistory.context';
 
 const Container=styled(View)`
@@ -65,7 +64,7 @@ export const DeliveryHome = ({ navigation }) => {
     if(isOrientationLoading){
         <SafeArea>
             <Container>
-                <ActivityIndicator color={Colors.red400} size={50} style={{marginTop:50}}  />
+                <ActivityIndicator color="purple" size={50} style={{marginTop:50}}  />
             </Container>
         </SafeArea>
     }

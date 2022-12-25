@@ -1,10 +1,9 @@
 import React,{ useContext, useRef } from 'react'
-import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl } from 'react-native';
+import { View, FlatList, TouchableOpacity, Text, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { FadeInView } from "../../common/components/animations/fade.animation"
 import { ItemInfoCard } from "../components/itemInfoCard.components"
 import styled from 'styled-components'
 import { ExchangeHistoryContext } from '../../../services/exchnage/historyExchnage.context'
-import { ActivityIndicator, Colors } from "react-native-paper";
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { HistoryFilterComponent } from '../../restaurants/components/historyDropdown.components';
 
@@ -81,7 +80,7 @@ export const ExchangeHistory = ({ navigation }) => {
             {detailsLoading?
             (
                 <View style={{ marginTop: 50 }}>
-                    <ActivityIndicator color={Colors.red400} size={50} />
+                    <ActivityIndicator color="purple" size={50} />
                 </View>
             ):
             (   

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, ActivityIndicator } from "react-native";
 import styled from "styled-components";
 import { SafeArea } from '../../../utils/components/safe-area.components';
 import { AccountBackground, AuthInput, AuthInputLand, AuthButton, ErrorContainer } from '../components/account.styles';
@@ -7,7 +7,6 @@ import { Text } from '../../common/components/typography/text.component';
 import { Spacer } from '../../common/components/spacer/spacer.component';
 import { DeviceOrientationContext } from '../../../services/common/deviceOrientation.context';
 import { AuthenticationContext } from '../../../services/authentication/authentication.context';
-import { ActivityIndicator,Colors } from 'react-native-paper';
 import { SecurityDropdown } from '../components/securityDropdown.components';
 
 const Title = styled(Text)`
@@ -93,7 +92,7 @@ export const ForgotPassword = ({ route,navigation }) => {
                     <View style={{marginVertical:16}}></View>
                     {isLoading?
                     (
-                      <ActivityIndicator animating={true} color={Colors.blue300} />
+                      <ActivityIndicator size={25} color="purple" />
                     ):
                     (
                       <AuthButton mode="contained" onPress={async() => { setError(await(ForgotPassword(userName,collection,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo))) }}>

@@ -167,11 +167,11 @@ export const AuthenticationContextProvider = ({ children }) => {
       )
   };
 
-  const onRegister = async (userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
+  const onRegister = async (userName, email, MobileNo,mobileDisplay, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo) => {
 
     setIsLoading(true);
 
-    let result = RegisterCheck(userName, email, MobileNo, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo)
+    let result = RegisterCheck(userName, email, MobileNo,mobileDisplay, password,securityQuestionOne,securityOne,securityQuestionTwo,securityTwo)
 
     /*firebase
       .auth()
@@ -211,6 +211,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         userName: userName,
         email: email,
         mobileNo: MobileNo,
+        mobileDisplay:mobileDisplay,
         password: password,
         token:token,
         securityOne:securityQuestionOne+" "+securityOne,
@@ -240,6 +241,28 @@ export const AuthenticationContextProvider = ({ children }) => {
     if (newFieldVal == "") {
       setIsLoading(false)
       return true;
+    }
+
+    if(field=="mobileDisplay")
+    {
+      const data = { ...user, mobileDisplay: newFieldVal }
+      delete data.id;
+      delete data.type
+      const docRef = doc(db, Coll, user.id)
+
+      setDoc(docRef, data, { merge: true })
+        .then(res => {
+          setUser({ ...user, mobileDisplay: newFieldVal,type:Coll })
+          removeUser()
+          saveUser({ ...user, mobileDisplay: newFieldVal,type:Coll })
+          setIsLoading(false)
+          return
+        })
+        .catch(error => {
+          setIsLoading(false)
+          console.log(error);
+          return
+        })
     }
 
     if (field == "password") {

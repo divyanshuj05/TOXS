@@ -100,6 +100,7 @@ export const EnterVendorData = (name,email,mobile,password,securityOne,securityQ
       userName:name,
       email:email,
       mobileNo:mobile,
+      mobileDisplay:"Yes",
       password:password,
       restaurant:"null",
       token:"null",
